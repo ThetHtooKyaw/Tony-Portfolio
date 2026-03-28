@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/src/home/views/home_appbar.dart';
 import 'package:tony_portfolio/src/home/views/home_experience_section.dart';
@@ -25,6 +26,25 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final width = MediaQuery.sizeOf(context).width;
+    if (width < 600) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
+  }
+
+  @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();
@@ -33,7 +53,6 @@ class _HomeViewState extends State<HomeView>
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final bool isDesktop = screenSize.width > 600;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -52,10 +71,7 @@ class _HomeViewState extends State<HomeView>
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: buildAppBar(
-                    screenSize: screenSize,
-                    isDesktop: isDesktop,
-                  ),
+                  child: buildAppBar(context: context, screenSize: screenSize),
                 ),
               ],
             ),

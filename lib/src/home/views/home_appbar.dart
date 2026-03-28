@@ -1,14 +1,18 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:tony_portfolio/core/data/menu_list.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_text_menu_btn.dart';
+import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
 
 PreferredSizeWidget buildAppBar({
+  required BuildContext context,
   required Size screenSize,
-  required bool isDesktop,
 }) {
-  final double menuSpacing = (screenSize.width * 0.04).clamp(20, 50);
+  final isDesktop = ResponsiveWidget.isDesktop(context);
+  final isTablet = ResponsiveWidget.isTablet(context);
 
   return AppBar(
     backgroundColor: Colors.transparent,
@@ -25,16 +29,17 @@ PreferredSizeWidget buildAppBar({
         child: AnimatedHoverMenuBtn(title: 'Tony\'s Portfolio'),
       ),
     ),
-    actions: isDesktop
+    actions: isDesktop || isTablet
         ? [
-            AnimatedHoverMenuBtn(title: 'Home', onPressed: () {}),
-            SizedBox(width: menuSpacing),
-
-            AnimatedHoverMenuBtn(title: 'About', onPressed: () {}),
-            SizedBox(width: menuSpacing),
-
-            AnimatedHoverMenuBtn(title: 'Awards', onPressed: () {}),
-            SizedBox(width: menuSpacing),
+            ...desktopMenuList.map((menu) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedHoverMenuBtn(title: menu, onPressed: () {}),
+                  SizedBox(width: (screenSize.width * 0.04).clamp(16, 50)),
+                ],
+              );
+            }),
 
             ElevatedButton(
               onPressed: () {},
@@ -53,12 +58,14 @@ PreferredSizeWidget buildAppBar({
               ),
               child: Row(
                 children: [
-                  Text(
+                  AutoSizeText(
                     'Get in touch',
+                    maxFontSize: 18,
+                    minFontSize: 16,
                     style: TextStyle(
                       fontFamily: 'Oswald',
                       color: AppColor.white,
-                      fontSize: 18,
+                      fontSize: screenSize.width * 0.025,
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -124,7 +131,6 @@ void _showMainMenu({required BuildContext context}) {
               children: [
                 Row(
                   children: [
-                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         'Tony\'s Portfolio',
@@ -145,33 +151,19 @@ void _showMainMenu({required BuildContext context}) {
                 ),
                 const SizedBox(height: 20),
 
-                AnimatedTextMenuBtn(
-                  title: 'Home',
-                  delay: Duration(milliseconds: 150),
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 16),
-
-                AnimatedTextMenuBtn(
-                  title: 'About',
-                  delay: Duration(milliseconds: 250),
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 16),
-
-                AnimatedTextMenuBtn(
-                  title: 'Awards',
-                  delay: Duration(milliseconds: 350),
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 16),
-
-                AnimatedTextMenuBtn(
-                  title: 'Get in touch',
-                  delay: Duration(milliseconds: 450),
-                  onPressed: () {},
-                ),
-                const SizedBox(height: 20),
+                ...mobileMenuList.map((menu) {
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AnimatedTextMenuBtn(
+                        title: menu['title'],
+                        delay: menu['delay'],
+                        onPressed: () {},
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  );
+                }),
               ],
             ),
           ),

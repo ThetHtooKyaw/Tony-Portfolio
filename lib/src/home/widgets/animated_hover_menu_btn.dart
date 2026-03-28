@@ -16,6 +16,11 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
 
   @override
   Widget build(BuildContext context) {
+    final double fontSize = (MediaQuery.sizeOf(context).width * 0.025).clamp(
+      18,
+      20,
+    );
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovering = true),
       onExit: (_) => setState(() => _isHovering = false),
@@ -32,7 +37,7 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
                 style: TextStyle(
                   fontFamily: 'Questrial',
                   color: AppColor.background,
-                  fontSize: 20,
+                  fontSize: fontSize,
                 ),
               ),
             ),

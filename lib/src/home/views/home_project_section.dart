@@ -1,10 +1,12 @@
 import 'dart:math' as math;
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
+import 'package:tony_portfolio/core/data/project_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
+import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
 
 class HomeProjectSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -18,39 +20,6 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
   final GlobalKey _sectionKey = GlobalKey();
   Offset? _mouseOffset;
   bool _isHovering = false;
-
-  final projects = [
-    {
-      'name': 'RUYI Booking Website',
-      'image': 'assets/images/ruyi_booking.png',
-      'date': '( 2024 )',
-      'icons': [
-        'assets/icons/flutter.png',
-        'assets/icons/dart.png',
-        'assets/icons/firebase.png',
-      ],
-      'features': [
-        'Admin/User Panels',
-        'Multi-language',
-        'Restaurant Booking System',
-      ],
-    },
-    {
-      'name': 'RUYI Booking Website',
-      'image': 'assets/images/ruyi_booking.png',
-      'date': '( 2024)',
-      'icons': [
-        'assets/icons/flutter.png',
-        'assets/icons/dart.png',
-        'assets/icons/firebase.png',
-      ],
-      'features': [
-        'Admin/User Panels',
-        'Multi-language',
-        'Restaurant Booking System',
-      ],
-    },
-  ];
 
   bool _isProjectScrollable(Size screenSize) {
     final section = _sectionKey.currentContext?.findRenderObject();
@@ -73,7 +42,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final bool isDesktop = screenSize.width > 830;
+    final isDesktop = ResponsiveWidget.isDesktop(context);
 
     const double cardHeight = 650;
     const double padding = 400;
@@ -98,43 +67,55 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
               alignment: Alignment.bottomCenter,
               child: SizedBox(
                 height: cardHeight,
-                child: MouseRegion(
-                  onHover: (event) => setState(() {
-                    final box = _sectionKey.currentContext?.findRenderObject();
-                    if (box is RenderBox) {
-                      final local = box.globalToLocal(event.position);
-                      _mouseOffset = local;
-                      _isHovering = true;
-                    }
-                  }),
-                  onExit: (_) => setState(() {
-                    _mouseOffset = null;
-                    _isHovering = false;
-                  }),
-                  cursor: _isHovering
-                      ? SystemMouseCursors.none
-                      : SystemMouseCursors.basic,
-                  child: IgnorePointer(
-                    ignoring: !active,
-                    child: StackedCardCarousel(
-                      type: StackedCardCarouselType.fadeOutStack,
-                      initialOffset: 0,
-                      spaceBetweenItems: step,
-                      applyTextScaleFactor: false,
-                      items: projects.map((project) {
-                        return isDesktop
-                            ? _buildDesktopCard(
-                                screenWidth: screenSize.width,
-                                projectData: project,
-                              )
-                            : _buildMobileCard(
+                child: isDesktop
+                    ? MouseRegion(
+                        onHover: (event) => setState(() {
+                          final box = _sectionKey.currentContext
+                              ?.findRenderObject();
+                          if (box is RenderBox) {
+                            final local = box.globalToLocal(event.position);
+                            _mouseOffset = local;
+                            _isHovering = true;
+                          }
+                        }),
+                        onExit: (_) => setState(() {
+                          _mouseOffset = null;
+                          _isHovering = false;
+                        }),
+                        cursor: _isHovering
+                            ? SystemMouseCursors.none
+                            : SystemMouseCursors.basic,
+                        child: IgnorePointer(
+                          ignoring: !active,
+                          child: StackedCardCarousel(
+                            type: StackedCardCarouselType.fadeOutStack,
+                            initialOffset: 0,
+                            spaceBetweenItems: step,
+                            applyTextScaleFactor: false,
+                            items: projectInfos.map((project) {
+                              return _buildDesktopCard(
                                 screenWidth: screenSize.width,
                                 projectData: project,
                               );
-                      }).toList(),
-                    ),
-                  ),
-                ),
+                            }).toList(),
+                          ),
+                        ),
+                      )
+                    : IgnorePointer(
+                        ignoring: !active,
+                        child: StackedCardCarousel(
+                          type: StackedCardCarouselType.fadeOutStack,
+                          initialOffset: 0,
+                          spaceBetweenItems: step,
+                          applyTextScaleFactor: false,
+                          items: projectInfos.map((project) {
+                            return _buildMobileCard(
+                              screenWidth: screenSize.width,
+                              projectData: project,
+                            );
+                          }).toList(),
+                        ),
+                      ),
               ),
             );
           },
@@ -152,8 +133,8 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
   Widget _buildCustomCursor(double screenWidth) {
     return Container(
-          height: (screenWidth * 0.03).clamp(60.0, 100.0),
-          width: (screenWidth * 0.03).clamp(60.0, 100.0),
+          height: (screenWidth * 0.03).clamp(60.0, 120.0),
+          width: (screenWidth * 0.03).clamp(60.0, 120.0),
           decoration: BoxDecoration(
             color: AppColor.accent,
             shape: BoxShape.circle,
@@ -181,23 +162,18 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     final icons = (projectData['icons'] as List).cast<String>();
     final features = (projectData['features'] as List).cast<String>();
 
-    final bigScreen = screenWidth > 1200;
-
     return Row(
       children: [
         Expanded(
           flex: 2,
-          child: _buildImageContainer(
-            imagePath: projectData['image'],
-            imageHeight: 650,
-          ),
+          child: _buildImageContainer(imagePaths: projectData['image']),
         ),
         const SizedBox(width: 20),
 
         Expanded(
           flex: 1,
           child: Container(
-            padding: EdgeInsets.all((screenWidth * 0.03).clamp(20.0, 40.0)),
+            padding: EdgeInsets.all((screenWidth * 0.02).clamp(20.0, 40.0)),
             height: 650,
             decoration: BoxDecoration(
               border: Border.all(color: AppColor.disable),
@@ -223,14 +199,16 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
                 const SizedBox(height: 30),
 
                 // Project Name
-                Text(
+                AutoSizeText(
                   projectData['name'],
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
+                  maxFontSize: 50.0,
+                  minFontSize: 30.0,
                   style: TextStyle(
                     fontFamily: 'Racing Sans One',
                     color: AppColor.white,
-                    fontSize: bigScreen ? 50 : 30,
+                    fontSize: screenWidth * 0.03,
                     height: 1.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -247,8 +225,10 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
                 // Project Description
                 ..._buildFeatureList(
+                  screenWidth: screenWidth,
                   features: features,
-                  fontSize: (screenWidth * 0.02).clamp(16.0, 22.0),
+                  maxFontSize: 22.0,
+                  minFontSize: 16.0,
                 ),
               ],
             ),
@@ -268,7 +248,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _buildImageContainer(imagePath: projectData['image'], imageHeight: 400),
+        _buildImageContainer(imagePaths: projectData['image'], isMobile: true),
         const SizedBox(height: 20),
 
         Container(
@@ -284,12 +264,14 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Project Name
-              Text(
+              AutoSizeText(
                 '${projectData['name']} ${projectData['date']}',
+                maxFontSize: 20.0,
+                minFontSize: 18.0,
                 style: TextStyle(
-                  fontFamily: 'Oswald',
+                  fontFamily: 'Racing Sans One',
                   color: AppColor.white,
-                  fontSize: 20,
+                  fontSize: screenWidth * 0.03,
                   height: 1.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -302,8 +284,10 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
               // Project Description
               ..._buildFeatureList(
+                screenWidth: screenWidth,
                 features: features,
-                fontSize: (screenWidth * 0.02).clamp(16.0, 18.0),
+                maxFontSize: 18.0,
+                minFontSize: 16.0,
               ),
             ],
           ),
@@ -312,47 +296,33 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     );
   }
 
-  List<Widget> _buildFeatureList({
-    required List<String> features,
-    required double fontSize,
-  }) {
-    return features.asMap().entries.map((entry) {
-      final index = entry.key;
-      final feature = entry.value;
-
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            feature,
-            style: TextStyle(
-              fontFamily: 'Open Sans',
-              color: AppColor.placeholder,
-              fontSize: fontSize,
-            ),
-          ),
-          if (index != features.length - 1)
-            Divider(color: AppColor.disable, thickness: 1, height: 8),
-        ],
-      );
-    }).toList();
-  }
-
   Widget _buildImageContainer({
-    required String imagePath,
-    required double imageHeight,
+    required List<String> imagePaths,
+    bool isMobile = false,
   }) {
-    return Container(
-      height: imageHeight,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
-        child: Image.asset(imagePath, fit: BoxFit.fill),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final containerWidth = constraints.maxWidth;
+        final mobileRatio = containerWidth <= 400.0
+            ? imagePaths.first
+            : imagePaths.last;
+        final desktopRatio = containerWidth <= 600.0
+            ? imagePaths.first
+            : imagePaths.last;
+        final imagePath = isMobile ? mobileRatio : desktopRatio;
+
+        return Container(
+          height: isMobile ? 400 : 650,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
+            child: Image.asset(imagePath, fit: BoxFit.fill),
+          ),
+        );
+      },
     );
   }
 
@@ -380,5 +350,36 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
         ),
       ],
     );
+  }
+
+  List<Widget> _buildFeatureList({
+    required double screenWidth,
+    required List<String> features,
+    required double maxFontSize,
+    required double minFontSize,
+  }) {
+    return features.asMap().entries.map((entry) {
+      final index = entry.key;
+      final feature = entry.value;
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AutoSizeText(
+            feature,
+            maxFontSize: maxFontSize,
+            minFontSize: minFontSize,
+            style: TextStyle(
+              fontFamily: 'Open Sans',
+              color: AppColor.placeholder,
+              fontSize: screenWidth * 0.02,
+            ),
+          ),
+          if (index != features.length - 1)
+            Divider(color: AppColor.disable, thickness: 1, height: 8),
+        ],
+      );
+    }).toList();
   }
 }

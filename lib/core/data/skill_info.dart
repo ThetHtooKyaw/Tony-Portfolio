@@ -1,0 +1,15 @@
+const List<Map<String, String>> skillInfos = [
+  {'text': 'Flutter', 'icon': 'assets/icons/flutter.png'},
+  {'text': 'Dart', 'icon': 'assets/icons/dart.png'},
+  {'text': 'Python', 'icon': 'assets/icons/python.png'},
+  {'text': 'Java', 'icon': 'assets/icons/java.png'},
+  {'text': 'Kotlin', 'icon': 'assets/icons/kotlin.png'},
+  {'text': 'HTML', 'icon': 'assets/icons/html.png'},
+  {'text': 'CSS', 'icon': 'assets/icons/css.png'},
+  {'text': 'JavaScript', 'icon': 'assets/icons/javascript.png'},
+  {'text': 'Firebase', 'icon': 'assets/icons/firebase.png'},
+  {'text': 'WordPress', 'icon': 'assets/icons/wordpress.png'},
+  {'text': 'Github', 'icon': 'assets/icons/github.png'},
+  {'text': 'Git', 'icon': 'assets/icons/git.png'},
+  {'text': 'Figma', 'icon': 'assets/icons/figma.png'},
+];

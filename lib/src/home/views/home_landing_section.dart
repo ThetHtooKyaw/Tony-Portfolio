@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:marquee/marquee.dart';
+import 'package:tony_portfolio/core/data/contact_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
@@ -18,10 +20,8 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final bool isDesktop = screenSize.width > 600;
 
-    final double titleSize = (screenSize.width * 0.18).clamp(130, 280);
-    final double subTitleSize = (screenSize.width * 0.06).clamp(34, 60);
+    final double titleSize = (screenSize.width * 0.18).clamp(100, 280);
 
     return Container(
       height: screenSize.height,
@@ -112,11 +112,14 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
           // My Roles
           Positioned(
             bottom: 40,
-            left: isDesktop ? AppFormat.priamaryPadding : 10,
+            left: (screenSize.width * 0.025).clamp(
+              10,
+              AppFormat.priamaryPadding,
+            ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildSubTitleText(text: "//", fontSize: subTitleSize),
+                _buildSubTitleText(text: "//", screenWidth: screenSize.width),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +127,7 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
                       .map(
                         (role) => _buildSubTitleText(
                           text: role,
-                          fontSize: subTitleSize,
+                          screenWidth: screenSize.width,
                         ),
                       )
                       .toList(),
@@ -146,16 +149,20 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
     );
   }
 
-  Widget _buildSubTitleText({required String text, required double fontSize}) {
-    return Text(
+  Widget _buildSubTitleText({
+    required String text,
+    required double screenWidth,
+  }) {
+    return AutoSizeText(
       text,
-      textAlign: TextAlign.center,
+      maxFontSize: 60,
+      minFontSize: 30,
       style: TextStyle(
         fontFamily: 'Oswald',
         foreground: Paint()
           ..color = AppColor.white
           ..blendMode = BlendMode.difference,
-        fontSize: fontSize,
+        fontSize: screenWidth * 0.06,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -177,44 +184,27 @@ Widget buildFloatingBtn({required Size screenSize}) {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children:
-              [
-                {
-                  'icon': 'assets/icons/github.png',
-                  'tooltip': 'GitHub',
-                  'url': 'https://github.com/ThetHtooKyaw',
-                },
-                {
-                  'icon': 'assets/icons/linkedin.png',
-                  'tooltip': 'LinkedIn',
-                  'url': 'https://www.linkedin.com/in/tonyjohnsons/',
-                },
-                {
-                  'icon': 'assets/icons/gmail.png',
-                  'tooltip': 'Gmail',
-                  'url': 'mailto:2003tonyc123@gmail.com',
-                },
-              ].map((social) {
-                return IconButton(
-                  onPressed: () async {
-                    final Uri url = Uri.parse(social['url']!);
+          children: contactInfos.map((social) {
+            return IconButton(
+              onPressed: () async {
+                final Uri url = Uri.parse(social['url']!);
 
-                    if (!await launchUrl(
-                      url,
-                      mode: LaunchMode.externalApplication,
-                    )) {
-                      debugPrint('Could not launch ${social['url']}');
-                    }
-                  },
-                  icon: Image.asset(
-                    social['icon']!,
-                    width: iconSize,
-                    height: iconSize,
-                    color: AppColor.white,
-                  ),
-                  tooltip: social['tooltip']!,
-                );
-              }).toList(),
+                if (!await launchUrl(
+                  url,
+                  mode: LaunchMode.externalApplication,
+                )) {
+                  debugPrint('Could not launch ${social['url']}');
+                }
+              },
+              icon: Image.asset(
+                social['icon']!,
+                width: iconSize,
+                height: iconSize,
+                color: AppColor.white,
+              ),
+              tooltip: social['tooltip']!,
+            );
+          }).toList(),
         ),
       ),
     ),
