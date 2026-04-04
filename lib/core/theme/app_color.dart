@@ -8,7 +8,7 @@ class AppColor {
   static const accent = Color(0xFF6D110D);
   static const card = Color(0xFF1A1A1A);
 
-  static const white = Color(0xFFD9D9D9);
+  static const white = Color(0xFFFFFFFF);
   static const light = Color(0xFFBDBDBD);
   static const background = Color(0xFF0F0F0F);
   static const shadow = Color(0xFF2B1217);

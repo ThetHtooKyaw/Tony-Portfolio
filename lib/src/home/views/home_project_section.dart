@@ -7,6 +7,7 @@ import 'package:tony_portfolio/core/data/project_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeProjectSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -36,7 +37,17 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     final visibleHeight = math.max(0.0, visibleBottom - visibleTop);
     final visibleRatio = visibleHeight / section.size.height;
 
-    return visibleRatio >= 0.98;
+    return visibleRatio >= 0.99;
+  }
+
+  void _handleUrlLaunch(String? projectUrl) async {
+    if (projectUrl == null) return;
+
+    final Uri url = Uri.parse(projectUrl);
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      debugPrint('Could not launch $url');
+    }
   }
 
   @override
@@ -44,7 +55,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
 
-    const double cardHeight = 650;
+    final double cardHeight = screenSize.height * 0.85;
     const double padding = 400;
     final double step = cardHeight + padding;
 
@@ -95,12 +106,14 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
                             items: projectInfos.map((project) {
                               return _buildDesktopCard(
                                 screenWidth: screenSize.width,
+                                cardHeight: cardHeight,
                                 projectData: project,
                               );
                             }).toList(),
                           ),
                         ),
                       )
+                    // TODO: Fix the scroll up stuck
                     : IgnorePointer(
                         ignoring: !active,
                         child: StackedCardCarousel(
@@ -110,7 +123,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
                           applyTextScaleFactor: false,
                           items: projectInfos.map((project) {
                             return _buildMobileCard(
-                              screenWidth: screenSize.width,
+                              screenSize: screenSize,
                               projectData: project,
                             );
                           }).toList(),
@@ -133,8 +146,8 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
   Widget _buildCustomCursor(double screenWidth) {
     return Container(
-          height: (screenWidth * 0.03).clamp(60.0, 120.0),
-          width: (screenWidth * 0.03).clamp(60.0, 120.0),
+          height: (screenWidth * 0.08).clamp(60.0, 140.0),
+          width: (screenWidth * 0.08).clamp(60.0, 140.0),
           decoration: BoxDecoration(
             color: AppColor.accent,
             shape: BoxShape.circle,
@@ -157,24 +170,118 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
   Widget _buildDesktopCard({
     required double screenWidth,
+    required double cardHeight,
     required Map<String, dynamic> projectData,
   }) {
     final icons = (projectData['icons'] as List).cast<String>();
     final features = (projectData['features'] as List).cast<String>();
 
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: _buildImageContainer(imagePaths: projectData['image']),
-        ),
-        const SizedBox(width: 20),
+    return GestureDetector(
+      onTap: () => _handleUrlLaunch(projectData['url']),
+      child: Row(
+        children: [
+          // Project Image
+          Expanded(
+            flex: 2,
+            child: _buildImageContainer(
+              cardHeight: cardHeight,
+              imagePaths: projectData['image'],
+            ),
+          ),
+          const SizedBox(width: 20),
 
-        Expanded(
-          flex: 1,
-          child: Container(
-            padding: EdgeInsets.all((screenWidth * 0.02).clamp(20.0, 40.0)),
-            height: 650,
+          Expanded(
+            flex: 1,
+            child: Container(
+              padding: EdgeInsets.all((screenWidth * 0.02).clamp(20.0, 40.0)),
+              height: cardHeight,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColor.disable),
+                borderRadius: BorderRadius.circular(
+                  AppFormat.primaryBorderRadius,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Project Date
+                  Text(
+                    projectData['date'],
+                    style: TextStyle(
+                      fontFamily: 'Questrial',
+                      color: AppColor.white,
+                      fontSize: 20,
+                      height: 1.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Project Name
+                  AutoSizeText(
+                    projectData['name'],
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    maxFontSize: 50.0,
+                    minFontSize: 30.0,
+                    style: TextStyle(
+                      fontFamily: 'Racing Sans One',
+                      color: AppColor.white,
+                      fontSize: screenWidth * 0.03,
+                      height: 1.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // Tech Stack Icon
+                  _buildIconList(
+                    icons: icons,
+
+                    iconSize: (screenWidth * 0.03).clamp(16.0, 30.0),
+                  ),
+                  const Spacer(),
+
+                  // Project Description
+                  ..._buildFeatureList(
+                    screenWidth: screenWidth,
+                    features: features,
+                    maxFontSize: 22.0,
+                    minFontSize: 16.0,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileCard({
+    required Size screenSize,
+    required Map<String, dynamic> projectData,
+  }) {
+    final icons = (projectData['icons'] as List).cast<String>();
+    final features = (projectData['features'] as List).cast<String>();
+
+    return GestureDetector(
+      onTap: () => _handleUrlLaunch(projectData['url']),
+      child: Column(
+        children: [
+          // Project Image
+          _buildImageContainer(
+            cardHeight: screenSize.height * 0.53,
+            imagePaths: projectData['image'],
+            isMobile: true,
+          ),
+          const SizedBox(height: 12),
+
+          Container(
+            padding: const EdgeInsets.all(AppFormat.priamaryPadding),
+            height: screenSize.height * 0.3,
+            width: double.infinity,
             decoration: BoxDecoration(
               border: Border.all(color: AppColor.disable),
               borderRadius: BorderRadius.circular(
@@ -185,118 +292,42 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Project Date
-                Text(
-                  projectData['date'],
-                  style: TextStyle(
-                    fontFamily: 'Questrial',
-                    color: AppColor.white,
-                    fontSize: 20,
-                    height: 1.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 30),
-
                 // Project Name
                 AutoSizeText(
-                  projectData['name'],
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  maxFontSize: 50.0,
-                  minFontSize: 30.0,
+                  '${projectData['name']} ${projectData['date']}',
+                  maxFontSize: 20.0,
+                  minFontSize: 18.0,
                   style: TextStyle(
                     fontFamily: 'Racing Sans One',
                     color: AppColor.white,
-                    fontSize: screenWidth * 0.03,
+                    fontSize: screenSize.width * 0.03,
                     height: 1.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
 
                 // Tech Stack Icon
-                _buildIconList(
-                  icons: icons,
-                  radiusSize: (screenWidth * 0.03).clamp(20.0, 26.0),
-                  iconSize: (screenWidth * 0.03).clamp(24.0, 26.0),
-                ),
+                _buildIconList(icons: icons, iconSize: 24),
                 const Spacer(),
 
                 // Project Description
                 ..._buildFeatureList(
-                  screenWidth: screenWidth,
+                  screenWidth: screenSize.width,
                   features: features,
-                  maxFontSize: 22.0,
-                  minFontSize: 16.0,
+                  maxFontSize: 18.0,
+                  minFontSize: 14.0,
                 ),
               ],
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMobileCard({
-    required double screenWidth,
-    required Map<String, dynamic> projectData,
-  }) {
-    final icons = (projectData['icons'] as List).cast<String>();
-    final features = (projectData['features'] as List).cast<String>();
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildImageContainer(imagePaths: projectData['image'], isMobile: true),
-        const SizedBox(height: 20),
-
-        Container(
-          padding: const EdgeInsets.all(AppFormat.priamaryPadding),
-          height: 230,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColor.disable),
-            borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Project Name
-              AutoSizeText(
-                '${projectData['name']} ${projectData['date']}',
-                maxFontSize: 20.0,
-                minFontSize: 18.0,
-                style: TextStyle(
-                  fontFamily: 'Racing Sans One',
-                  color: AppColor.white,
-                  fontSize: screenWidth * 0.03,
-                  height: 1.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Tech Stack Icon
-              _buildIconList(icons: icons, radiusSize: 20, iconSize: 24),
-              const SizedBox(height: 20),
-
-              // Project Description
-              ..._buildFeatureList(
-                screenWidth: screenWidth,
-                features: features,
-                maxFontSize: 18.0,
-                minFontSize: 16.0,
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget _buildImageContainer({
+    double cardHeight = 400,
     required List<String> imagePaths,
     bool isMobile = false,
   }) {
@@ -312,7 +343,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
         final imagePath = isMobile ? mobileRatio : desktopRatio;
 
         return Container(
-          height: isMobile ? 400 : 650,
+          height: cardHeight,
           width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
@@ -328,24 +359,14 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
   Widget _buildIconList({
     required List<String> icons,
-    required double radiusSize,
     required double iconSize,
   }) {
     return Row(
       children: [
         ...icons.map(
           (icon) => Padding(
-            padding: const EdgeInsets.only(right: 14.0),
-            child: CircleAvatar(
-              radius: radiusSize,
-              backgroundColor: AppColor.white.withValues(alpha: 0.1),
-              child: Image.asset(
-                icon,
-                height: iconSize,
-                width: iconSize,
-                color: AppColor.white,
-              ),
-            ),
+            padding: const EdgeInsets.only(right: 20.0),
+            child: Image.asset(icon, height: iconSize, width: iconSize),
           ),
         ),
       ],

@@ -1,8 +1,16 @@
 const List<Map<String, dynamic>> mobileMenuList = [
-  {'title': 'Home', 'delay': Duration(milliseconds: 150)},
-  {'title': 'About', 'delay': Duration(milliseconds: 250)},
-  {'title': 'Awards', 'delay': Duration(milliseconds: 350)},
-  {'title': 'Get in touch', 'delay': Duration(milliseconds: 450)},
+  {'title': 'Home', 'route': '/', 'delay': Duration(milliseconds: 150)},
+  {'title': 'Awards', 'route': '/awards', 'delay': Duration(milliseconds: 250)},
+  // {'title': 'About', 'route': '/about', 'delay': Duration(milliseconds: 350)},
+  {
+    'title': 'Get in touch',
+    'route': '/contact',
+    'delay': Duration(milliseconds: 450),
+  },
 ];
 
-const List<String> desktopMenuList = ['Home', 'About', 'Awards'];
+const List<Map<String, dynamic>> desktopMenuList = [
+  {'title': 'Home', 'route': '/'},
+  {'title': 'Awards', 'route': '/awards'},
+  // {'title': 'About', 'route': '/about'},
+];

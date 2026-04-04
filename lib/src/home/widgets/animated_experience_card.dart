@@ -60,7 +60,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
     return VisibilityDetector(
       key: Key('exp-${widget.index}'),
       onVisibilityChanged: (expCard) {
-        if (expCard.visibleFraction > 0.3) {
+        if (expCard.visibleFraction > 0.03) {
           if (_controller.status == AnimationStatus.dismissed ||
               _controller.status == AnimationStatus.reverse) {
             _controller.forward();
@@ -73,22 +73,22 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
         }
       },
 
-      child: FadeTransition(
-        opacity: _fadeInAnimation,
-        child: SlideTransition(
-          position: _slideUpAnimation,
-          child: isDesktop
-              ? _buildDesktopCard(
+      child: isDesktop
+          ? FadeTransition(
+              opacity: _fadeInAnimation,
+              child: SlideTransition(
+                position: _slideUpAnimation,
+                child: _buildDesktopCard(
                   screenSize: screenSize.width,
                   isHeadlineleft: widget.index % 2 == 0,
                   expData: widget.expData,
-                )
-              : _buildMobileCard(
-                  screenWidth: screenSize.width,
-                  expData: widget.expData,
                 ),
-        ),
-      ),
+              ),
+            )
+          : _buildMobileCard(
+              screenWidth: screenSize.width,
+              expData: widget.expData,
+            ),
     );
   }
 

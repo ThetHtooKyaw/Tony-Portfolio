@@ -1,5 +1,6 @@
 const List<Map<String, dynamic>> projectInfos = [
   {
+    'url': 'https://ruyi-restaurant.xyz/',
     'name': 'RUYI Booking Website',
     'image': [
       'assets/images/ruyi_mobile.png',
@@ -7,9 +8,9 @@ const List<Map<String, dynamic>> projectInfos = [
     ],
     'date': '( 2024 )',
     'icons': [
-      'assets/icons/flutter.png',
-      'assets/icons/dart.png',
-      'assets/icons/firebase.png',
+      'assets/icons/flutter_color.png',
+      'assets/icons/dart_color.png',
+      'assets/icons/firebase_color.png',
     ],
     'features': [
       'Admin/User Panels',
@@ -17,7 +18,9 @@ const List<Map<String, dynamic>> projectInfos = [
       'Restaurant Booking System',
     ],
   },
+  // TODO: Add Eventee and StudyHub Project Infos here
   {
+    'url': 'https://ruyi-restaurant.xyz/',
     'name': 'RUYI Booking Website',
     'image': [
       'assets/images/ruyi_mobile.png',
@@ -25,9 +28,9 @@ const List<Map<String, dynamic>> projectInfos = [
     ],
     'date': '( 2024)',
     'icons': [
-      'assets/icons/flutter.png',
-      'assets/icons/dart.png',
-      'assets/icons/firebase.png',
+      'assets/icons/flutter_color.png',
+      'assets/icons/dart_color.png',
+      'assets/icons/firebase_color.png',
     ],
     'features': [
       'Admin/User Panels',

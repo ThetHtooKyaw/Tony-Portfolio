@@ -90,7 +90,11 @@ class _HomeExperienceSectionState extends State<HomeExperienceSection> {
                         Map<String, dynamic> expData = entry.value;
 
                         return Padding(
-                          padding: EdgeInsets.only(bottom: isDesktop ? 60 : 30),
+                          padding: EdgeInsets.only(
+                            bottom: isDesktop
+                                ? (screenSize.width * 0.08).clamp(80.0, 120.0)
+                                : 30,
+                          ),
                           child: AnimatedExperienceCard(
                             index: index,
                             expData: expData,

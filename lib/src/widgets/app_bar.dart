@@ -1,15 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tony_portfolio/core/data/menu_list.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_text_menu_btn.dart';
+import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
 import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
 
 PreferredSizeWidget buildAppBar({
   required BuildContext context,
   required Size screenSize,
+  bool isBlackBackground = true,
 }) {
   final isDesktop = ResponsiveWidget.isDesktop(context);
   final isTablet = ResponsiveWidget.isTablet(context);
@@ -22,28 +26,62 @@ PreferredSizeWidget buildAppBar({
     iconTheme: const IconThemeData(color: AppColor.background),
     leadingWidth: 220,
     actionsPadding: const EdgeInsets.only(right: AppFormat.priamaryPadding),
+    // Project Label
     leading: Padding(
-      padding: const EdgeInsets.only(left: AppFormat.priamaryPadding),
+      padding: const EdgeInsets.only(
+        left: AppFormat.priamaryPadding,
+        top: AppFormat.secondaryPadding,
+      ),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: AnimatedHoverMenuBtn(title: 'Tony\'s Portfolio'),
+        child:
+            AnimatedHoverMenuBtn(
+              title: 'Tony\'s Portfolio',
+              fontSize: (screenSize.width * 0.025).clamp(18, 22),
+            ).animate().slide(
+              begin: const Offset(0.0, -1.0),
+              end: Offset.zero,
+              duration: 400.ms,
+              curve: Curves.easeIn,
+            ),
       ),
     ),
     actions: isDesktop || isTablet
         ? [
+            // Desktop Menu
             ...desktopMenuList.map((menu) {
-              return Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedHoverMenuBtn(title: menu, onPressed: () {}),
-                  SizedBox(width: (screenSize.width * 0.04).clamp(16, 50)),
-                ],
+              return Padding(
+                padding: const EdgeInsets.only(top: AppFormat.secondaryPadding),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedHoverMenuBtn(
+                      title: menu['title'],
+                      fontSize: (screenSize.width * 0.025).clamp(18, 22),
+                      onPressed: () {
+                        if (menu['route'] == '/awards') {
+                          context.go('/awards');
+                        } else if (menu['route'] == '/about') {
+                          context.go('/about');
+                        } else {
+                          context.go('/');
+                        }
+                      },
+                    ),
+                    SizedBox(width: (screenSize.width * 0.04).clamp(16, 50)),
+                  ],
+                ),
               );
             }),
 
+            // TODO: Change Button UI
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
+                backgroundColor: isBlackBackground
+                    ? AppColor.white
+                    : AppColor.background,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
                     AppFormat.circleBorderRadius,
@@ -60,40 +98,71 @@ PreferredSizeWidget buildAppBar({
                 children: [
                   AutoSizeText(
                     'Get in touch',
-                    maxFontSize: 18,
+                    maxFontSize: 22,
                     minFontSize: 16,
                     style: TextStyle(
                       fontFamily: 'Oswald',
-                      color: AppColor.white,
+                      color: isBlackBackground
+                          ? AppColor.background
+                          : AppColor.white,
                       fontSize: screenSize.width * 0.025,
                     ),
                   ),
                   const SizedBox(width: 10),
+
                   CircleAvatar(
-                    radius: 14,
-                    backgroundColor: AppColor.white,
-                    child: Icon(Icons.arrow_forward, size: 20),
+                    radius: 18,
+                    backgroundColor: isBlackBackground
+                        ? AppColor.background
+                        : AppColor.white,
+                    foregroundColor: isBlackBackground
+                        ? AppColor.white
+                        : AppColor.background,
+                    child: Icon(
+                      Icons.arrow_forward,
+                      // color: isBlackBackground
+                      //     ? AppColor.white
+                      //     : AppColor.background,
+                      size: 20,
+                    ),
                   ),
                 ],
               ),
             ),
-          ]
+          ].animate().slide(
+            begin: const Offset(0.0, -1.0),
+            end: Offset.zero,
+            duration: 400.ms,
+            curve: Curves.easeIn,
+          )
         : [
-            Builder(
-              builder: (context) => IconButton(
-                onPressed: () => _showMainMenu(context: context),
-                style: const ButtonStyle(
-                  padding: MaterialStatePropertyAll(EdgeInsets.zero),
-                  overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                ),
-                icon: Image.asset(
-                  'assets/icons/main_menu.png',
-                  height: 40,
-                  width: 40,
+            // Mobile Menu Button
+            RepaintBoundary(
+              child: BlendMask(
+                blendMode: BlendMode.difference,
+                child: Builder(
+                  builder: (context) => IconButton(
+                    onPressed: () => _showMainMenu(context: context),
+                    style: const ButtonStyle(
+                      padding: WidgetStatePropertyAll(EdgeInsets.zero),
+                      overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                    ),
+                    icon: Image.asset(
+                      'assets/icons/main_menu.png',
+                      color: AppColor.white,
+                      height: 40,
+                      width: 40,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ],
+          ].animate().slide(
+            begin: const Offset(0.0, -1.4),
+            end: Offset.zero,
+            duration: 500.ms,
+            curve: Curves.easeIn,
+          ),
   );
 }
 
@@ -158,7 +227,17 @@ void _showMainMenu({required BuildContext context}) {
                       AnimatedTextMenuBtn(
                         title: menu['title'],
                         delay: menu['delay'],
-                        onPressed: () {},
+                        onPressed: () {
+                          if (menu['route'] == '/awards') {
+                            context.go('/awards');
+                          } else if (menu['route'] == '/about') {
+                            context.go('/about');
+                          } else if (menu['route'] == '/contact') {
+                            context.go('/contact');
+                          } else {
+                            context.go('/');
+                          }
+                        },
                       ),
                       const SizedBox(height: 16),
                     ],

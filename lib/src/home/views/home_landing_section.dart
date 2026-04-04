@@ -2,11 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:marquee/marquee.dart';
-import 'package:tony_portfolio/core/data/contact_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeLandingSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -21,7 +18,7 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
 
-    final double titleSize = (screenSize.width * 0.18).clamp(100, 280);
+    final double titleSize = (screenSize.width * 0.18).clamp(100.0, 280.0);
 
     return Container(
       height: screenSize.height,
@@ -39,7 +36,7 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
                   scrollOffset = widget.scrollController.offset;
                 }
 
-                final double parallaxOffset = (scrollOffset * 0.5).clamp(
+                final parallaxOffset = (scrollOffset * 0.5).clamp(
                   0.0,
                   screenSize.height,
                 );
@@ -113,27 +110,37 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
           Positioned(
             bottom: 40,
             left: (screenSize.width * 0.025).clamp(
-              10,
+              10.0,
               AppFormat.priamaryPadding,
             ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSubTitleText(text: "//", screenWidth: screenSize.width),
-                const SizedBox(width: 10),
-                Column(
+            child:
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: ["Mobile Developer", "Web Developer"]
-                      .map(
-                        (role) => _buildSubTitleText(
-                          text: role,
-                          screenWidth: screenSize.width,
-                        ),
-                      )
-                      .toList(),
+                  children: [
+                    _buildSubTitleText(
+                      text: "//",
+                      screenWidth: screenSize.width,
+                    ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: ["Mobile Developer", "Web Developer"]
+                          .map(
+                            (role) => _buildSubTitleText(
+                              text: role,
+                              screenWidth: screenSize.width,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
+                ).animate().slide(
+                  begin: const Offset(0.0, 1.4),
+                  end: Offset.zero,
+                  duration: 600.ms,
+                  delay: 1600.ms,
+                  curve: Curves.easeIn,
                 ),
-              ],
-            ).animate().fadeIn(duration: 2.seconds, delay: 1800.ms),
           ),
 
           // Black Screen Fade Out
@@ -167,46 +174,4 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
       ),
     );
   }
-}
-
-Widget buildFloatingBtn({required Size screenSize}) {
-  final double iconSize = (screenSize.width * 0.05).clamp(20, 30);
-  final double padding = (screenSize.width * 0.01).clamp(0, 10);
-
-  return RepaintBoundary(
-    child: BlendMask(
-      blendMode: BlendMode.difference,
-      child: Container(
-        padding: EdgeInsets.all(padding),
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: AppColor.white),
-          borderRadius: BorderRadius.circular(AppFormat.circleBorderRadius),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: contactInfos.map((social) {
-            return IconButton(
-              onPressed: () async {
-                final Uri url = Uri.parse(social['url']!);
-
-                if (!await launchUrl(
-                  url,
-                  mode: LaunchMode.externalApplication,
-                )) {
-                  debugPrint('Could not launch ${social['url']}');
-                }
-              },
-              icon: Image.asset(
-                social['icon']!,
-                width: iconSize,
-                height: iconSize,
-                color: AppColor.white,
-              ),
-              tooltip: social['tooltip']!,
-            );
-          }).toList(),
-        ),
-      ),
-    ),
-  ).animate().fadeIn(duration: 2.seconds, delay: 1900.ms);
 }

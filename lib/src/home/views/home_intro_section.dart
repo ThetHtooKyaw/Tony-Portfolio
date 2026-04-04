@@ -155,124 +155,120 @@ class _HomeIntroSectionState extends State<HomeIntroSection>
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final isDesktop = ResponsiveWidget.isDesktop(context);
+    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
 
-    return ResponsiveWidget(
-      smallMobile: _buildIntroContainer(
-        screenSize: screenSize,
-        smallScreen: true,
-      ),
-      mobile: _buildIntroContainer(screenSize: screenSize),
-      tablet: _buildIntroContainer(screenSize: screenSize),
-      desktop: _buildDesktopIntro(screenSize),
+    return Container(
+      height: isSmallMobile ? screenSize.height + 20 : screenSize.height,
+      width: double.infinity,
+      color: AppColor.background,
+      child: isDesktop
+          ? _buildDesktopIntro(screenSize)
+          : _buildMobileIntro(
+              screenSize: screenSize,
+              isSmallMobile: isSmallMobile,
+            ),
     );
   }
 
   Widget _buildDesktopIntro(Size screenSize) {
-    return Container(
-      height: screenSize.height,
-      width: double.infinity,
-      color: AppColor.background,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Headline
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: (screenSize.width * 0.03).clamp(30.0, 50.0),
-              horizontal: (screenSize.width * 0.03).clamp(20.0, 120.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Headline
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: (screenSize.width * 0.03).clamp(30.0, 50.0),
+            horizontal: (screenSize.width * 0.03).clamp(
+              AppFormat.priamaryPadding,
+              120.0,
             ),
-            child: _buildHeadline(screenSize),
           ),
+          child: _buildHeadline(screenSize),
+        ),
 
-          // Divider
-          Container(height: 2, width: 100, color: AppColor.accent),
-          const SizedBox(height: 40),
+        // Divider
+        Container(height: 2, width: 100, color: AppColor.accent),
+        const SizedBox(height: 40),
 
-          FadeTransition(
-            opacity: _secondFadeInAnimation,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 950),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: SlideTransition(
-                          position: _slideFromLeftAnimation,
-                          child: Column(
-                            children: [
-                              // My Toolkit Title
-                              Text(
-                                'My Toolkit',
-                                style: TextStyle(
-                                  fontFamily: 'Racing Sans One',
-                                  color: AppColor.white,
-                                  fontSize: (screenSize.width * 0.04).clamp(
-                                    40.0,
-                                    60.0,
-                                  ),
-                                  fontWeight: FontWeight.bold,
+        FadeTransition(
+          opacity: _secondFadeInAnimation,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 950),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: SlideTransition(
+                        position: _slideFromLeftAnimation,
+                        child: Column(
+                          children: [
+                            // My Toolkit Title
+                            Text(
+                              'My Toolkit',
+                              style: TextStyle(
+                                fontFamily: 'Racing Sans One',
+                                color: AppColor.white,
+                                fontSize: (screenSize.width * 0.04).clamp(
+                                  40.0,
+                                  60.0,
                                 ),
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(height: 20),
+                            ),
+                            const SizedBox(height: 20),
 
-                              // Skills List
-                              _buildSkillsList(),
-                            ],
-                          ),
+                            // Skills List
+                            _buildSkillsList(),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        width: (screenSize.width * 0.04).clamp(40.0, 60.0),
-                      ),
+                    ),
+                    SizedBox(
+                      width: (screenSize.width * 0.04).clamp(40.0, 60.0),
+                    ),
 
-                      // TODO: Change Hover Animation
-                      // Highlights
-                      Expanded(
-                        flex: 1,
-                        child: SlideTransition(
-                          position: _slideFromRightAnimation,
-                          child: Column(
-                            children: [
-                              _buildExperienceCard(),
-                              const SizedBox(height: 20),
+                    // TODO: Change Hover Animation
+                    // Highlights
+                    Expanded(
+                      flex: 1,
+                      child: SlideTransition(
+                        position: _slideFromRightAnimation,
+                        child: Column(
+                          children: [
+                            _buildExperienceCard(),
+                            const SizedBox(height: 20),
 
-                              _buildProjectCard(),
-                            ],
-                          ),
+                            _buildProjectCard(),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  Widget _buildIntroContainer({
+  Widget _buildMobileIntro({
     required Size screenSize,
-    bool smallScreen = false,
+    required bool isSmallMobile,
   }) {
-    final containerHeight = smallScreen
-        ? screenSize.height + 20
-        : screenSize.height;
-    final titleFontSize = smallScreen
+    final titleFontSize = isSmallMobile
         ? 30.0
         : (screenSize.width * 0.04).clamp(40.0, 60.0);
-    final spacing = smallScreen ? 20.0 : 30.0;
+    final spacing = isSmallMobile ? 20.0 : 30.0;
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppFormat.priamaryPadding),
-      height: containerHeight,
-      width: double.infinity,
-      color: AppColor.background,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
