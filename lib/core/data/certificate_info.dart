@@ -7,27 +7,93 @@ const List<String> majorCertificateInfos = [
   'assets/images/webinar_2.jpg',
 ];
 
-const List<String> dartCertificates = [
-  'assets/images/dart_1.png',
-  'assets/images/dart_2.png',
-  'assets/images/dart_3.png',
-  'assets/images/dart_4.png',
-  'assets/images/dart_5.png',
-  'assets/images/dart_6.png',
+const List<Map<String, dynamic>> dartCertificates = [
+  {
+    'image': 'assets/images/dart_1.png',
+    'title': 'Dart Programming for Beginners Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/dart_2.png',
+    'title': 'Dart Foundations Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/dart_3.png',
+    'title': 'Data Structures in Dart Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/dart_4.png',
+    'title': 'Iterations & Loops in Dart Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/dart_5.png',
+    'title': 'Functions in Dart Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/dart_6.png',
+    'title': 'Object-Oriented Programming in Dart Certificate',
+    'detail': false,
+  },
 ];
 
-const List<String> kotlinCertificates = [
-  'assets/images/kotlin_1.png',
-  'assets/images/kotlin_2.png',
-  'assets/images/kotlin_3.png',
-  'assets/images/kotlin_4.png',
-  'assets/images/kotlin_5.png',
-  'assets/images/kotlin_6.png',
+const List<Map<String, dynamic>> kotlinCertificates = [
+  {
+    'image': 'assets/images/kotlin_1.png',
+    'title': 'Kotlin Programming for Beginners Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/kotlin_2.png',
+    'title': 'Kotlin Foundations Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/kotlin_3.png',
+    'title': 'Data Structures in Kotlin Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/kotlin_4.png',
+    'title': 'Iterations & Loops in Kotlin Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/kotlin_5.png',
+    'title': 'Functions in Kotlin Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/kotlin_6.png',
+    'title': 'Object-Oriented Programming in Kotlin Certificate',
+    'detail': false,
+  },
 ];
 
-List<Map<String, String>> minorCertificateInfos = [
-  {'image': dartCertificates[0], 'title': 'Dart Programming Language Certificate'},
-  {'image': kotlinCertificates[0], 'title': 'Kotlin Programming Language Certificate'},
-  {'image': 'assets/images/flutter_1.jpg', 'title': 'Flutter Development Certificate'},
-  {'image': 'assets/images/java_1.jpg', 'title': 'Java Programming Language Certificate'},
+const List<Map<String, dynamic>> minorCertificateInfos = [
+  {
+    'image': 'assets/images/dart_1.png',
+    'title': 'Dart Programming Language Certificates',
+    'detail': true,
+    'certificates': dartCertificates,
+  },
+  {
+    'image': 'assets/images/kotlin_1.png',
+    'title': 'Kotlin Programming Language Certificates',
+    'detail': true,
+    'certificates': kotlinCertificates,
+  },
+  {
+    'image': 'assets/images/flutter_1.jpg',
+    'title': 'Flutter Development Certificate',
+    'detail': false,
+  },
+  {
+    'image': 'assets/images/java_1.jpg',
+    'title': 'Java Programming Language Certificate',
+    'detail': false,
+  },
 ];

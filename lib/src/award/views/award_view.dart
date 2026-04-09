@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tony_portfolio/core/data/certificate_info.dart';
 import 'package:tony_portfolio/src/award/views/award_major_certificate_section.dart';
 import 'package:tony_portfolio/src/award/views/award_landing_section.dart';
 import 'package:tony_portfolio/src/award/views/award_minor_certificate_section.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
 import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
 import 'package:tony_portfolio/src/widgets/floating_btn.dart';

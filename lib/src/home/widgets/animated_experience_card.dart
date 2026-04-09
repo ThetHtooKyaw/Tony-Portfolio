@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class AnimatedExperienceCard extends StatefulWidget {
@@ -69,7 +69,6 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
           if (isDesktop) {
             _controller.reset();
           }
-          isTextExpanded = false;
         }
       },
 
@@ -203,8 +202,6 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
     required double screenWidth,
     required Map<String, dynamic> expData,
   }) {
-    final isTablet = ResponsiveWidget.isTablet(context);
-
     return GestureDetector(
       onTap: () => setState(() => isTextExpanded = !isTextExpanded),
       child: ClipRRect(
@@ -296,13 +293,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
                   expData['desc'],
                   maxFontSize: 18.0,
                   minFontSize: 14.0,
-                  maxLines: isTablet
-                      ? isTextExpanded
-                            ? 10
-                            : 6
-                      : isTextExpanded
-                      ? 10
-                      : 5,
+                  maxLines: isTextExpanded ? 20 : 5,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontFamily: 'Open Sans',

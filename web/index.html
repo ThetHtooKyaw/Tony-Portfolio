@@ -14,8 +14,91 @@
 
   <title>tony_portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Preload Assets for instant loading -->
+  <link rel="preload" href="assets/animations/loader.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="assets/fonts/RacingSansOne-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <!-- Lottie Player Script (deferred so it doesn't block rendering) -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+
+  <style>
+    @font-face {
+      font-family: 'Racing Sans One';
+      src: url('assets/fonts/RacingSansOne-Regular.ttf') format('truetype');
+    }
+
+    body {
+      background-color: #0F0F0F;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    #loading-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.4s ease-out;
+    }
+
+    .loading-text {
+      color: #6D110D;
+      font-family: 'Racing Sans One', sans-serif;
+      font-size: clamp(34px, 6vw, 60px);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 0 20px;
+    }
+  </style>
 </head>
 <body>
+  <!-- Custom Lottie Loader -->
+  <div id="loading-indicator">
+    <div class="loading-text">Tony's Portfolio</div>
+    <lottie-player 
+      src="assets/animations/loader.json" 
+      background="transparent" 
+      speed="1" 
+      style="width: 250px; height: 250px; margin-top: -50px;" 
+      loop 
+      autoplay>
+    </lottie-player>
+  </div>
+
+  <script>
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node.tagName === 'FLUTTER-VIEW') {
+            setTimeout(() => {
+              const loader = document.getElementById('loading-indicator');
+              if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.remove(), 400);
+              }
+            }, 800);
+            observer.disconnect();
+            return;
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -8,7 +8,7 @@ import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_text_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 PreferredSizeWidget buildAppBar({
   required BuildContext context,
@@ -36,8 +36,9 @@ PreferredSizeWidget buildAppBar({
         alignment: Alignment.centerLeft,
         child:
             AnimatedHoverMenuBtn(
-              title: 'Tony\'s Portfolio',
+              title: '© Tony\'s Portfolio',
               fontSize: (screenSize.width * 0.025).clamp(18, 22),
+              onPressed: () => context.go('/'),
             ).animate().slide(
               begin: const Offset(0.0, -1.0),
               end: Offset.zero,
@@ -75,9 +76,9 @@ PreferredSizeWidget buildAppBar({
               );
             }),
 
-            // TODO: Change Button UI
+            // Contact Button
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () => context.go('/contact'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: isBlackBackground
                     ? AppColor.white
@@ -111,7 +112,7 @@ PreferredSizeWidget buildAppBar({
                   const SizedBox(width: 10),
 
                   CircleAvatar(
-                    radius: 18,
+                    radius: 16,
                     backgroundColor: isBlackBackground
                         ? AppColor.background
                         : AppColor.white,
@@ -202,7 +203,7 @@ void _showMainMenu({required BuildContext context}) {
                   children: [
                     Expanded(
                       child: Text(
-                        'Tony\'s Portfolio',
+                        '© Tony\'s Portfolio',
                         style: TextStyle(
                           fontFamily: 'Oswald',
                           color: AppColor.white,

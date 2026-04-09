@@ -23,8 +23,6 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.sizeOf(context);
-
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovering = true),
       onExit: (_) => setState(() => _isHovering = false),

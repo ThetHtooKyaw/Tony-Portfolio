@@ -11,16 +11,6 @@ class AppTheme {
       useMaterial3: true,
       scaffoldBackgroundColor: AppColor.background,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      // colorScheme:
-      //     ColorScheme.fromSeed(
-      //       seedColor: AppColor.primary,
-      //       brightness: Brightness.light,
-      //     ).copyWith(
-      //       primary: AppColor.primary,
-      //       secondary: AppColor.secondary,
-      //       surface: AppColor.white,
-      //       onPrimary: AppColor.white,
-      //     ),
     );
 
     return base.copyWith(

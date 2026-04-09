@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class BottomBar extends StatefulWidget {
   final ScrollController scrollController;
@@ -16,8 +16,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final isDesktop = ResponsiveWidget.isDesktop(context);
-    final isTablet = ResponsiveWidget.isTablet(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -26,7 +25,7 @@ class _BottomBarState extends State<BottomBar> {
           40.0,
         ),
       ),
-      height: 100,
+      height: isLargeScreen ? 100 : 80,
       width: screenSize.width,
       color: AppColor.background,
       child: Row(
@@ -39,13 +38,12 @@ class _BottomBarState extends State<BottomBar> {
           ),
 
           // Project Label
-          if (isDesktop || isTablet)
+          if (isLargeScreen)
             AnimatedHoverMenuBtn(
               title: 'Tony\'s Portfolio',
               fontSize: (screenSize.width * 0.025).clamp(22, 34),
             ),
 
-          // TODO: blocked with social icons
           // Back to Top Button
           GestureDetector(
             onTap: () {

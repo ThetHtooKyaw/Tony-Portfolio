@@ -3,7 +3,7 @@ import 'package:tony_portfolio/core/data/experience_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_experience_card.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class HomeExperienceSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -18,9 +18,13 @@ class _HomeExperienceSectionState extends State<HomeExperienceSection> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
-      height: isDesktop ? screenSize.height * 1.9 : screenSize.height * 2.0,
+      padding: EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: isLargeScreen ? 40 : AppFormat.priamaryPadding,
+      ),
       width: double.infinity,
       color: AppColor.background,
       child: AnimatedBuilder(
@@ -37,75 +41,70 @@ class _HomeExperienceSectionState extends State<HomeExperienceSection> {
           final double lineProgressSpeed = 0.7;
           final double expLine = (scrollDistance * lineProgressSpeed).clamp(
             0.0,
-            screenSize.height * 2,
+            double.infinity,
           );
 
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isDesktop ? 40 : AppFormat.priamaryPadding,
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Experience Line
-                Positioned(
-                  top: 0,
-                  child: Container(
-                    height: expLine,
-                    width: 4,
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              // Experience Line
+              Positioned(
+                top: 0,
+                child: Container(
+                  height: expLine,
+                  width: 4,
+                  color: AppColor.accent,
+                ),
+              ),
+
+              // Experience Dots
+              Positioned(
+                top: expLine,
+                child: Container(
+                  height: 14,
+                  width: 14,
+                  decoration: BoxDecoration(
                     color: AppColor.accent,
-                  ),
-                ),
-
-                // Experience Dots
-                Positioned(
-                  top: expLine,
-                  child: Container(
-                    height: 14,
-                    width: 14,
-                    decoration: BoxDecoration(
-                      color: AppColor.accent,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColor.accent,
-                          blurRadius: 20,
-                          spreadRadius: 4,
-                          offset: Offset.zero,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Experience List
-                Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: isDesktop ? 60 : 30),
-
-                      ...expInfos.asMap().entries.map((entry) {
-                        int index = entry.key;
-                        Map<String, dynamic> expData = entry.value;
-
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            bottom: isDesktop
-                                ? (screenSize.width * 0.08).clamp(80.0, 120.0)
-                                : 30,
-                          ),
-                          child: AnimatedExperienceCard(
-                            index: index,
-                            expData: expData,
-                          ),
-                        );
-                      }),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColor.accent,
+                        blurRadius: 20,
+                        spreadRadius: 4,
+                        offset: Offset.zero,
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+
+              // Experience List
+              Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 60),
+
+                    ...expInfos.asMap().entries.map((entry) {
+                      int index = entry.key;
+                      Map<String, dynamic> expData = entry.value;
+
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: isDesktop
+                              ? (screenSize.width * 0.08).clamp(80.0, 120.0)
+                              : 60.0,
+                        ),
+                        child: AnimatedExperienceCard(
+                          index: index,
+                          expData: expData,
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ],
           );
         },
       ),

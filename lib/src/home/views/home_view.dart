@@ -6,7 +6,7 @@ import 'package:tony_portfolio/src/home/views/home_experience_section.dart';
 import 'package:tony_portfolio/src/home/views/home_intro_section.dart';
 import 'package:tony_portfolio/src/home/views/home_landing_section.dart';
 import 'package:tony_portfolio/src/home/views/home_project_section.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:tony_portfolio/src/home/widgets/sticky_section_header.dart';
 import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
 import 'package:tony_portfolio/src/widgets/floating_btn.dart';

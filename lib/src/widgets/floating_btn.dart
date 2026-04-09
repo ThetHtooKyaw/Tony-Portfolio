@@ -4,6 +4,7 @@ import 'package:tony_portfolio/core/data/contact_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FloatingBtn extends StatefulWidget {
@@ -55,12 +56,19 @@ class _FloatingBtnState extends State<FloatingBtn> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
     final double iconSize = (screenSize.width * 0.05).clamp(20, 30);
 
     return AnimatedPadding(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
-      padding: EdgeInsets.only(bottom: isNearBottom ? 100.0 : 0),
+      padding: EdgeInsets.only(
+        bottom: isNearBottom
+            ? isLargeScreen
+                  ? 100.0
+                  : 80.0
+            : 0,
+      ),
       child:
           RepaintBoundary(
             child: BlendMask(

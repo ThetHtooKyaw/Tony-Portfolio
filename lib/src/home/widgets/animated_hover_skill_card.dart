@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class AnimatedHoverSkillCard extends StatefulWidget {
   final Map<String, String> skill;
@@ -23,6 +23,7 @@ class _AnimatedHoverSkillCardState extends State<AnimatedHoverSkillCard> {
     final textSize = isDesktop || isTablet
         ? (screenSize.width * 0.04).clamp(10.0, 18.0)
         : (screenSize.width * 0.03).clamp(10.0, 14.0);
+
     final iconSize = isDesktop || isTablet
         ? (screenSize.width * 0.04).clamp(14.0, 22.0)
         : (screenSize.width * 0.03).clamp(14.0, 18.0);

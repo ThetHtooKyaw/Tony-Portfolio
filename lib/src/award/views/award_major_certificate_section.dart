@@ -4,7 +4,7 @@ import 'package:flutter_3d_carousel/flutter_3d_carousel.dart';
 import 'package:tony_portfolio/core/data/certificate_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class AwardMajorCertificateSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -23,13 +23,11 @@ class _AwardMajorCertificateSectionState
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final isDesktop = ResponsiveWidget.isDesktop(context);
-    final isTablet = ResponsiveWidget.isTablet(context);
-    final largeScreen = isDesktop || isTablet;
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
       height: screenSize.height,
-      width: screenSize.width,
+      width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -81,7 +79,7 @@ class _AwardMajorCertificateSectionState
           // Title
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: largeScreen
+              horizontal: isLargeScreen
                   ? (screenSize.width * 0.03).clamp(40.0, 80.0)
                   : AppFormat.priamaryPadding,
             ),
@@ -104,7 +102,7 @@ class _AwardMajorCertificateSectionState
           // Subtitle
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: largeScreen
+              horizontal: isLargeScreen
                   ? (screenSize.width * 0.03).clamp(40.0, 80.0)
                   : AppFormat.priamaryPadding,
             ),
@@ -121,13 +119,13 @@ class _AwardMajorCertificateSectionState
               ),
             ),
           ),
-          SizedBox(height: largeScreen ? 0 : 40),
+          SizedBox(height: isLargeScreen ? 0 : 40),
 
           // Major Certificates
           ClipRect(
             child: CarouselWidget3D(
-              childScale: largeScreen ? 0.7 : 0.9,
-              radius: largeScreen
+              childScale: isLargeScreen ? 0.7 : 0.9,
+              radius: isLargeScreen
                   ? screenSize.width * 0.7
                   : screenSize.width * 0.7,
               snapTimeInMillis: 200,

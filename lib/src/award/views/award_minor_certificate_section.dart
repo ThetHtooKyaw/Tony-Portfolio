@@ -4,7 +4,7 @@ import 'package:tony_portfolio/core/data/certificate_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/award/widgets/animated_certificate_card.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class AwardMinorCertificateSection extends StatefulWidget {
   const AwardMinorCertificateSection({super.key});
@@ -16,17 +16,16 @@ class AwardMinorCertificateSection extends StatefulWidget {
 
 class _AwardMinorCertificateSectionState
     extends State<AwardMinorCertificateSection> {
+  int? _expandedIndex;
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
-    final isTablet = ResponsiveWidget.isTablet(context);
-    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
-    final largeScreen = isDesktop || isTablet;
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
-      padding: const EdgeInsets.only(bottom: 40),
-      width: screenSize.width,
+      width: double.infinity,
       color: AppColor.background,
       child: Column(
         children: [
@@ -35,7 +34,7 @@ class _AwardMinorCertificateSectionState
           // Title
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: largeScreen
+              horizontal: isLargeScreen
                   ? (screenSize.width * 0.03).clamp(40.0, 80.0)
                   : AppFormat.priamaryPadding,
             ),
@@ -58,7 +57,7 @@ class _AwardMinorCertificateSectionState
           // Subtitle
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: largeScreen
+              horizontal: isLargeScreen
                   ? (screenSize.width * 0.03).clamp(40.0, 80.0)
                   : AppFormat.priamaryPadding,
             ),
@@ -77,46 +76,48 @@ class _AwardMinorCertificateSectionState
           ),
           SizedBox(height: isDesktop ? 100 : 60),
 
-          // Minor Certificates Grid
-          SizedBox(
-            height: isDesktop
-                ? screenSize.height * 1.4
-                : isSmallMobile
-                ? screenSize.height * 2.6
-                : screenSize.height * 2.0,
-            child: GridView.builder(
-              padding: EdgeInsets.symmetric(
-                horizontal: largeScreen
-                    ? (screenSize.width * 0.1).clamp(80.0, 120.0)
-                    : AppFormat.priamaryPadding,
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isDesktop ? 2 : 1,
-                mainAxisSpacing: isDesktop
-                    ? (screenSize.width * 0.06).clamp(100.0, 150.0)
-                    : 40,
-                crossAxisSpacing: isDesktop
-                    ? (screenSize.width * 0.04).clamp(20.0, 120.0)
-                    : 0.0,
-                mainAxisExtent: isDesktop
-                    ? (screenSize.width * 0.28).clamp(400, 550)
-                    : (screenSize.width * 0.28).clamp(380, 480),
-              ),
-              physics: const NeverScrollableScrollPhysics(),
+          // Minor Certificates List
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: isDesktop
+                  ? AppFormat.priamaryPadding
+                  : (screenSize.width * 0.1).clamp(
+                      AppFormat.priamaryPadding,
+                      100.0,
+                    ),
+            ),
+            height: isDesktop ? 500 : null,
+            alignment: Alignment.center,
+            child: ListView.separated(
               shrinkWrap: true,
+              separatorBuilder: (context, index) =>
+                  const SizedBox(width: 20, height: 20),
+              scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
+
               itemCount: minorCertificateInfos.length,
               itemBuilder: (context, index) {
                 final certificate = minorCertificateInfos[index];
-                final bool isRightColumn = isDesktop && index % 2 != 0;
 
                 return AnimatedCertificateCard(
                   index: index,
                   certificate: certificate,
-                  isRightColumn: isRightColumn,
+                  isExpandedMobile: _expandedIndex == index,
+                  onTapMobile: () {
+                    setState(() {
+                      if (_expandedIndex == index) {
+                        _expandedIndex = null;
+                      } else {
+                        _expandedIndex = index;
+                      }
+                    });
+                  },
                 );
               },
             ),
           ),
+
+          SizedBox(height: isLargeScreen ? 100 : 20),
         ],
       ),
     );

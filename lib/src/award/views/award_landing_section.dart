@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/award/widgets/animated_award_card.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class AwardLandingSection extends StatefulWidget {
   final ScrollController scrollController;
@@ -41,12 +41,11 @@ class _AwardLandingSectionState extends State<AwardLandingSection>
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
-    final isTablet = ResponsiveWidget.isTablet(context);
-    final largeScreen = isDesktop || isTablet;
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
       height: isDesktop ? screenSize.height * 2.0 : screenSize.height * 2.4,
-      width: screenSize.width,
+      width: double.infinity,
       color: AppColor.background,
       child: AnimatedBuilder(
         animation: widget.scrollController,
@@ -166,8 +165,8 @@ class _AwardLandingSectionState extends State<AwardLandingSection>
                 // Hackathon Content
                 Positioned(
                   top: screenSize.height * 1.4,
-                  left: largeScreen ? null : AppFormat.priamaryPadding,
-                  right: largeScreen ? null : AppFormat.priamaryPadding,
+                  left: isLargeScreen ? null : AppFormat.priamaryPadding,
+                  right: isLargeScreen ? null : AppFormat.priamaryPadding,
                   child: AnimatedAwardCard(),
                 ),
               ],

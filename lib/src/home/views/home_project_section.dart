@@ -6,7 +6,7 @@ import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 import 'package:tony_portfolio/core/data/project_info.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeProjectSection extends StatefulWidget {
@@ -69,10 +69,9 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
             return Container(
               key: _sectionKey,
               padding: EdgeInsets.symmetric(
-                vertical: AppFormat.priamaryPadding,
+                vertical: isDesktop ? 40 : AppFormat.priamaryPadding,
                 horizontal: isDesktop ? 40 : AppFormat.priamaryPadding,
               ),
-              height: screenSize.height,
               width: double.infinity,
               color: AppColor.background,
               alignment: Alignment.bottomCenter,
@@ -268,60 +267,68 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
 
     return GestureDetector(
       onTap: () => _handleUrlLaunch(projectData['url']),
-      child: Column(
-        children: [
-          // Project Image
-          _buildImageContainer(
-            cardHeight: screenSize.height * 0.53,
-            imagePaths: projectData['image'],
-            isMobile: true,
-          ),
-          const SizedBox(height: 12),
-
-          Container(
-            padding: const EdgeInsets.all(AppFormat.priamaryPadding),
-            height: screenSize.height * 0.3,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColor.disable),
-              borderRadius: BorderRadius.circular(
-                AppFormat.primaryBorderRadius,
+      child: SizedBox(
+        height: screenSize.height * 0.85,
+        child: Column(
+          children: [
+            // Project Image
+            Expanded(
+              flex: 5,
+              child: _buildImageContainer(
+                cardHeight: double.infinity,
+                imagePaths: projectData['image'],
+                isMobile: true,
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Project Name
-                AutoSizeText(
-                  '${projectData['name']} ${projectData['date']}',
-                  maxFontSize: 20.0,
-                  minFontSize: 18.0,
-                  style: TextStyle(
-                    fontFamily: 'Racing Sans One',
-                    color: AppColor.white,
-                    fontSize: screenSize.width * 0.03,
-                    height: 1.0,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(height: 12),
+
+            Expanded(
+              flex: 3,
+              child: Container(
+                padding: const EdgeInsets.all(AppFormat.priamaryPadding),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColor.disable),
+                  borderRadius: BorderRadius.circular(
+                    AppFormat.primaryBorderRadius,
                   ),
                 ),
-                const SizedBox(height: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Project Name
+                    AutoSizeText(
+                      '${projectData['name']} ${projectData['date']}',
+                      maxFontSize: 20.0,
+                      minFontSize: 18.0,
+                      style: TextStyle(
+                        fontFamily: 'Racing Sans One',
+                        color: AppColor.white,
+                        fontSize: screenSize.width * 0.03,
+                        height: 1.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
 
-                // Tech Stack Icon
-                _buildIconList(icons: icons, iconSize: 24),
-                const Spacer(),
+                    // Tech Stack Icon
+                    _buildIconList(icons: icons, iconSize: 24),
+                    const Spacer(),
 
-                // Project Description
-                ..._buildFeatureList(
-                  screenWidth: screenSize.width,
-                  features: features,
-                  maxFontSize: 18.0,
-                  minFontSize: 14.0,
+                    // Project Description
+                    ..._buildFeatureList(
+                      screenWidth: screenSize.width,
+                      features: features,
+                      maxFontSize: 18.0,
+                      minFontSize: 14.0,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

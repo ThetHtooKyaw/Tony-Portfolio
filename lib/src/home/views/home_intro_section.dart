@@ -4,7 +4,7 @@ import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_hightlight_card.dart';
 import 'package:tony_portfolio/src/home/widgets/animated_hover_skill_card.dart';
-import 'package:tony_portfolio/src/home/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class HomeIntroSection extends StatefulWidget {
@@ -156,18 +156,18 @@ class _HomeIntroSectionState extends State<HomeIntroSection>
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
-    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
-      height: isSmallMobile ? screenSize.height + 20 : screenSize.height,
+      padding: EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: isLargeScreen ? 40 : AppFormat.priamaryPadding,
+      ),
       width: double.infinity,
       color: AppColor.background,
       child: isDesktop
           ? _buildDesktopIntro(screenSize)
-          : _buildMobileIntro(
-              screenSize: screenSize,
-              isSmallMobile: isSmallMobile,
-            ),
+          : _buildMobileIntro(screenSize: screenSize),
     );
   }
 
@@ -180,7 +180,7 @@ class _HomeIntroSectionState extends State<HomeIntroSection>
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: (screenSize.width * 0.03).clamp(30.0, 50.0),
-            horizontal: (screenSize.width * 0.03).clamp(
+            horizontal: (screenSize.width * 0.08).clamp(
               AppFormat.priamaryPadding,
               120.0,
             ),
@@ -258,107 +258,96 @@ class _HomeIntroSectionState extends State<HomeIntroSection>
     );
   }
 
-  Widget _buildMobileIntro({
-    required Size screenSize,
-    required bool isSmallMobile,
-  }) {
-    final titleFontSize = isSmallMobile
-        ? 30.0
-        : (screenSize.width * 0.04).clamp(40.0, 60.0);
-    final spacing = isSmallMobile ? 20.0 : 30.0;
+  Widget _buildMobileIntro({required Size screenSize}) {
+    final titleFontSize = (screenSize.width * 0.04).clamp(30.0, 60.0);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppFormat.priamaryPadding),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Headline
-          _buildHeadline(screenSize),
-          SizedBox(height: spacing),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // Headline
+        _buildHeadline(screenSize),
+        SizedBox(height: 30),
 
-          // Divider
-          Container(height: 2, width: 100, color: AppColor.accent),
-          const SizedBox(height: 20),
+        // Divider
+        Container(height: 2, width: 100, color: AppColor.accent),
+        const SizedBox(height: 30),
 
-          // My Toolkit Title
-          AnimatedBuilder(
-            animation: _titleSlideUpController,
-            builder: (context, child) {
-              bool startPlay = _titleSlideUpController.value > 0.1;
+        // My Toolkit Title
+        AnimatedBuilder(
+          animation: _titleSlideUpController,
+          builder: (context, child) {
+            bool startPlay = _titleSlideUpController.value > 0.1;
 
-              if (!startPlay) {
-                return SizedBox(height: titleFontSize);
-              }
+            if (!startPlay) {
+              return SizedBox(height: titleFontSize);
+            }
 
-              return ClipRect(
-                child: TextAnimator(
-                  key: ValueKey(startPlay),
-                  'My Toolkit',
-                  incomingEffect:
-                      WidgetTransitionEffects.incomingSlideInFromBottom(
-                        curve: Curves.easeOutCubic,
-                        duration: const Duration(milliseconds: 400),
-                      ),
-                  style: TextStyle(
-                    fontFamily: 'Racing Sans One',
-                    color: AppColor.white,
-                    fontSize: titleFontSize,
-                    fontWeight: FontWeight.bold,
-                    height: 1.0,
-                  ),
+            return ClipRect(
+              child: TextAnimator(
+                key: ValueKey(startPlay),
+                'My Toolkit',
+                incomingEffect:
+                    WidgetTransitionEffects.incomingSlideInFromBottom(
+                      curve: Curves.easeOutCubic,
+                      duration: const Duration(milliseconds: 400),
+                    ),
+                style: TextStyle(
+                  fontFamily: 'Racing Sans One',
+                  color: AppColor.white,
+                  fontSize: titleFontSize,
+                  fontWeight: FontWeight.bold,
+                  height: 1.0,
                 ),
-              );
-            },
-          ),
-          SizedBox(height: spacing),
+              ),
+            );
+          },
+        ),
+        SizedBox(height: 30),
 
-          // Skills List
-          FadeTransition(
-            opacity: _firstFadeInAnimation,
-            child: ClipRect(
-              child: SlideTransition(
-                position: _slideUpAnimation,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: _buildSkillsList(),
-                ),
+        // Skills List
+        FadeTransition(
+          opacity: _firstFadeInAnimation,
+          child: ClipRect(
+            child: SlideTransition(
+              position: _slideUpAnimation,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: _buildSkillsList(),
               ),
             ),
           ),
-          SizedBox(height: spacing),
+        ),
+        SizedBox(height: 30),
 
-          // highlights
-          FadeTransition(
-            opacity: _secondFadeInAnimation,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: SlideTransition(
-                    position: _slideFromLeftAnimation,
-                    child: _buildExperienceCard(),
-                  ),
+        // highlights
+        FadeTransition(
+          opacity: _secondFadeInAnimation,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: SlideTransition(
+                  position: _slideFromLeftAnimation,
+                  child: _buildExperienceCard(),
                 ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: SlideTransition(
-                    position: _slideFromRightAnimation,
-                    child: _buildProjectCard(),
-                  ),
+              ),
+              SizedBox(width: 20),
+              Expanded(
+                child: SlideTransition(
+                  position: _slideFromRightAnimation,
+                  child: _buildProjectCard(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildHeadline(Size screenSize) {
-    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
-    final isMobile = ResponsiveWidget.isMobile(context);
-    final isTablet = ResponsiveWidget.isTablet(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return AnimatedBuilder(
       animation: widget.scrollController,
@@ -414,13 +403,9 @@ class _HomeIntroSectionState extends State<HomeIntroSection>
             style: TextStyle(
               fontFamily: 'Oswald',
               color: AppColor.white,
-              fontSize: isSmallMobile
-                  ? 23
-                  : isMobile
-                  ? (screenSize.width * 0.04).clamp(23.0, 26.0)
-                  : isTablet
-                  ? (screenSize.width * 0.04).clamp(26.0, 30.0)
-                  : (screenSize.width * 0.036).clamp(30.0, 80.0),
+              fontSize: isLargeScreen
+                  ? (screenSize.width * 0.036).clamp(30.0, 80.0)
+                  : (screenSize.width * 0.04).clamp(26.0, 30.0),
               height: 1.2,
             ),
             children: dynamicSpans,
