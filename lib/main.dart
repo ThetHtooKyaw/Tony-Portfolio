@@ -8,7 +8,12 @@ import 'package:tony_portfolio/src/contact/view_model/contact_view_model.dart';
 
 void main() async {
   usePathUrlStrategy();
-  await dotenv.load(fileName: ".env");
+
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    debugPrint("Failed to load .env file: $e");
+  }
 
   runApp(
     MultiProvider(

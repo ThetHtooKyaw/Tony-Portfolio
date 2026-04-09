@@ -12,12 +12,12 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>tony_portfolio</title>
+  <title>Tony's Portfolio</title>
   <link rel="manifest" href="manifest.json">
 
   <!-- Preload Assets for instant loading -->
-  <link rel="preload" href="assets/animations/loader.json" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="assets/fonts/RacingSansOne-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="assets/assets/animations/loader.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="assets/assets/fonts/RacingSansOne-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
   <!-- Lottie Player Script (deferred so it doesn't block rendering) -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
@@ -25,7 +25,7 @@
   <style>
     @font-face {
       font-family: 'Racing Sans One';
-      src: url('assets/fonts/RacingSansOne-Regular.ttf') format('truetype');
+      src: url('assets/assets/fonts/RacingSansOne-Regular.ttf') format('truetype');
     }
 
     body {
@@ -68,7 +68,7 @@
   <div id="loading-indicator">
     <div class="loading-text">Tony's Portfolio</div>
     <lottie-player 
-      src="assets/animations/loader.json" 
+      src="assets/assets/animations/loader.json" 
       background="transparent" 
       speed="1" 
       style="width: 250px; height: 250px; margin-top: -50px;" 

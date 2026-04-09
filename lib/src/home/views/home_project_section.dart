@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -32,12 +31,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
         ? widget.scrollController.position.viewportDimension
         : screenSize.height;
 
-    final visibleTop = math.max(top, 0.0);
-    final visibleBottom = math.min(bottom, viewportHeight);
-    final visibleHeight = math.max(0.0, visibleBottom - visibleTop);
-    final visibleRatio = visibleHeight / section.size.height;
-
-    return visibleRatio >= 0.99;
+    return top <= 20.0 && bottom >= viewportHeight - 20.0;
   }
 
   void _handleUrlLaunch(String? projectUrl) async {
@@ -56,7 +50,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
     final isDesktop = ResponsiveWidget.isDesktop(context);
 
     final double cardHeight = screenSize.height * 0.85;
-    const double padding = 400;
+    const double padding = 500;
     final double step = cardHeight + padding;
 
     return Stack(
@@ -73,6 +67,8 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
                 horizontal: isDesktop ? 40 : AppFormat.priamaryPadding,
               ),
               width: double.infinity,
+              height: screenSize
+                  .height, // Force section to span exactly 1 whole screen
               color: AppColor.background,
               alignment: Alignment.bottomCenter,
               child: SizedBox(
