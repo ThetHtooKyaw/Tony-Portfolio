@@ -108,7 +108,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
                           ),
                         ),
                       )
-                    // TODO: Fix the scroll up stuck
+                    // TODO: Sync Mouse Cursor
                     : IgnorePointer(
                         ignoring: !active,
                         child: StackedCardCarousel(

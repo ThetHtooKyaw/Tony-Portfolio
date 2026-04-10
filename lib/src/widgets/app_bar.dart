@@ -42,7 +42,7 @@ PreferredSizeWidget buildAppBar({
             ).animate().slide(
               begin: const Offset(0.0, -1.0),
               end: Offset.zero,
-              duration: 400.ms,
+              duration: 500.ms,
               curve: Curves.easeIn,
             ),
       ),
@@ -133,7 +133,7 @@ PreferredSizeWidget buildAppBar({
           ].animate().slide(
             begin: const Offset(0.0, -1.0),
             end: Offset.zero,
-            duration: 400.ms,
+            duration: 500.ms,
             curve: Curves.easeIn,
           )
         : [

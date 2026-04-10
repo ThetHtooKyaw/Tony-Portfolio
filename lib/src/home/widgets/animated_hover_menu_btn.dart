@@ -54,7 +54,7 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
                       .slide(
                         begin: const Offset(-1.5, 0),
                         end: Offset.zero,
-                        duration: 300.ms,
+                        duration: 500.ms,
                         curve: Curves.easeOutCubic,
                       ),
                 ),

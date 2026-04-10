@@ -21,7 +21,7 @@ class ContactViewModel extends BaseViewModel {
 
     final response = await _contactService.sendEmail(
       name: nameController.text,
-      email: emailController.text,
+      email: emailController.text.toLowerCase(),
       subject: subjectController.text,
       message: messageController.text,
     );

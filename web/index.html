@@ -78,25 +78,13 @@
   </div>
 
   <script>
-    const observer = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        for (const node of mutation.addedNodes) {
-          if (node.tagName === 'FLUTTER-VIEW') {
-            setTimeout(() => {
-              const loader = document.getElementById('loading-indicator');
-              if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.remove(), 400);
-              }
-            }, 800);
-            observer.disconnect();
-            return;
-          }
-        }
+    window.addEventListener('flutter-first-frame', function() {
+      const loader = document.getElementById('loading-indicator');
+      if (loader) {
+        loader.style.display = 'none';
+        loader.remove();
       }
     });
-
-    observer.observe(document.body, { childList: true });
   </script>
 
   <script src="flutter_bootstrap.js" async></script>

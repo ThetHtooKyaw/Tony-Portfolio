@@ -149,7 +149,7 @@ class _HomeLandingSectionState extends State<HomeLandingSection> {
               height: screenSize.height,
               width: double.infinity,
               color: AppColor.background,
-            ).animate().fadeOut(duration: 2.seconds, delay: 0.seconds),
+            ).animate().fadeOut(duration: 3.seconds, delay: 0.seconds),
           ),
         ],
       ),
