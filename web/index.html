@@ -61,6 +61,7 @@
       text-align: center;
       padding: 0 20px;
     }
+
   </style>
 </head>
 <body>
@@ -87,6 +88,30 @@
     });
   </script>
 
-  <script src="flutter_bootstrap.js" async></script>
+  <script src="flutter.js" defer></script>
+  <script>
+    window.addEventListener('load', function(ev) {
+      var checkFlutter = setInterval(function() {
+        if (window._flutter) {
+          clearInterval(checkFlutter);
+          
+          _flutter.loader.loadEntrypoint({
+            onEntrypointLoaded: async function(engineInitializer) {
+              try {
+                let appRunner = await engineInitializer.initializeEngine({
+                  // Optional: Force html renderer if CanvasKit continues to fail in FB
+                  // renderer: 'html' 
+                });
+                await appRunner.runApp();
+              } catch (e) {
+                console.error("Flutter initialization failed: ", e);
+                window.location.href = 'error.html';
+              }
+            }
+          });
+        }
+      }, 100);
+    });
+  </script>
 </body>
 </html>

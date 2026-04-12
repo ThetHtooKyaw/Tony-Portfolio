@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="tony_portfolio">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Tony's Portfolio</title>
+
+   <!-- Preload Assets for instant loading -->
+  <link rel="preload" href="assets/assets/animations/404.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="assets/fonts/Questrial-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <!-- Lottie Player Script -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+
+  <style>
+    @font-face {
+      font-family: 'Questrial';
+      src: url('assets/fonts/Questrial-Regular.ttf') format('truetype');
+    }
+
+    body {
+      background-color: #0F0F0F;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #404-indicator {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .message {
+      color: white;
+      font-family: 'Questrial', sans-serif;
+      font-size: 16px;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.5;
+      padding: 0 20px;
+    }
+  </style>
+</head>
+<body>
+    <!-- Custom Lottie Animation -->
+  <div id="404-indicator">
+    <lottie-player 
+      src="assets/assets/animations/404.json" 
+      background="transparent" 
+      speed="1" 
+      style="width: 250px; height: 250px; margin-bottom: 20px;" 
+      loop 
+      autoplay>
+    </lottie-player>
+
+    <p class="message">
+      We couldn't load the app in this browser.<br>
+      Please use in System Browser (e.g., Safari/Chrome) directly.
+    </p>
+  </div>
+</body>
+</html>
