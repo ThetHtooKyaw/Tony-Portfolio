@@ -79,7 +79,25 @@
   </div>
 
   <script>
+    let appLoaded = false;
+
+    // 1. HARD TIMEOUT: Max 10 seconds to load
+    const fallbackTimeout = setTimeout(function() {
+      if (!appLoaded) window.location.href = 'error.html';
+    }, 10000);
+
+    // 2. GLOBAL ERROR CATCHER: If CanvasKit/Dart crashes in Facebook before loading
+    window.addEventListener('error', function(e) {
+      if (!appLoaded) window.location.href = 'error.html';
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      if (!appLoaded) window.location.href = 'error.html';
+    });
+
+    // 3. SUCCESS HANDLER
     window.addEventListener('flutter-first-frame', function() {
+      appLoaded = true;
+      clearTimeout(fallbackTimeout);
       const loader = document.getElementById('loading-indicator');
       if (loader) {
         loader.style.display = 'none';
@@ -95,13 +113,10 @@
         if (window._flutter) {
           clearInterval(checkFlutter);
           
-          _flutter.loader.loadEntrypoint({
+          _flutter.loader.load({
             onEntrypointLoaded: async function(engineInitializer) {
               try {
-                let appRunner = await engineInitializer.initializeEngine({
-                  // Optional: Force html renderer if CanvasKit continues to fail in FB
-                  renderer: 'html' 
-                });
+                let appRunner = await engineInitializer.initializeEngine();
                 await appRunner.runApp();
               } catch (e) {
                 console.error("Flutter initialization failed: ", e);
