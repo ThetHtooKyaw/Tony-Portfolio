@@ -7,6 +7,7 @@ import 'package:tony_portfolio/core/utils/router.dart';
 import 'package:tony_portfolio/src/contact/view_model/contact_view_model.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
 
   try {
