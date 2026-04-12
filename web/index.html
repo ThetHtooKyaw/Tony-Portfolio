@@ -100,7 +100,7 @@
               try {
                 let appRunner = await engineInitializer.initializeEngine({
                   // Optional: Force html renderer if CanvasKit continues to fail in FB
-                  // renderer: 'html' 
+                  renderer: 'html' 
                 });
                 await appRunner.runApp();
               } catch (e) {
