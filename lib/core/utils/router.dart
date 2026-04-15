@@ -3,9 +3,14 @@ import 'package:tony_portfolio/src/award/views/award_view.dart';
 import 'package:tony_portfolio/src/award/views/certificate_detail_view.dart';
 import 'package:tony_portfolio/src/contact/views/contact_view.dart';
 import 'package:tony_portfolio/src/home/views/home_view.dart';
+import 'package:tony_portfolio/src/not_found_view.dart';
 import 'package:tony_portfolio/src/widgets/animated_screen_transition.dart';
 
 final GoRouter router = GoRouter(
+  errorPageBuilder: (context, state) => AnimatedScreenTransition(
+    newScreen: NotFoundView(routeName: state.uri.path),
+    key: state.pageKey,
+  ),
   routes: [
     GoRoute(
       path: '/',
