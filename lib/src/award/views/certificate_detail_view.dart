@@ -24,47 +24,41 @@ class _CertificateDetailViewState extends State<CertificateDetailView> {
     return Scaffold(
       backgroundColor: AppColor.background,
       appBar: buildAppBar(context: context, screenSize: screenSize),
-      body: SizedBox(
-        width: double.infinity,
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: isDesktop
-                  ? AppFormat.priamaryPadding
-                  : (screenSize.width * 0.1).clamp(
-                      AppFormat.priamaryPadding,
-                      100.0,
-                    ),
-            ),
-            height: isDesktop ? 500 : null,
-            alignment: Alignment.center,
-            child: ListView.separated(
-              shrinkWrap: true,
-              separatorBuilder: (context, index) =>
-                  const SizedBox(width: 20, height: 20),
-              scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
-              physics: const NeverScrollableScrollPhysics(),
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: isDesktop
+                ? AppFormat.priamaryPadding
+                : (screenSize.width * 0.1).clamp(
+                    AppFormat.priamaryPadding,
+                    100.0,
+                  ),
+          ),
+          height: isDesktop ? 500 : null,
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: ListView.separated(
+            padding: EdgeInsets.symmetric(vertical: 20.0),
+            shrinkWrap: true,
+            separatorBuilder: (context, index) =>
+                const SizedBox(width: 20, height: 20),
+            scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
+            // physics: const NeverScrollableScrollPhysics(),
+            itemCount: widget.certificates.length,
+            itemBuilder: (context, index) {
+              final certificate = widget.certificates[index];
 
-              itemCount: widget.certificates.length,
-              itemBuilder: (context, index) {
-                final certificate = widget.certificates[index];
-
-                return AnimatedCertificateCard(
-                  index: index,
-                  certificate: certificate,
-                  isExpandedMobile: _expandedIndex == index,
-                  onTapMobile: () {
-                    setState(() {
-                      if (_expandedIndex == index) {
-                        _expandedIndex = null;
-                      } else {
-                        _expandedIndex = index;
-                      }
-                    });
-                  },
-                );
-              },
-            ),
+              return AnimatedCertificateCard(
+                index: index,
+                certificate: certificate,
+                isExpandedMobile: _expandedIndex == index,
+                onTapMobile: () {
+                  setState(() {
+                    _expandedIndex = _expandedIndex == index ? null : index;
+                  });
+                },
+              );
+            },
           ),
         ),
       ),

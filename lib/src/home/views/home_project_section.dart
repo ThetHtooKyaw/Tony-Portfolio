@@ -22,6 +22,7 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
   bool _isHovering = false;
 
   bool _isProjectScrollable(Size screenSize) {
+    final isDesktop = ResponsiveWidget.isDesktop(context);
     final section = _sectionKey.currentContext?.findRenderObject();
     if (section is! RenderBox) return false;
 
@@ -31,7 +32,9 @@ class _HomeProjectSectionState extends State<HomeProjectSection> {
         ? widget.scrollController.position.viewportDimension
         : screenSize.height;
 
-    return top <= 20.0 && bottom >= viewportHeight - 20.0;
+    final enabled = isDesktop ? 20.0 : 40.0;
+
+    return top <= enabled && bottom >= viewportHeight - enabled;
   }
 
   void _handleUrlLaunch(String? projectUrl) async {

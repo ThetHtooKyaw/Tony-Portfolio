@@ -31,17 +31,10 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
   void _handleSeeMore() {
     if (widget.certificate['detail'] == false) return;
 
-    if (widget.index == 0) {
-      context.go(
-        '/awards/certificates',
-        extra: widget.certificate['certificates'],
-      );
-    } else if (widget.index == 1) {
-      context.go(
-        '/awards/certificates',
-        extra: widget.certificate['certificates'],
-      );
-    }
+    context.go(
+      '/awards/certificates',
+      extra: widget.certificate['certificates'],
+    );
   }
 
   @override
@@ -63,7 +56,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
         child: Stack(
           children: [
             // Certificate Image
-            _buildImageContainer(650),
+            _buildImageContainer(height: 500, width: 650),
 
             // "See More" Button
             if (widget.certificate['detail'] == true)
@@ -103,26 +96,18 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
       ),
     );
 
-    if (isDesktop) {
-      return MouseRegion(
-        onEnter: (_) => setState(() => _isHovering = true),
-        onExit: (_) => setState(() => _isHovering = false),
-        child: largeCard,
-      );
-    }
-
     Widget smallCard = GestureDetector(
-      onTap: _handleSeeMore,
+      onTap: isExpanded ? _handleSeeMore : widget.onTapMobile,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
-        height: isExpanded ? 500 : 150,
+        height: isExpanded ? 300 : 150,
         width: screenSize.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         child: Stack(
           children: [
             // Certificate Image
-            _buildImageContainer(double.infinity),
+            _buildImageContainer(height: 300, width: double.infinity),
 
             // "See More" Button
             if (widget.certificate['detail'] == true)
@@ -143,7 +128,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
                     child: AutoSizeText(
                       widget.certificate['title']!,
                       maxFontSize: 20,
-                      minFontSize: 14,
+                      minFontSize: 16,
                       maxLines: 1,
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -168,7 +153,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
       );
     }
 
-    return GestureDetector(onTap: widget.onTapMobile, child: smallCard);
+    return smallCard;
   }
 
   Widget _buildButton(Size screenSize) {
@@ -227,12 +212,12 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
     );
   }
 
-  Widget _buildImageContainer(double width) {
+  Widget _buildImageContainer({required double height, required double width}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.asset(
         widget.certificate['image']!,
-        height: 500,
+        height: height,
         width: width,
         fit: BoxFit.fill,
       ),
