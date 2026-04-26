@@ -13,10 +13,25 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v6
+        
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
+          
+      - name: Make .env file
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_DEBUG: false
+          envkey_SERVICE_ID: ${{ secrets.SERVICE_ID }}
+          envkey_TEMPLATE_ID: ${{ secrets.TEMPLATE_ID }}
+          envkey_PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+          directory: .
+          file_name: .env
+          fail_on_empty: true
+          sort_keys: false
+          
       - run: flutter pub get
       - run: flutter test
       - run: flutter build web
