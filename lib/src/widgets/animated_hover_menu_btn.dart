@@ -29,7 +29,7 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
       child: IntrinsicWidth(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             TextButton(

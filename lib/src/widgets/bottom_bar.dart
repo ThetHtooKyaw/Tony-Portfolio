@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
+import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
 class BottomBar extends StatefulWidget {

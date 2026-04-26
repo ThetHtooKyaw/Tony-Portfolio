@@ -1,5 +1,5 @@
 name: tony_portfolio
-description: "A new Flutter project."
+description: "Tony's Portfolio Flutter project"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -49,6 +49,7 @@ dependencies:
   http: ^1.6.0
   provider: ^6.1.5+1
   flutter_dotenv: ^6.0.0
+  mocktail: ^1.0.5
 
 dev_dependencies:
   flutter_test:

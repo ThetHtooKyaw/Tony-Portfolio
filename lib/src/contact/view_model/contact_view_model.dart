@@ -5,21 +5,19 @@ import 'package:tony_portfolio/core/utils/base_view_model.dart';
 import 'package:tony_portfolio/src/contact/repo/contact_service.dart';
 
 class ContactViewModel extends BaseViewModel {
-  final ContactService _contactService = ContactService();
+  final ContactService contactService;
+  ContactViewModel({required this.contactService});
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
   final TextEditingController messageController = TextEditingController();
 
   Future<void> sendEmail() async {
-    if (!formKey.currentState!.validate()) return;
-
     setActionLoading(true);
     setError(null);
 
-    final response = await _contactService.sendEmail(
+    final response = await contactService.sendEmail(
       name: nameController.text,
       email: emailController.text.toLowerCase(),
       subject: subjectController.text,
@@ -31,6 +29,7 @@ class ContactViewModel extends BaseViewModel {
       clearForm();
     } else if (response is Failure) {
       setError(response.response.toString());
+      clearForm();
     }
 
     setActionLoading(false);

@@ -10,14 +10,18 @@ import 'package:tony_portfolio/src/widgets/app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactView extends StatefulWidget {
-  const ContactView({super.key});
+  final bool isTestMode;
+  const ContactView({super.key, this.isTestMode = false});
 
   @override
   State<ContactView> createState() => _ContactViewState();
 }
 
 class _ContactViewState extends State<ContactView> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   Future<void> _sendEmail(ContactViewModel vm) async {
+    if (!formKey.currentState!.validate()) return;
     await vm.sendEmail();
 
     if (vm.errorMessage != null) {
@@ -36,56 +40,59 @@ class _ContactViewState extends State<ContactView> {
 
     return Scaffold(
       backgroundColor: AppColor.background,
-      appBar: buildAppBar(context: context, screenSize: screenSize),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: isDesktop ? 0.0 : 100.0,
-            horizontal: isDesktop
-                ? (screenSize.width * 0.04).clamp(
-                    AppFormat.priamaryPadding,
-                    80.0,
-                  )
-                : isTablet
-                ? (screenSize.width * 0.1).clamp(40, 150.0)
-                : (screenSize.width * 0.08).clamp(
-                    AppFormat.priamaryPadding,
-                    40.0,
-                  ),
-          ),
-          height: isDesktop ? screenSize.height : null,
-          width: double.infinity,
-          color: AppColor.background,
-          child: isDesktop
-              ? _buildDesktopLayout(screenSize)
-              : _buildMobileLayout(screenSize),
+      appBar: widget.isTestMode
+          ? AppBar(title: Text('Test'))
+          : buildAppBar(context: context, screenSize: screenSize),
+      body: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: isDesktop
+              ? (screenSize.width * 0.04).clamp(AppFormat.priamaryPadding, 80.0)
+              : isTablet
+              ? (screenSize.width * 0.1).clamp(40, 150.0)
+              : (screenSize.width * 0.08).clamp(
+                  AppFormat.priamaryPadding,
+                  40.0,
+                ),
         ),
+        height: screenSize.height,
+        width: double.infinity,
+        color: AppColor.background,
+        child: isDesktop
+            ? _buildDesktopLayout(screenSize)
+            : _buildMobileLayout(screenSize),
       ),
     );
   }
 
   Widget _buildMobileLayout(Size screenSize) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Title Text
-        _buildTitleText(screenSize, 'LET\'S WORK'),
-        _buildTitleText(screenSize, 'TOGETHER'),
-        const SizedBox(height: 40),
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 40),
 
-        // Sub Title
-        _buildSubTitleSection(screenSize),
-        const SizedBox(height: 40),
+            // Title Text
+            _buildTitleText(screenSize, 'LET\'S WORK'),
+            _buildTitleText(screenSize, 'TOGETHER'),
+            const SizedBox(height: 40),
 
-        // Contact Form
-        _buildContactForm(screenSize),
-        const SizedBox(height: 40),
+            // Sub Title
+            _buildSubTitleSection(screenSize),
+            const SizedBox(height: 40),
 
-        // Contact Info
-        _buildContactInfo(screenSize),
-      ],
+            // Contact Form
+            _buildContactForm(screenSize),
+            const SizedBox(height: 40),
+
+            // Contact Info
+            _buildContactInfo(screenSize),
+            const SizedBox(height: 40),
+          ],
+        ),
+      ),
     );
   }
 
@@ -236,7 +243,7 @@ class _ContactViewState extends State<ContactView> {
     return Consumer<ContactViewModel>(
       builder: (context, vm, child) {
         return Form(
-          key: vm.formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -248,7 +255,7 @@ class _ContactViewState extends State<ContactView> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your name';
-                  } else if (value.length < 3) {
+                  } else if (value.length <= 3) {
                     return 'Name must be at least 3 characters';
                   }
                   return null;

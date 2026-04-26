@@ -1,14 +1,18 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:provider/provider.dart';
 import 'package:tony_portfolio/core/theme/app_theme.dart';
 import 'package:tony_portfolio/core/utils/router.dart';
+import 'package:tony_portfolio/src/contact/repo/contact_service.dart';
 import 'package:tony_portfolio/src/contact/view_model/contact_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  usePathUrlStrategy();
+  if (kIsWeb) {
+    setUrlStrategy(PathUrlStrategy());
+  }
 
   try {
     await dotenv.load(fileName: ".env");
@@ -19,7 +23,12 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ContactViewModel()),
+        Provider(create: (context) => ContactService()),
+
+        ChangeNotifierProvider<ContactViewModel>(
+          create: (context) =>
+              ContactViewModel(contactService: context.read<ContactService>()),
+        ),
       ],
       child: const MyApp(),
     ),

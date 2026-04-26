@@ -1,11 +1,14 @@
 import 'dart:convert';
-
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:tony_portfolio/core/status/failure.dart';
 import 'package:tony_portfolio/core/status/success.dart';
 
 class ContactService {
+  final http.Client httpClient;
+  ContactService({http.Client? httpClient})
+    : httpClient = httpClient ?? http.Client();
+
   Future<Object> sendEmail({
     required String name,
     required String email,
@@ -19,7 +22,7 @@ class ContactService {
     final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
 
     try {
-      final response = await http.post(
+      final response = await httpClient.post(
         url,
         headers: {
           'Content-Type': 'application/json',

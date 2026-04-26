@@ -34,7 +34,7 @@ class _AnimatedTextMenuBtnState extends State<AnimatedTextMenuBtn> {
               ),
             ),
           ).animate().slide(
-            begin: const Offset(0.0, 1.2),
+            begin: const Offset(0.0, 1.4),
             end: Offset.zero,
             duration: 300.ms,
             curve: Curves.easeOutCubic,

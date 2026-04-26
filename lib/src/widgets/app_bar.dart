@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:tony_portfolio/core/data/menu_list.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_hover_menu_btn.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_text_menu_btn.dart';
+import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
+import 'package:tony_portfolio/src/widgets/animated_text_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
 import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
 
