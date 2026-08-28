@@ -19,24 +19,24 @@ const List<Map<String, dynamic>> expInfos = [
     'position': 'Lead WordPress Developer (Intern)',
     'company': 'Knowles Training Institute',
     'logo': 'assets/images/knowles_training_institute.png',
-    'year': 'June 2023 - Aug 2023',
+    'year': 'Mar 2023 - Dec 2023',
     'desc':
-        'As the WordPress Development Lead for the intern batch, I bridged the gap between management and the technical team by translating high-level objectives into actionable tasks. I orchestrated daily workflows and performance reporting while managing a WordPress Learning Management System (LMS). Beyond coordination, I optimized the platform’s UI, improved media load speeds, and audited course content to ensure a seamless and accurate experience for all new modules.',
+        'As the WordPress Development Lead, I bridged the gap between management and a team of interns by translating high-level objectives into aligned daily workflows and performance reporting. While managing the WordPress Learning Management System (LMS), I audited course content, optimized the platform\'s UI, and improved page load speeds by 55% to ensure a seamless and enhanced user experience for all new modules.',
   },
   {
-    'position': 'Web Developer (Intern)',
+    'position': 'Web Developer',
     'company': 'The Umonics Method',
     'logo': 'assets/images/umonics_method.png',
-    'year': 'Aug 2023 - Jan 2024',
+    'year': 'Jan 2024 - Dec 2024',
     'desc':
-        'Collaborated with a teammate on the end-to-end development of a full-stack platform, transitioning from initial wireframing and high-fidelity Figma designs to a complete technical implementation from scratch. As a Web Development Intern, I worked across the full stack using JavaScript, HTML, and Tailwind CSS to build a responsive React frontend, supported by a MongoDB database to ensure a scalable and robust architecture.',
+        'Co-developed a full-stack CRM platform from scratch, transitioning seamlessly from initial wireframing and high-fidelity Figma designs to a complete technical implementation. Working across the entire stack, I architected a scalable UI and robust database infrastructure using JavaScript, React, Tailwind CSS, and MongoDB to optimize workflow management and ensure a highly responsive user experience.',
   },
   {
-    'position': 'Flutter Developer (Mobile & Desktop) (Intern)',
+    'position': 'Flutter Developer (Mobile & Desktop)',
     'company': 'Hash For Gamers',
     'logo': 'assets/images/hash_for_gamer.png',
-    'year': 'July 2025 - Nov 2025',
+    'year': 'Jan 2025 - Dec 2025',
     'desc':
-        'Engineered high-performance cross-platform solutions across mobile and desktop environments. This included architecting the mobile UI for the Hash: Book Gaming Cafes application and developing core features for the Hash Dash PC system, such as secure User Authentication, real-time Session Control, and comprehensive data Analytics to track system performance and user engagement.',
+        'Engineered high-performance cross-platform solutions, developing and maintaining the UI for over 10 production mobile and desktop applications serving thousands of users. This included architecting the mobile UI for the Hash: Book Gaming Cafes application and delivering 5+ core features and critical bug fixes for the Hash Dash PC system—including secure User Authentication, real-time Session Control, and comprehensive data Analytics to optimize system performance and user engagement.',
   },
 ];

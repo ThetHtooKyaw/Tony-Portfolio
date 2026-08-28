@@ -1,10 +1,10 @@
-# tony_portfolio
+# Tony's Portfolio
 
 A responsive Flutter web portfolio showcasing Tony's skills, projects, awards, and contact information.
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Responsive Design:** Adapts seamlessly to desktop, tablet, and mobile screens.
 - **Animated UI:** Smooth transitions and interactive hover effects throughout.
@@ -18,7 +18,7 @@ A responsive Flutter web portfolio showcasing Tony's skills, projects, awards, a
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 lib/
@@ -46,7 +46,7 @@ main.dart           # App entry point
 
 ---
 
-## 🧪 Testing
+## Testing
 
 - **Unit & Widget Tests:** Located in the `test/` directory.
 - Run all tests with:
@@ -56,7 +56,7 @@ main.dart           # App entry point
 
 ---
 
-## 🛠️ Getting Started
+## Getting Started
 
 1. **Clone the repository:**
 
@@ -78,14 +78,14 @@ main.dart           # App entry point
 
 ---
 
-## 📄 License
+## License
 
 This project is for personal portfolio use.  
 Feel free to explore and adapt for your own learning!
 
 ---
 
-## 🙋‍♂️ About
+## About
 
 Built and maintained by Tony Johnson.  
 For questions or feedback, please use the contact form in the app.
