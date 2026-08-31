@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tony_portfolio/core/data/contact_info.dart';
+import 'package:tony_portfolio/core/model/contact_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FloatingBtn extends StatefulWidget {
@@ -83,25 +83,25 @@ class _FloatingBtnState extends State<FloatingBtn> {
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: contactInfos.map((social) {
+                  children: contacts.map((social) {
                     return IconButton(
                       onPressed: () async {
-                        final Uri url = Uri.parse(social['url']!);
+                        final Uri url = Uri.parse(social.url);
 
                         if (!await launchUrl(
                           url,
                           mode: LaunchMode.externalApplication,
                         )) {
-                          debugPrint('Could not launch ${social['url']}');
+                          debugPrint('Could not launch ${social.url}');
                         }
                       },
                       icon: Image.asset(
-                        social['icon']!,
+                        social.icon,
                         width: iconSize,
                         height: iconSize,
                         color: AppColor.white,
                       ),
-                      tooltip: social['tooltip']!,
+                      tooltip: social.tooltip,
                     );
                   }).toList(),
                 ),

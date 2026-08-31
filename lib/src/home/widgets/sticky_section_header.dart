@@ -31,7 +31,7 @@ class StickySectionHeader extends SliverPersistentHeaderDelegate {
           child: Container(
             padding: const EdgeInsets.symmetric(
               vertical: AppFormat.secondaryPadding,
-              horizontal: AppFormat.priamaryPadding,
+              horizontal: AppFormat.primaryPadding,
             ),
             decoration: BoxDecoration(
               color: AppColor.background.withValues(alpha: 0.4),

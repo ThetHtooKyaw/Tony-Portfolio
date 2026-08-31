@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tony_portfolio/core/data/menu_list.dart';
+import 'package:tony_portfolio/core/model/menu_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/src/widgets/animated_text_menu_btn.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 
 PreferredSizeWidget buildAppBar({
   required BuildContext context,
@@ -25,18 +25,19 @@ PreferredSizeWidget buildAppBar({
     elevation: 0,
     iconTheme: const IconThemeData(color: AppColor.background),
     leadingWidth: 220,
-    actionsPadding: const EdgeInsets.only(right: AppFormat.priamaryPadding),
+    actionsPadding: const EdgeInsets.only(right: AppFormat.primaryPadding),
     // Project Label
     leading: Padding(
       padding: const EdgeInsets.only(
-        left: AppFormat.priamaryPadding,
+        left: AppFormat.primaryPadding,
         top: AppFormat.secondaryPadding,
       ),
       child: Align(
         alignment: Alignment.centerLeft,
         child:
             AnimatedHoverMenuBtn(
-              title: '© Tony\'s Portfolio',
+              icon: 'assets/images/tony_logo.webp',
+              title: 'Tony\'s Portfolio',
               fontSize: (screenSize.width * 0.025).clamp(18, 22),
               onPressed: () => context.go('/'),
             ).animate().slide(
@@ -50,7 +51,7 @@ PreferredSizeWidget buildAppBar({
     actions: isDesktop || isTablet
         ? [
             // Desktop Menu
-            ...desktopMenuList.map((menu) {
+            ...desktopMenuItems.map((menu) {
               return Padding(
                 padding: const EdgeInsets.only(top: AppFormat.secondaryPadding),
                 child: Row(
@@ -58,12 +59,12 @@ PreferredSizeWidget buildAppBar({
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AnimatedHoverMenuBtn(
-                      title: menu['title'],
+                      title: menu.title,
                       fontSize: (screenSize.width * 0.025).clamp(18, 22),
                       onPressed: () {
-                        if (menu['route'] == '/awards') {
+                        if (menu.route == '/awards') {
                           context.go('/awards');
-                        } else if (menu['route'] == '/about') {
+                        } else if (menu.route == '/about') {
                           context.go('/about');
                         } else {
                           context.go('/');
@@ -149,7 +150,7 @@ PreferredSizeWidget buildAppBar({
                       overlayColor: WidgetStatePropertyAll(Colors.transparent),
                     ),
                     icon: Image.asset(
-                      'assets/icons/main_menu.png',
+                      'assets/icons/main_menu.webp',
                       color: AppColor.white,
                       height: 40,
                       width: 40,
@@ -191,7 +192,7 @@ void _showMainMenu({required BuildContext context}) {
           child: Container(
             padding: EdgeInsets.symmetric(
               vertical: AppFormat.secondaryPadding,
-              horizontal: AppFormat.priamaryPadding,
+              horizontal: AppFormat.primaryPadding,
             ),
             width: double.infinity,
             color: AppColor.background,
@@ -202,13 +203,26 @@ void _showMainMenu({required BuildContext context}) {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                        '© Tony\'s Portfolio',
-                        style: TextStyle(
-                          fontFamily: 'Oswald',
-                          color: AppColor.white,
-                          fontSize: 18,
-                        ),
+                      child: Row(
+                        children: [
+                          // Logo
+                          Image.asset(
+                            'assets/images/tony_logo.webp',
+                            height: 18,
+                            width: 18,
+                          ),
+                          const SizedBox(width: 10),
+
+                          // Web Name
+                          Text(
+                            'Tony\'s Portfolio',
+                            style: TextStyle(
+                              fontFamily: 'Oswald',
+                              color: AppColor.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -221,19 +235,19 @@ void _showMainMenu({required BuildContext context}) {
                 ),
                 const SizedBox(height: 20),
 
-                ...mobileMenuList.map((menu) {
+                ...mobileMenuItems.map((menu) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AnimatedTextMenuBtn(
-                        title: menu['title'],
-                        delay: menu['delay'],
+                        title: menu.title,
+                        delay: menu.delay,
                         onPressed: () {
-                          if (menu['route'] == '/awards') {
+                          if (menu.route == '/awards') {
                             context.go('/awards');
-                          } else if (menu['route'] == '/about') {
+                          } else if (menu.route == '/about') {
                             context.go('/about');
-                          } else if (menu['route'] == '/contact') {
+                          } else if (menu.route == '/contact') {
                             context.go('/contact');
                           } else {
                             context.go('/');

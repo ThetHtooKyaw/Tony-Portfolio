@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 
 class AnimatedHoverHightlightCard extends StatefulWidget {
   final bool isExpLabel;
@@ -28,6 +28,7 @@ class _AnimatedHoverHightlightCardState
     final screenSize = MediaQuery.sizeOf(context);
     final fieldQuantity = widget.isExpLabel ? 3 : 20;
 
+    // Desktop & Tablet Card
     Widget largeCard = _buildCardBox(
       isLargeCard: true,
       child: Column(
@@ -35,16 +36,16 @@ class _AnimatedHoverHightlightCardState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Icon
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Icon
               CircleAvatar(
                 backgroundColor: AppColor.white.withValues(alpha: 0.1),
                 child: Image.asset(
                   widget.isExpLabel
-                      ? 'assets/icons/code.png'
-                      : 'assets/icons/project.png',
+                      ? 'assets/icons/code.webp'
+                      : 'assets/icons/project.webp',
                   color: _isHovering ? AppColor.accent : AppColor.white,
                   width: 24,
                   height: 24,
@@ -90,6 +91,7 @@ class _AnimatedHoverHightlightCardState
       ),
     );
 
+    // Mobile Card
     Widget smallCard = _buildCardBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -158,6 +160,27 @@ class _AnimatedHoverHightlightCardState
     return smallCard;
   }
 
+  Widget _buildCardBox({bool isLargeCard = false, required Widget child}) {
+    return AnimatedContainer(
+      transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+      padding: isLargeCard
+          ? EdgeInsets.all(AppFormat.primaryPadding)
+          : const EdgeInsets.symmetric(
+              horizontal: 6,
+              vertical: AppFormat.primaryPadding,
+            ),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColor.card,
+        border: Border.all(color: AppColor.card, width: 1),
+        borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
+      ),
+      child: child,
+    );
+  }
+
   Widget _buildFieldQuantity({
     required int fieldQuantity,
     bool isSmallCard = false,
@@ -187,34 +210,6 @@ class _AnimatedHoverHightlightCardState
           ),
         );
       },
-    );
-  }
-
-  Widget _buildCardBox({bool isLargeCard = false, required Widget child}) {
-    return Container(
-      padding: isLargeCard
-          ? EdgeInsets.all(AppFormat.priamaryPadding)
-          : const EdgeInsets.symmetric(
-              horizontal: 6,
-              vertical: AppFormat.priamaryPadding,
-            ),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: AppColor.card,
-        border: Border.all(color: AppColor.card, width: 1),
-        borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
-        boxShadow: _isHovering
-            ? [
-                BoxShadow(
-                  color: AppColor.shadow,
-                  blurRadius: 20,
-                  spreadRadius: 1,
-                  offset: const Offset(0, 0),
-                ),
-              ]
-            : null,
-      ),
-      child: child,
     );
   }
 }

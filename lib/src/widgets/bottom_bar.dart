@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 
 class BottomBar extends StatefulWidget {
   final ScrollController scrollController;
@@ -21,7 +21,7 @@ class _BottomBarState extends State<BottomBar> {
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: (screenSize.width * 0.03).clamp(
-          AppFormat.priamaryPadding,
+          AppFormat.primaryPadding,
           40.0,
         ),
       ),

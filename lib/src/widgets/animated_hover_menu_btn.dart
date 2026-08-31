@@ -4,11 +4,13 @@ import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
 
 class AnimatedHoverMenuBtn extends StatefulWidget {
+  final String? icon;
   final String title;
   final double fontSize;
   final VoidCallback? onPressed;
   const AnimatedHoverMenuBtn({
     super.key,
+    this.icon,
     required this.title,
     required this.fontSize,
     this.onPressed,
@@ -34,15 +36,25 @@ class _AnimatedHoverMenuBtnState extends State<AnimatedHoverMenuBtn> {
           children: [
             TextButton(
               onPressed: widget.onPressed,
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  fontFamily: 'Questrial',
-                  foreground: Paint()
-                    ..color = AppColor.white
-                    ..blendMode = BlendMode.difference,
-                  fontSize: widget.fontSize,
-                ),
+              child: Row(
+                children: [
+                  // Logo
+                  if (widget.icon != null)
+                    Image.asset(widget.icon!, height: 25, width: 25),
+                  if (widget.icon != null) const SizedBox(width: 10),
+
+                  // Web Name
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontFamily: 'Questrial',
+                      foreground: Paint()
+                        ..color = AppColor.white
+                        ..blendMode = BlendMode.difference,
+                      fontSize: widget.fontSize,
+                    ),
+                  ),
+                ],
               ),
             ),
             ClipRect(

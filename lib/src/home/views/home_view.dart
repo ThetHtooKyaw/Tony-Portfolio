@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
-import 'package:tony_portfolio/src/home/views/home_experience_section.dart';
-import 'package:tony_portfolio/src/home/views/home_intro_section.dart';
-import 'package:tony_portfolio/src/home/views/home_landing_section.dart';
-import 'package:tony_portfolio/src/home/views/home_project_section.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/src/home/views/experience_section.dart';
+import 'package:tony_portfolio/src/home/views/intro_section.dart';
+import 'package:tony_portfolio/src/home/views/landing_section.dart';
+import 'package:tony_portfolio/src/home/views/project_section.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:tony_portfolio/src/home/widgets/sticky_section_header.dart';
 import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
 import 'package:tony_portfolio/src/widgets/floating_btn.dart';
@@ -83,7 +83,7 @@ class _HomeViewState extends State<HomeView>
             child: Stack(
               children: [
                 // Landing Section
-                HomeLandingSection(scrollController: _scrollController),
+                LandingSection(scrollController: _scrollController),
 
                 // App Bar
                 Positioned(
@@ -114,7 +114,7 @@ class _HomeViewState extends State<HomeView>
 
               // Content
               SliverToBoxAdapter(
-                child: HomeIntroSection(scrollController: _scrollController),
+                child: IntroSection(scrollController: _scrollController),
               ),
             ],
           ),
@@ -142,9 +142,7 @@ class _HomeViewState extends State<HomeView>
 
               // Content
               SliverToBoxAdapter(
-                child: HomeExperienceSection(
-                  scrollController: _scrollController,
-                ),
+                child: ExperienceSection(scrollController: _scrollController),
               ),
             ],
           ),
@@ -171,9 +169,7 @@ class _HomeViewState extends State<HomeView>
               ),
 
               // Content
-              SliverToBoxAdapter(
-                child: HomeProjectSection(scrollController: _scrollController),
-              ),
+              SliverToBoxAdapter(child: ProjectSection()),
             ],
           ),
 

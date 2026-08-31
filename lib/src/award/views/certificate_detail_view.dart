@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
+import 'package:tony_portfolio/src/award/model/certificate_model.dart';
 import 'package:tony_portfolio/src/award/widgets/animated_certificate_card.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 
 class CertificateDetailView extends StatefulWidget {
-  final List<Map<String, dynamic>> certificates;
+  final List<MinorCertificateModel> certificates;
   const CertificateDetailView({super.key, required this.certificates});
 
   @override
@@ -28,9 +29,9 @@ class _CertificateDetailViewState extends State<CertificateDetailView> {
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: isDesktop
-                ? AppFormat.priamaryPadding
+                ? AppFormat.primaryPadding
                 : (screenSize.width * 0.1).clamp(
-                    AppFormat.priamaryPadding,
+                    AppFormat.primaryPadding,
                     100.0,
                   ),
           ),
@@ -49,7 +50,6 @@ class _CertificateDetailViewState extends State<CertificateDetailView> {
               final certificate = widget.certificates[index];
 
               return AnimatedCertificateCard(
-                index: index,
                 certificate: certificate,
                 isExpandedMobile: _expandedIndex == index,
                 onTapMobile: () {

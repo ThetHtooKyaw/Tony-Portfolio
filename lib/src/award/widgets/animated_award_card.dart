@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/data/hackathon_info.dart';
+import 'package:tony_portfolio/src/award/model/hackathon_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -47,7 +47,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
   }
 
   void _handleUrlLaunch() async {
-    final Uri url = Uri.parse(hackathonInfos[0]['url']);
+    final Uri url = Uri.parse(hackathons[0].url);
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       debugPrint('Could not launch $url');
@@ -61,7 +61,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
     final isTablet = ResponsiveWidget.isTablet(context);
 
     return VisibilityDetector(
-      key: Key('award-${hackathonInfos[0]}'),
+      key: Key('award-${hackathons[0].projectName}'),
       onVisibilityChanged: (awardCard) {
         if (awardCard.visibleFraction > 0.1) {
           if (_controller.status == AnimationStatus.dismissed ||
@@ -123,8 +123,9 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Project Name & Event Name
                 Text(
-                  '${hackathonInfos[0]['projectName']} - ${hackathonInfos[0]['eventName']}',
+                  '${hackathons[0].projectName} - ${hackathons[0].eventName}',
                   style: TextStyle(
                     color: AppColor.white,
                     fontFamily: 'Oswald',
@@ -136,7 +137,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
 
                 // Tech Stack Icons
                 Row(
-                  children: hackathonInfos[0]['icons'].map<Widget>((icon) {
+                  children: hackathons[0].icons.map<Widget>((icon) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: Image.asset(icon, width: 24, height: 24),
@@ -147,7 +148,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
 
                 // Description
                 Text(
-                  hackathonInfos[0]['description'],
+                  hackathons[0].description,
                   maxLines: isExpanded ? 20 : 7,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -177,9 +178,10 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
         ),
         const SizedBox(height: 20),
 
+        // Project Name & Event Name
         Center(
           child: AutoSizeText(
-            '${hackathonInfos[0]['projectName']} - ${hackathonInfos[0]['eventName']}',
+            '${hackathons[0].projectName} - ${hackathons[0].eventName}',
             maxFontSize: 30,
             minFontSize: 18,
             textAlign: TextAlign.center,
@@ -197,7 +199,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
         Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: hackathonInfos[0]['icons'].map<Widget>((icon) {
+            children: hackathons[0].icons.map<Widget>((icon) {
               return Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Image.asset(icon, width: 24, height: 24),
@@ -207,10 +209,11 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
         ),
         const SizedBox(height: 10),
 
+        // Description
         GestureDetector(
           onTap: () => setState(() => isExpanded = !isExpanded),
           child: AutoSizeText(
-            hackathonInfos[0]['description'],
+            hackathons[0].description,
             maxLines: isExpanded ? 20 : 6,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.justify,
@@ -244,7 +247,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
-                hackathonInfos[0]['image'][0],
+                hackathons[0].image[0],
                 height: imageHeight,
                 width: imageWidth,
                 fit: BoxFit.fill,
@@ -269,7 +272,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Image.asset(
-                          'assets/icons/trophy.png',
+                          'assets/icons/trophy.webp',
                           width: 20,
                           height: 20,
                           color: const Color(0xFFFFD700),
@@ -277,7 +280,7 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
                         const SizedBox(width: 10),
 
                         Text(
-                          hackathonInfos[0]['award'],
+                          hackathons[0].award,
                           style: TextStyle(
                             color: AppColor.white,
                             fontFamily: 'Questrial',

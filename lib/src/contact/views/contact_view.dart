@@ -5,9 +5,10 @@ import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/core/utils/app_snackbars.dart';
 import 'package:tony_portfolio/src/contact/view_model/contact_view_model.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/contact/widgets/contact_Icon_button.dart';
+import 'package:tony_portfolio/src/contact/widgets/custom_textfiled.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ContactView extends StatefulWidget {
   final bool isTestMode;
@@ -29,6 +30,7 @@ class _ContactViewState extends State<ContactView> {
       vm.setError(null);
     } else {
       AppSnackbars.showSuccessSnackbar(context, vm.successMessage!);
+      vm.setSuccess(null);
     }
   }
 
@@ -46,13 +48,10 @@ class _ContactViewState extends State<ContactView> {
       body: Container(
         padding: EdgeInsets.symmetric(
           horizontal: isDesktop
-              ? (screenSize.width * 0.04).clamp(AppFormat.priamaryPadding, 80.0)
+              ? (screenSize.width * 0.04).clamp(AppFormat.primaryPadding, 80.0)
               : isTablet
               ? (screenSize.width * 0.1).clamp(40, 150.0)
-              : (screenSize.width * 0.08).clamp(
-                  AppFormat.priamaryPadding,
-                  40.0,
-                ),
+              : (screenSize.width * 0.08).clamp(AppFormat.primaryPadding, 40.0),
         ),
         height: screenSize.height,
         width: double.infinity,
@@ -154,40 +153,6 @@ class _ContactViewState extends State<ContactView> {
     );
   }
 
-  Widget _buildTitleText(Size screenSize, String text) {
-    final isDesktop = ResponsiveWidget.isDesktop(context);
-
-    return AutoSizeText(
-      text,
-      maxFontSize: isDesktop ? 140 : 100.0,
-      minFontSize: 50.0,
-      maxLines: 1,
-      style: TextStyle(
-        fontFamily: 'Racing Sans One',
-        color: AppColor.white,
-        height: 0.8,
-        fontSize: screenSize.width * 0.1,
-      ),
-    );
-  }
-
-  Widget _buildSubTitleText({required Size screenSize, required String text}) {
-    final isDesktop = ResponsiveWidget.isDesktop(context);
-
-    return AutoSizeText(
-      text,
-      maxFontSize: 34,
-      minFontSize: 18,
-      maxLines: 1,
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontFamily: 'Oswald',
-        color: AppColor.white,
-        fontSize: screenSize.width * (isDesktop ? 0.04 : 0.03),
-      ),
-    );
-  }
-
   Widget _buildContactInfo(Size screenSize) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -202,36 +167,14 @@ class _ContactViewState extends State<ContactView> {
         _buildContactInfoCard(
           screenWidth: screenSize.width,
           icon: Icons.phone_outlined,
-          contactInfo: '+95 924955940',
+          contactInfo: '+66 924955940',
         ),
-      ],
-    );
-  }
+        const SizedBox(height: 10),
 
-  Widget _buildContactInfoCard({
-    required double screenWidth,
-    required IconData icon,
-    required String contactInfo,
-  }) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: AppColor.white,
-          size: (screenWidth * 0.03).clamp(20, 30),
-        ),
-        const SizedBox(width: 10),
-
-        AutoSizeText(
-          contactInfo,
-          maxFontSize: 20,
-          minFontSize: 16,
-          style: TextStyle(
-            fontFamily: 'Questrial',
-            color: AppColor.white,
-            fontSize: screenWidth * 0.03,
-            fontWeight: FontWeight.bold,
-          ),
+        _buildContactInfoCard(
+          screenWidth: screenSize.width,
+          icon: Icons.phone_outlined,
+          contactInfo: '+971 585683997',
         ),
       ],
     );
@@ -247,8 +190,8 @@ class _ContactViewState extends State<ContactView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text Fields
-              _buildTextField(
+              // Contacter Name Field
+              CustomTextfiled(
                 controller: vm.nameController,
                 label: 'Name',
                 keyboardType: TextInputType.name,
@@ -263,7 +206,8 @@ class _ContactViewState extends State<ContactView> {
               ),
               const SizedBox(height: 20),
 
-              _buildTextField(
+              // Email Field
+              CustomTextfiled(
                 controller: vm.emailController,
                 label: 'Email',
                 keyboardType: TextInputType.emailAddress,
@@ -280,7 +224,8 @@ class _ContactViewState extends State<ContactView> {
               ),
               const SizedBox(height: 20),
 
-              _buildTextField(
+              // Subject Field
+              CustomTextfiled(
                 controller: vm.subjectController,
                 label: 'Job Title',
                 keyboardType: TextInputType.text,
@@ -295,7 +240,8 @@ class _ContactViewState extends State<ContactView> {
               ),
               const SizedBox(height: 20),
 
-              _buildTextField(
+              // Message Field
+              CustomTextfiled(
                 controller: vm.messageController,
                 label: 'Message',
                 keyboardType: TextInputType.text,
@@ -349,16 +295,16 @@ class _ContactViewState extends State<ContactView> {
                   SizedBox(width: iconPadding),
 
                   // Contact Icon Buttons
-                  _buildContactIconBtn(
+                  ContactIconButton(
                     screenWidth: screenSize.width,
-                    icon: 'assets/icons/linkedin.png',
+                    icon: 'assets/icons/linkedin.webp',
                     link: 'https://www.linkedin.com/in/tonyjohnsons/',
                   ),
                   SizedBox(width: iconPadding),
 
-                  _buildContactIconBtn(
+                  ContactIconButton(
                     screenWidth: screenSize.width,
-                    icon: 'assets/icons/github.png',
+                    icon: 'assets/icons/github.webp',
                     link: 'https://github.com/ThetHtooKyaw',
                   ),
                 ],
@@ -370,63 +316,66 @@ class _ContactViewState extends State<ContactView> {
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    required TextInputType keyboardType,
-    bool isMessageField = false,
-    required String? Function(String?)? validator,
-  }) {
-    return SizedBox(
-      width: 600,
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        minLines: 1,
-        maxLines: isMessageField ? 4 : 1,
-        style: TextStyle(color: AppColor.white),
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: TextStyle(color: AppColor.placeholder),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColor.placeholder),
-          ),
-          focusedBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: AppColor.white),
-          ),
-        ),
-        validator: validator,
+  Widget _buildTitleText(Size screenSize, String text) {
+    final isDesktop = ResponsiveWidget.isDesktop(context);
+
+    return AutoSizeText(
+      text,
+      maxFontSize: isDesktop ? 140 : 100.0,
+      minFontSize: 50.0,
+      maxLines: 1,
+      style: TextStyle(
+        fontFamily: 'Racing Sans One',
+        color: AppColor.white,
+        height: 0.8,
+        fontSize: screenSize.width * 0.1,
       ),
     );
   }
 
-  Widget _buildContactIconBtn({
-    required double screenWidth,
-    required String icon,
-    required String link,
-  }) {
-    final btnSize = (screenWidth * 0.03).clamp(18.0, 24.0);
+  Widget _buildSubTitleText({required Size screenSize, required String text}) {
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
-    return IconButton(
-      onPressed: () async {
-        final Uri url = Uri.parse(link);
-
-        if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-          debugPrint('Could not launch $url');
-        }
-      },
-      style: IconButton.styleFrom(
-        padding: EdgeInsets.all((screenWidth * 0.03).clamp(18.0, 24.0)),
-        backgroundColor: AppColor.card,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-      // padding: const EdgeInsets.all(20),
-      icon: Image.asset(
-        icon,
+    return AutoSizeText(
+      text,
+      maxFontSize: 34,
+      minFontSize: 18,
+      maxLines: 1,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontFamily: 'Oswald',
         color: AppColor.white,
-        height: btnSize,
-        width: btnSize,
+        fontSize: screenSize.width * (isLargeScreen ? 0.04 : 0.038),
       ),
+    );
+  }
+
+  Widget _buildContactInfoCard({
+    required double screenWidth,
+    required IconData icon,
+    required String contactInfo,
+  }) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: AppColor.white,
+          size: (screenWidth * 0.03).clamp(20, 30),
+        ),
+        const SizedBox(width: 10),
+
+        AutoSizeText(
+          contactInfo,
+          maxFontSize: 20,
+          minFontSize: 16,
+          style: TextStyle(
+            fontFamily: 'Questrial',
+            color: AppColor.white,
+            fontSize: screenWidth * 0.03,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

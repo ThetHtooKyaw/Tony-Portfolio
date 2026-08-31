@@ -3,16 +3,17 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/home/models/experience_model.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class AnimatedExperienceCard extends StatefulWidget {
   final int index;
-  final Map<String, dynamic> expData;
+  final ExperienceModel experience;
   const AnimatedExperienceCard({
     super.key,
     required this.index,
-    required this.expData,
+    required this.experience,
   });
 
   @override
@@ -71,7 +72,6 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
           }
         }
       },
-
       child: isDesktop
           ? FadeTransition(
               opacity: _fadeInAnimation,
@@ -80,13 +80,13 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
                 child: _buildDesktopCard(
                   screenSize: screenSize.width,
                   isHeadlineleft: widget.index % 2 == 0,
-                  expData: widget.expData,
+                  experience: widget.experience,
                 ),
               ),
             )
           : _buildMobileCard(
               screenWidth: screenSize.width,
-              expData: widget.expData,
+              experience: widget.experience,
             ),
     );
   }
@@ -94,8 +94,9 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
   Widget _buildDesktopCard({
     required double screenSize,
     required bool isHeadlineleft,
-    required Map<String, dynamic> expData,
+    required ExperienceModel experience,
   }) {
+    // Headline
     Widget headline = Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: isHeadlineleft
@@ -104,7 +105,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
       children: [
         // Position
         AutoSizeText(
-          expData['position'],
+          experience.position,
           textAlign: isHeadlineleft ? TextAlign.right : TextAlign.left,
           maxFontSize: 30.0,
           minFontSize: 24.0,
@@ -120,7 +121,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
 
         // Company Name
         AutoSizeText(
-          expData['company'],
+          experience.company,
           textAlign: isHeadlineleft ? TextAlign.right : TextAlign.left,
           maxFontSize: 26.0,
           minFontSize: 20.0,
@@ -136,7 +137,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
 
         // Year
         AutoSizeText(
-          expData['year'],
+          experience.year,
           maxFontSize: 20.0,
           minFontSize: 16.0,
           style: TextStyle(
@@ -150,14 +151,15 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
         const SizedBox(height: 12),
 
         // Company Logo
-        _buildCompanyLogo(expData),
+        _buildCompanyLogo(experience),
       ],
     );
 
+    // Description
     Widget description = SizedBox(
       width: 500,
       child: AutoSizeText(
-        expData['desc'],
+        experience.desc,
         textAlign: isHeadlineleft ? TextAlign.left : TextAlign.right,
         maxFontSize: 18.0,
         minFontSize: 14.0,
@@ -200,7 +202,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
 
   Widget _buildMobileCard({
     required double screenWidth,
-    required Map<String, dynamic> expData,
+    required ExperienceModel experience,
   }) {
     return GestureDetector(
       onTap: () => setState(() => isTextExpanded = !isTextExpanded),
@@ -209,7 +211,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
-            padding: const EdgeInsets.all(AppFormat.priamaryPadding),
+            padding: const EdgeInsets.all(AppFormat.primaryPadding),
             width: double.infinity,
             decoration: BoxDecoration(
               color: AppColor.shadow.withValues(alpha: 0.2),
@@ -227,7 +229,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
                 Row(
                   children: [
                     // Company Logo
-                    _buildCompanyLogo(expData),
+                    _buildCompanyLogo(experience),
                     const SizedBox(width: 16),
 
                     Expanded(
@@ -237,7 +239,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
                         children: [
                           // Position
                           AutoSizeText(
-                            expData['position'],
+                            experience.position,
                             maxFontSize: 20.0,
                             minFontSize: 16.0,
                             maxLines: 1,
@@ -254,7 +256,7 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
 
                           // Company Name
                           AutoSizeText(
-                            expData['company'],
+                            experience.company,
                             maxFontSize: 18.0,
                             minFontSize: 14.0,
                             maxLines: 1,
@@ -270,10 +272,9 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
 
                           // Year
                           AutoSizeText(
-                            expData['year'],
+                            experience.year,
                             maxFontSize: 18.0,
                             minFontSize: 14.0,
-
                             style: TextStyle(
                               fontFamily: 'Questrial',
                               color: AppColor.placeholder,
@@ -289,8 +290,9 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
                 ),
                 const SizedBox(height: 16),
 
+                // Description
                 AutoSizeText(
-                  expData['desc'],
+                  experience.desc,
                   maxFontSize: 18.0,
                   minFontSize: 14.0,
                   maxLines: isTextExpanded ? 20 : 5,
@@ -309,13 +311,13 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
     );
   }
 
-  Widget _buildCompanyLogo(Map<String, dynamic> expData) {
+  Widget _buildCompanyLogo(ExperienceModel experience) {
     return ClipOval(
       child: Container(
         height: 50,
         width: 50,
         color: AppColor.white,
-        child: Image.asset(expData['logo'], fit: BoxFit.cover),
+        child: Image.asset(experience.logo, fit: BoxFit.cover),
       ),
     );
   }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/home/models/skill_model.dart';
 
 class AnimatedHoverSkillCard extends StatefulWidget {
-  final Map<String, String> skill;
+  final SkillModel skill;
   const AnimatedHoverSkillCard({super.key, required this.skill});
 
   @override
@@ -49,14 +50,14 @@ class _AnimatedHoverSkillCardState extends State<AnimatedHoverSkillCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    widget.skill['icon'] ?? '',
+                    widget.skill.icon,
                     height: iconSize,
                     width: iconSize,
                     color: AppColor.white,
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    widget.skill['text'] ?? '',
+                    widget.skill.text,
                     style: TextStyle(
                       fontFamily: 'Open Sans',
                       color: AppColor.white,
@@ -102,14 +103,14 @@ class _AnimatedHoverSkillCardState extends State<AnimatedHoverSkillCard> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Image.asset(
-                                widget.skill['icon'] ?? '',
+                                widget.skill.icon,
                                 height: iconSize,
                                 width: iconSize,
                                 color: AppColor.background,
                               ),
                               const SizedBox(width: 10),
                               Text(
-                                widget.skill['text'] ?? '',
+                                widget.skill.text,
                                 style: TextStyle(
                                   fontFamily: 'Open Sans',
                                   color: AppColor.background,

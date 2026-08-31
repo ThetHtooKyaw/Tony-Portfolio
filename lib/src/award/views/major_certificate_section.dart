@@ -1,0 +1,146 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_3d_carousel/flutter_3d_carousel.dart';
+import 'package:tony_portfolio/src/award/model/certificate_model.dart';
+import 'package:tony_portfolio/core/theme/app_color.dart';
+import 'package:tony_portfolio/core/theme/app_format.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+class MajorCertificateSection extends StatelessWidget {
+  final ScrollController scrollController;
+  const MajorCertificateSection({super.key, required this.scrollController});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
+
+    return Container(
+      height: screenSize.height,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [0.0, 0.4, 1.0],
+          colors: [
+            AppColor.white,
+            Color.lerp(AppColor.white, AppColor.background, 0.5)!,
+            AppColor.background,
+          ],
+        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+      ),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+
+          // Label
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppFormat.primaryPadding,
+              vertical: 10,
+            ),
+            decoration: BoxDecoration(
+              color: AppColor.background,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColor.background.withValues(alpha: 0.6),
+                  blurRadius: 10,
+                  offset: Offset(0, 10),
+                ),
+              ],
+            ),
+            child: AutoSizeText(
+              'BEYOND THE CODE',
+              maxFontSize: 20,
+              minFontSize: 16,
+              style: TextStyle(
+                fontFamily: 'Questrial',
+                color: AppColor.white,
+                fontSize: screenSize.width * 0.03,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Title
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isLargeScreen
+                  ? (screenSize.width * 0.03).clamp(40.0, 80.0)
+                  : AppFormat.primaryPadding,
+            ),
+            child: AutoSizeText(
+              'Credentials & Credits',
+              maxFontSize: 100,
+              minFontSize: 30,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Racing Sans One',
+                color: AppColor.background,
+                height: 1,
+                fontSize: screenSize.width * 0.1,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+
+          // Subtitle
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isLargeScreen
+                  ? (screenSize.width * 0.03).clamp(40.0, 80.0)
+                  : AppFormat.primaryPadding,
+            ),
+            child: AutoSizeText(
+              'Where academic rigor meets professional practice and specialized innovation',
+              maxFontSize: 20,
+              minFontSize: 8,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'Questrial',
+                color: AppColor.shadow,
+                fontSize: screenSize.width * 0.03,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(height: isLargeScreen ? 0 : 40),
+
+          // Major Certificates
+          ClipRect(
+            child: CarouselWidget3D(
+              childScale: isLargeScreen ? 0.7 : 0.9,
+              radius: isLargeScreen
+                  ? screenSize.width * 0.7
+                  : screenSize.width * 0.7,
+              snapTimeInMillis: 200,
+              shouldRotate: false,
+              spinWhileRotating: false,
+              dragSensitivity: 1.0,
+              children: List.generate(majorCertificates.length, (index) {
+                return CarouselChild(
+                  child: Container(
+                    height: (screenSize.width).clamp(300, 600),
+                    width: (screenSize.width).clamp(800, 1000),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColor.background, width: 2),
+                    ),
+                    child: Image.asset(
+                      majorCertificates[index],
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -3,18 +3,16 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/widgets/responsive_widget.dart';
+import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/award/model/certificate_model.dart';
 
 class AnimatedCertificateCard extends StatefulWidget {
-  final int index;
-  final Map<String, dynamic> certificate;
+  final MinorCertificateModel certificate;
   final bool isExpandedMobile;
   final VoidCallback onTapMobile;
 
-  // final bool isRightColumn;
   const AnimatedCertificateCard({
     super.key,
-    required this.index,
     required this.certificate,
     required this.isExpandedMobile,
     required this.onTapMobile,
@@ -29,12 +27,9 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
   bool _isHovering = false;
 
   void _handleSeeMore() {
-    if (widget.certificate['detail'] == false) return;
+    if (widget.certificate.detail == false) return;
 
-    context.go(
-      '/awards/certificates',
-      extra: widget.certificate['certificates'],
-    );
+    context.go('/awards/certificates', extra: widget.certificate.certificates);
   }
 
   @override
@@ -42,6 +37,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
     final isExpanded = isDesktop ? _isHovering : widget.isExpandedMobile;
+    final certificate = widget.certificate;
 
     Widget largeCard = GestureDetector(
       onTap: _handleSeeMore,
@@ -59,12 +55,14 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
             _buildImageContainer(height: 500, width: 650),
 
             // "See More" Button
-            if (widget.certificate['detail'] == true)
+            if (certificate.detail == true)
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Center(child: _buildButton(screenSize)),
+                child: Center(
+                  child: _buildButton(screenSize, isLargeCard: true),
+                ),
               ),
 
             // Foreground Overlay
@@ -77,7 +75,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
                     child: RotatedBox(
                       quarterTurns: 5,
                       child: AutoSizeText(
-                        widget.certificate['title']!,
+                        certificate.title,
                         maxFontSize: 20,
                         minFontSize: 16,
                         maxLines: 1,
@@ -110,12 +108,14 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
             _buildImageContainer(height: 300, width: double.infinity),
 
             // "See More" Button
-            if (widget.certificate['detail'] == true)
+            if (certificate.detail == true)
               Positioned(
                 bottom: 0,
                 left: 0,
                 right: 0,
-                child: Center(child: _buildButton(screenSize)),
+                child: Center(
+                  child: _buildButton(screenSize, isLargeCard: false),
+                ),
               ),
 
             // Foreground Overlay
@@ -126,7 +126,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
                 ? const SizedBox.shrink()
                 : Center(
                     child: AutoSizeText(
-                      widget.certificate['title']!,
+                      certificate.title,
                       maxFontSize: 20,
                       minFontSize: 16,
                       maxLines: 1,
@@ -156,30 +156,50 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
     return smallCard;
   }
 
-  Widget _buildButton(Size screenSize) {
-    return ClipRRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-          decoration: BoxDecoration(
-            color: AppColor.shadow,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
-          ),
-          child: AutoSizeText(
-            'See More',
-            maxFontSize: 18,
-            minFontSize: 16,
-            style: TextStyle(
-              fontFamily: 'Questrial',
-              color: AppColor.white,
-              fontSize: screenSize.width * 0.03,
-              fontWeight: FontWeight.bold,
+  Widget _buildButton(Size screenSize, {required bool isLargeCard}) {
+    Widget buttonContent(double bottomRadius) {
+      return ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: const Radius.circular(14),
+          bottom: Radius.circular(isLargeCard ? bottomRadius : 0),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+            decoration: BoxDecoration(
+              color: AppColor.shadow,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(14),
+                bottom: Radius.circular(isLargeCard ? bottomRadius : 0),
+              ),
+            ),
+            child: AutoSizeText(
+              'See More',
+              maxFontSize: 18,
+              minFontSize: 16,
+              style: TextStyle(
+                fontFamily: 'Questrial',
+                color: AppColor.white,
+                fontSize: screenSize.width * 0.03,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
+
+    if (isLargeCard) {
+      return TweenAnimationBuilder<double>(
+        tween: Tween<double>(begin: 12.0, end: _isHovering ? 0.0 : 12.0),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        builder: (context, bottomRadius, _) => buttonContent(bottomRadius),
+      );
+    }
+
+    return buttonContent(12.0);
   }
 
   Widget _buildOverlay(double borderRadius) {
@@ -216,7 +236,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.asset(
-        widget.certificate['image']!,
+        widget.certificate.image,
         height: height,
         width: width,
         fit: BoxFit.fill,
