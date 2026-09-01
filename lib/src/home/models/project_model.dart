@@ -141,7 +141,7 @@ const List<ProjectModel> projects = [
     detail:
         'Developing this full-stack restaurant software from the ground up gave me a comprehensive understanding of how to plan, build, and deliver a production-ready web application independently. On the frontend, I gained significant expertise in implementing multi-language localization frameworks that dynamically translate content, while utilizing mobile-first design patterns to ensure intricate layouts remain completely responsive across all device screen sizes. Moving deeper into the backend architecture, I focused on constructing heavy operational logic—specifically engineering a thread-safe table reservation and scheduling engine capable of managing real-time inventory and preventing booking conflicts. Additionally, I learned how to orchestrate complex data flows by building a secure menu management system driven by robust CRUD pipelines, connecting automated booking confirmation email triggers using transactional mail servers, and unifying these separate components into a centralized administrative control dashboard for seamless restaurant management.',
     storeButtons: [
-      {'name': 'Website', 'url': 'https://ruyi-restaurant.xyz/'},
+      {'name': 'Website', 'url': 'https://ruyibooking.netlify.app/'},
     ],
   ),
 ];

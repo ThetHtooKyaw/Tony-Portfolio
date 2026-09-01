@@ -4,6 +4,7 @@ import 'package:tony_portfolio/src/home/models/project_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class ProjectSection extends StatelessWidget {
   const ProjectSection({super.key});
@@ -11,40 +12,110 @@ class ProjectSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 40, bottom: 20),
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppFormat.primaryPadding,
-        ),
-        shrinkWrap: true,
-        separatorBuilder: (_, _) => SizedBox(height: AppFormat.primaryPadding),
-        itemCount: projects.length,
-        itemBuilder: (context, index) {
-          final project = projects[index];
+      padding: const EdgeInsets.all(AppFormat.primaryPadding),
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
 
-          return ProjectCard(project: project);
-        },
+          ...projects.asMap().entries.map((entry) {
+            final index = entry.key;
+            final project = entry.value;
+
+            return ProjectCard(index: index, project: project);
+          }),
+        ],
       ),
     );
   }
 }
 
 class ProjectCard extends StatefulWidget {
+  final int index;
   final ProjectModel project;
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({super.key, required this.index, required this.project});
 
   @override
   State<ProjectCard> createState() => _ProjectCardState();
 }
 
-class _ProjectCardState extends State<ProjectCard> {
+class _ProjectCardState extends State<ProjectCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeInAnimation;
+  late Animation<Offset> _slideUpAnimation;
   bool _isHovering = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
+    );
+
+    _fadeInAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    );
+
+    _slideUpAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 0.2),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDesktop = ResponsiveWidget.isDesktop(context);
     final project = widget.project;
 
-    final card = GestureDetector(
+    final card = VisibilityDetector(
+      key: Key('project-${widget.index}'),
+      onVisibilityChanged: (expCard) {
+        if (expCard.visibleFraction > 0.03) {
+          if (_controller.status == AnimationStatus.dismissed ||
+              _controller.status == AnimationStatus.reverse) {
+            _controller.forward();
+          }
+        } else if (expCard.visibleFraction == 0) {
+          if (isDesktop) {
+            _controller.reset();
+          }
+        }
+      },
+      child: FadeTransition(
+        opacity: _fadeInAnimation,
+        child: SlideTransition(
+          position: _slideUpAnimation,
+          child: _buildProjectCard(context, isDesktop, project),
+        ),
+      ),
+    );
+
+    if (isDesktop) {
+      return MouseRegion(
+        onEnter: (_) => setState(() => _isHovering = true),
+        onExit: (_) => setState(() => _isHovering = false),
+        child: card,
+      );
+    }
+
+    return card;
+  }
+
+  GestureDetector _buildProjectCard(
+    BuildContext context,
+    bool isDesktop,
+    ProjectModel project,
+  ) {
+    return GestureDetector(
       onTap: () => context.go('/home/project_detail', extra: widget.project),
       child: Center(
         child: AnimatedContainer(
@@ -52,6 +123,9 @@ class _ProjectCardState extends State<ProjectCard> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
           width: isDesktop ? 900 : double.infinity,
+          margin: const EdgeInsets.symmetric(
+            vertical: AppFormat.secondaryPadding,
+          ),
           padding: const EdgeInsets.all(AppFormat.primaryPadding),
           decoration: BoxDecoration(
             color: AppColor.card,
@@ -201,15 +275,5 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
       ),
     );
-
-    if (isDesktop) {
-      return MouseRegion(
-        onEnter: (_) => setState(() => _isHovering = true),
-        onExit: (_) => setState(() => _isHovering = false),
-        child: card,
-      );
-    }
-
-    return card;
   }
 }
