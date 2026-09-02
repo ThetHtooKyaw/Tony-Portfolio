@@ -47,132 +47,134 @@ class _HackathonSectionState extends State<HackathonSection>
       height: isDesktop ? screenSize.height * 2.0 : screenSize.height * 2.4,
       width: double.infinity,
       color: AppColor.background,
-      child: AnimatedBuilder(
-        animation: widget.scrollController,
-        builder: (context, child) {
-          double scrollOffset = 0.0;
+      child: RepaintBoundary(
+        child: AnimatedBuilder(
+          animation: widget.scrollController,
+          builder: (context, child) {
+            double scrollOffset = 0.0;
 
-          if (widget.scrollController.hasClients) {
-            scrollOffset = widget.scrollController.offset;
-          }
+            if (widget.scrollController.hasClients) {
+              scrollOffset = widget.scrollController.offset;
+            }
 
-          // Responsive Logic
-          final double minWidth = 600;
-          final double maxWidth = 1600;
-          final double minOffset = 100;
-          final double maxOffset = 50;
+            // Responsive Logic
+            final double minWidth = 600;
+            final double maxWidth = 1600;
+            final double minOffset = 100;
+            final double maxOffset = 50;
 
-          final double t =
-              (1 - ((screenSize.width - minWidth) / (maxWidth - minWidth)))
-                  .clamp(0.0, 1.0);
-          final double topOffset = maxOffset + (minOffset - maxOffset) * t;
-
-          // Parallax Effect Animation Logic
-          final double parallaxOffsetY = scrollOffset.clamp(
-            0.0,
-            screenSize.height * 3.0,
-          );
-
-          final double startScroll = screenSize.height * 0.4;
-          final double endScroll = screenSize.height * 1.0;
-          final double reverseEndScroll = screenSize.height * 1.5;
-
-          double progress = 0.0;
-          if (scrollOffset >= startScroll && scrollOffset <= endScroll) {
-            progress =
-                ((scrollOffset - startScroll) / (endScroll - startScroll))
+            final double t =
+                (1 - ((screenSize.width - minWidth) / (maxWidth - minWidth)))
                     .clamp(0.0, 1.0);
-          } else if (scrollOffset > endScroll &&
-              scrollOffset <= reverseEndScroll) {
-            progress =
-                1.0 -
-                ((scrollOffset - endScroll) / (reverseEndScroll - endScroll))
-                    .clamp(0.0, 1.0);
-          }
+            final double topOffset = maxOffset + (minOffset - maxOffset) * t;
 
-          // Size Animation Logic
-          final double earthWidthStart = (screenSize.width * 0.9).clamp(
-            600.0,
-            1600.0,
-          );
-          final double earthWidthEnd = (screenSize.width * 0.9).clamp(
-            300.0,
-            1000.0,
-          );
+            // Parallax Effect Animation Logic
+            final double parallaxOffsetY = scrollOffset.clamp(
+              0.0,
+              screenSize.height * 3.0,
+            );
 
-          final double earthWidth =
-              earthWidthStart - (earthWidthStart - earthWidthEnd) * progress;
+            final double startScroll = screenSize.height * 0.4;
+            final double endScroll = screenSize.height * 1.0;
+            final double reverseEndScroll = screenSize.height * 1.5;
 
-          return ClipRRect(
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                // Earth Animation
-                Positioned(
-                  top: topOffset,
-                  child: _buildLottieAnimation(parallaxOffsetY, earthWidth),
-                ),
+            double progress = 0.0;
+            if (scrollOffset >= startScroll && scrollOffset <= endScroll) {
+              progress =
+                  ((scrollOffset - startScroll) / (endScroll - startScroll))
+                      .clamp(0.0, 1.0);
+            } else if (scrollOffset > endScroll &&
+                scrollOffset <= reverseEndScroll) {
+              progress =
+                  1.0 -
+                  ((scrollOffset - endScroll) / (reverseEndScroll - endScroll))
+                      .clamp(0.0, 1.0);
+            }
 
-                // Landing Title
-                Positioned(
-                  top: screenSize.height * 0.74,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children:
-                        [
-                          _buildLandingText(
-                            screenSize: screenSize,
-                            text: 'HACKATHON',
-                            maxFontSize: 300,
-                            minFontSize: 40,
-                          ),
-                          _buildLandingText(
-                            screenSize: screenSize,
-                            text: 'ENTRIES',
-                            maxFontSize: 80,
-                            minFontSize: 20,
-                          ),
-                        ].animate().slide(
-                          begin: const Offset(0.0, 1.0),
-                          end: Offset.zero,
-                          duration: 800.ms,
-                          curve: Curves.easeIn,
-                        ),
+            // Size Animation Logic
+            final double earthWidthStart = (screenSize.width * 0.9).clamp(
+              600.0,
+              1600.0,
+            );
+            final double earthWidthEnd = (screenSize.width * 0.9).clamp(
+              300.0,
+              1000.0,
+            );
+
+            final double earthWidth =
+                earthWidthStart - (earthWidthStart - earthWidthEnd) * progress;
+
+            return ClipRRect(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  // Earth Animation
+                  Positioned(
+                    top: topOffset,
+                    child: _buildLottieAnimation(parallaxOffsetY, earthWidth),
                   ),
-                ),
 
-                // Foreground Title
-                Positioned(
-                  top: screenSize.height * 1.2,
-                  child: AutoSizeText(
-                    '" JUST DO IT "',
-                    maxFontSize: 40,
-                    minFontSize: 20,
-                    style: TextStyle(
-                      foreground: Paint()
-                        ..color = AppColor.accent
-                        ..blendMode = BlendMode.difference,
-                      // color: AppColor.accent,
-                      fontFamily: 'Racing Sans One',
-                      height: 1,
-                      fontSize: screenSize.width * 0.10,
-                      fontWeight: FontWeight.bold,
+                  // Landing Title
+                  Positioned(
+                    top: screenSize.height * 0.74,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children:
+                          [
+                            _buildLandingText(
+                              screenSize: screenSize,
+                              text: 'HACKATHON',
+                              maxFontSize: 300,
+                              minFontSize: 40,
+                            ),
+                            _buildLandingText(
+                              screenSize: screenSize,
+                              text: 'ENTRIES',
+                              maxFontSize: 80,
+                              minFontSize: 20,
+                            ),
+                          ].animate().slide(
+                            begin: const Offset(0.0, 1.0),
+                            end: Offset.zero,
+                            duration: 800.ms,
+                            curve: Curves.easeIn,
+                          ),
                     ),
                   ),
-                ),
 
-                // Hackathon Content
-                Positioned(
-                  top: screenSize.height * 1.4,
-                  left: isLargeScreen ? null : AppFormat.primaryPadding,
-                  right: isLargeScreen ? null : AppFormat.primaryPadding,
-                  child: AnimatedAwardCard(),
-                ),
-              ],
-            ),
-          );
-        },
+                  // Foreground Title
+                  Positioned(
+                    top: screenSize.height * 1.2,
+                    child: AutoSizeText(
+                      '" JUST DO IT "',
+                      maxFontSize: 40,
+                      minFontSize: 20,
+                      style: TextStyle(
+                        foreground: Paint()
+                          ..color = AppColor.accent
+                          ..blendMode = BlendMode.difference,
+                        // color: AppColor.accent,
+                        fontFamily: 'Racing Sans One',
+                        height: 1,
+                        fontSize: screenSize.width * 0.10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  // Hackathon Content
+                  Positioned(
+                    top: screenSize.height * 1.4,
+                    left: isLargeScreen ? null : AppFormat.primaryPadding,
+                    right: isLargeScreen ? null : AppFormat.primaryPadding,
+                    child: AnimatedAwardCard(),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

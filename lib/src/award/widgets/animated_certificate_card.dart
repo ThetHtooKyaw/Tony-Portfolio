@@ -29,7 +29,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
   void _handleSeeMore() {
     if (widget.certificate.detail == false) return;
 
-    context.go('/awards/certificates', extra: widget.certificate.certificates);
+    context.go('/certificates', extra: widget.certificate.certificates);
   }
 
   @override

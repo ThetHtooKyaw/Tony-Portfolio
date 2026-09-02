@@ -63,6 +63,8 @@ class _AnimatedAwardCardState extends State<AnimatedAwardCard>
     return VisibilityDetector(
       key: Key('award-${hackathons[0].projectName}'),
       onVisibilityChanged: (awardCard) {
+        if (!mounted) return;
+
         if (awardCard.visibleFraction > 0.1) {
           if (_controller.status == AnimationStatus.dismissed ||
               _controller.status == AnimationStatus.reverse) {

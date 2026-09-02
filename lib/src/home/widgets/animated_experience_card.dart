@@ -61,6 +61,8 @@ class _AnimatedExperienceCardState extends State<AnimatedExperienceCard>
     return VisibilityDetector(
       key: Key('exp-${widget.index}'),
       onVisibilityChanged: (expCard) {
+        if (!mounted) return;
+
         if (expCard.visibleFraction > 0.02) {
           if (_controller.status == AnimationStatus.dismissed ||
               _controller.status == AnimationStatus.reverse) {

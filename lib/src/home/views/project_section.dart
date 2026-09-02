@@ -79,6 +79,8 @@ class _ProjectCardState extends State<ProjectCard>
     final card = VisibilityDetector(
       key: Key('project-${widget.index}'),
       onVisibilityChanged: (expCard) {
+        if (!mounted) return;
+
         if (expCard.visibleFraction > 0.03) {
           if (_controller.status == AnimationStatus.dismissed ||
               _controller.status == AnimationStatus.reverse) {
@@ -116,7 +118,7 @@ class _ProjectCardState extends State<ProjectCard>
     ProjectModel project,
   ) {
     return GestureDetector(
-      onTap: () => context.go('/home/project_detail', extra: widget.project),
+      onTap: () => context.go('/project_detail', extra: widget.project),
       child: Center(
         child: AnimatedContainer(
           transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),

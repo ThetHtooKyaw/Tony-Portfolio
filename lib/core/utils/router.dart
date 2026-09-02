@@ -21,19 +21,13 @@ final GoRouter router = GoRouter(
         newScreen: const HomeView(),
         key: state.pageKey,
       ),
-      routes: [
-        GoRoute(
-          path: 'home/project_detail',
-          pageBuilder: (context, state) {
-            return AnimatedScreenTransition(
-              newScreen: ProjectDetailView(
-                project: state.extra as ProjectModel,
-              ),
-              key: state.pageKey,
-            );
-          },
-        ),
-      ],
+    ),
+    GoRoute(
+      path: '/project_detail',
+      pageBuilder: (context, state) => AnimatedScreenTransition(
+        newScreen: ProjectDetailView(project: state.extra as ProjectModel),
+        key: state.pageKey,
+      ),
     ),
     GoRoute(
       path: '/awards',
@@ -41,19 +35,15 @@ final GoRouter router = GoRouter(
         newScreen: const AwardView(),
         key: state.pageKey,
       ),
-      routes: [
-        GoRoute(
-          path: 'certificates',
-          pageBuilder: (context, state) {
-            return AnimatedScreenTransition(
-              newScreen: CertificateDetailView(
-                certificates: state.extra as List<MinorCertificateModel>,
-              ),
-              key: state.pageKey,
-            );
-          },
+    ),
+    GoRoute(
+      path: '/certificates',
+      pageBuilder: (context, state) => AnimatedScreenTransition(
+        newScreen: CertificateDetailView(
+          certificates: state.extra as List<MinorCertificateModel>,
         ),
-      ],
+        key: state.pageKey,
+      ),
     ),
     GoRoute(
       path: '/contact',
