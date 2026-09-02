@@ -53,7 +53,7 @@
       justify-content: center;
       align-items: center;
       z-index: 1000;
-      transition: opacity 0.6s ease-out;
+      transition: opacity 0.4s ease-out;
     }
 
     .loading-text {
@@ -87,10 +87,8 @@
      window.addEventListener('flutter-first-frame', function() {
       const loader = document.getElementById('loading-indicator');
       if (loader) {
-        setTimeout(function() {
-          loader.style.display = 'none';
-          loader.remove();
-        }, 600);
+         loader.style.display = 'none';
+        loader.remove();
       }
     });
   </script>
