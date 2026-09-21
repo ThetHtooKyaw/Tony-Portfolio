@@ -65,7 +65,7 @@ class SubTitleWidget extends StatelessWidget {
       child: AutoSizeText(
         subtitle,
         maxFontSize: 20,
-        minFontSize: 8,
+        minFontSize: 12,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'Questrial',

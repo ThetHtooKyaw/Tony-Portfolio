@@ -101,6 +101,7 @@ class _CertificateDetailViewState extends State<CertificateDetailView>
                 separatorBuilder: (context, index) =>
                     const SizedBox(width: 20, height: 20),
                 scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: widget.certificates.length,
                 itemBuilder: (context, index) {
                   final certificate = widget.certificates[index];

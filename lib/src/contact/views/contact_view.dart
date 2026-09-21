@@ -47,7 +47,6 @@ class _ContactViewState extends State<ContactView> {
           : buildAppBar(context: context, screenSize: screenSize),
       body: Container(
         padding: EdgeInsets.symmetric(
-          vertical: 40,
           horizontal: isDesktop
               ? (screenSize.width * 0.04).clamp(AppFormat.primaryPadding, 80.0)
               : isTablet
@@ -72,6 +71,7 @@ class _ContactViewState extends State<ContactView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            const SizedBox(height: 40),
             // Title Text
             _buildTitleText(screenSize, 'LET\'S WORK'),
             _buildTitleText(screenSize, 'TOGETHER'),
@@ -87,6 +87,7 @@ class _ContactViewState extends State<ContactView> {
 
             // Contact Info
             _buildContactInfo(screenSize),
+            const SizedBox(height: 40),
           ],
         ),
       ),
