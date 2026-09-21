@@ -129,91 +129,87 @@ class _ProjectCardState extends State<ProjectCard>
   ) {
     return GestureDetector(
       onTap: () => context.push('/project_detail', extra: widget.project),
-      child: Center(
-        child: AnimatedContainer(
-          transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOut,
-          margin: const EdgeInsets.symmetric(
-            vertical: AppFormat.secondaryPadding,
-          ),
-          padding: const EdgeInsets.all(AppFormat.primaryPadding),
-          width: isDesktop ? 900 : double.infinity,
-          decoration: BoxDecoration(
-            color: AppColor.card,
-            border: Border.all(color: AppColor.disable, width: 0.5),
-            borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  alignment: WrapAlignment.spaceBetween,
-                  runSpacing: AppFormat.primaryPadding,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Project Name
-                        Text(
-                          project.name,
-                          style: TextStyle(
-                            fontFamily: 'Racing Sans One',
-                            color: _isHovering
-                                ? AppColor.accent
-                                : AppColor.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            height: 1,
-                          ),
+      child: AnimatedContainer(
+        transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOut,
+        margin: const EdgeInsets.symmetric(
+          vertical: AppFormat.secondaryPadding,
+        ),
+        padding: const EdgeInsets.all(AppFormat.primaryPadding),
+        width: isDesktop ? 900 : double.infinity,
+        decoration: BoxDecoration(
+          color: AppColor.card,
+          border: Border.all(color: AppColor.disable, width: 0.5),
+          borderRadius: BorderRadius.circular(AppFormat.primaryBorderRadius),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                runSpacing: AppFormat.primaryPadding,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Project Name
+                      Text(
+                        project.name,
+                        style: TextStyle(
+                          fontFamily: 'Racing Sans One',
+                          color: _isHovering ? AppColor.accent : AppColor.white,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          height: 1,
                         ),
-                        const SizedBox(height: 10),
-
-                        // Project Type
-                        Text(
-                          project.type,
-                          style: TextStyle(
-                            fontFamily: 'Oswald',
-                            color: AppColor.light,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    // Project Download Count
-                    if (project.downloadCount > 0)
-                      PillContainerDownloadCount(
-                        downloadCount: project.downloadCount,
-                        fontSize: 16.0,
                       ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+                      const SizedBox(height: 10),
 
-              // Project Labels
-              PillContainerLabel(labels: project.labels),
-              const SizedBox(height: 20),
+                      // Project Type
+                      Text(
+                        project.type,
+                        style: TextStyle(
+                          fontFamily: 'Oswald',
+                          color: AppColor.light,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
 
-              // Project Description
-              Text(
-                project.description,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: AppColor.light, fontSize: 16),
+                  // Project Download Count
+                  if (project.downloadCount > 0)
+                    PillContainerDownloadCount(
+                      downloadCount: project.downloadCount,
+                      fontSize: 16.0,
+                    ),
+                ],
               ),
-              const SizedBox(height: 20),
+            ),
+            const SizedBox(height: 20),
 
-              // Project Buttons
-              PillContainerButton(
-                buttons: project.storeButtons,
-                buttonColor: AppColor.background,
-              ),
-            ],
-          ),
+            // Project Labels
+            PillContainerLabel(labels: project.labels),
+            const SizedBox(height: 20),
+
+            // Project Description
+            Text(
+              project.description,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: AppColor.light, fontSize: 16),
+            ),
+            const SizedBox(height: 20),
+
+            // Project Buttons
+            PillContainerButton(
+              buttons: project.storeButtons,
+              buttonColor: AppColor.background,
+            ),
+          ],
         ),
       ),
     );

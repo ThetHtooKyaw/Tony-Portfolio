@@ -10,10 +10,12 @@ import 'package:url_launcher/url_launcher.dart';
 class FloatingBtn extends StatefulWidget {
   final ScrollController scrollController;
   final Duration delay;
+  final bool notScrollable;
   const FloatingBtn({
     super.key,
     required this.scrollController,
     required this.delay,
+    this.notScrollable = false,
   });
 
   @override
@@ -63,7 +65,7 @@ class _FloatingBtnState extends State<FloatingBtn> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       padding: EdgeInsets.only(
-        bottom: isNearBottom
+        bottom: (isNearBottom || widget.notScrollable)
             ? isLargeScreen
                   ? 100.0
                   : 80.0

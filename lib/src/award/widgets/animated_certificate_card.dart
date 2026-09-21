@@ -27,9 +27,15 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
   bool _isHovering = false;
 
   void _handleSeeMore() {
-    if (widget.certificate.detail == false) return;
+    if (widget.certificate.haveCollection == false) return;
 
-    context.push('/certificates', extra: widget.certificate.certificates);
+    context.push(
+      '/certificates',
+      extra: {
+        'title': widget.certificate.title,
+        'certificates': widget.certificate.certificates,
+      },
+    );
   }
 
   @override
@@ -55,7 +61,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
             _buildImageContainer(),
 
             // "See More" Button
-            if (certificate.detail == true)
+            if (certificate.haveCollection == true)
               Positioned(
                 bottom: 0,
                 left: 0,
@@ -108,7 +114,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
             _buildImageContainer(),
 
             // "See More" Button
-            if (certificate.detail == true)
+            if (certificate.haveCollection == true)
               Positioned(
                 bottom: 0,
                 left: 0,

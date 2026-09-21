@@ -10,8 +10,13 @@ import 'package:tony_portfolio/src/widgets/floating_btn.dart';
 import 'package:tony_portfolio/src/widgets/title_widget.dart';
 
 class CertificateDetailView extends StatefulWidget {
+  final String title;
   final List<MinorCertificateModel> certificates;
-  const CertificateDetailView({super.key, required this.certificates});
+  const CertificateDetailView({
+    super.key,
+    required this.title,
+    required this.certificates,
+  });
 
   @override
   State<CertificateDetailView> createState() => _CertificateDetailViewState();
@@ -44,11 +49,11 @@ class _CertificateDetailViewState extends State<CertificateDetailView>
       floatingActionButton: FloatingBtn(
         scrollController: _scrollController,
         delay: Duration(milliseconds: 0),
+        notScrollable: true,
       ),
       body: isDesktop
           ? _buildDetailCertificateCard(isDesktop)
           : SingleChildScrollView(
-              controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppFormat.primaryPadding,
@@ -64,7 +69,7 @@ class _CertificateDetailViewState extends State<CertificateDetailView>
 
     return Column(
       children: [
-        const SizedBox(height: 60),
+        const SizedBox(height: 20),
 
         // Instruction
         SubTitleWidget(
@@ -72,6 +77,13 @@ class _CertificateDetailViewState extends State<CertificateDetailView>
           color: AppColor.light,
         ),
         const SizedBox(height: 20),
+
+        TitleWidget(
+          title: widget.title,
+          color: AppColor.accent,
+          isLongTitle: true,
+        ),
+        SizedBox(height: isDesktop ? 40 : 20),
 
         // Certificates
         Center(

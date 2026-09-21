@@ -39,12 +39,17 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/certificates',
-      pageBuilder: (context, state) => AnimatedScreenTransition(
-        newScreen: CertificateDetailView(
-          certificates: state.extra as List<MinorCertificateModel>,
-        ),
-        key: state.pageKey,
-      ),
+      pageBuilder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+
+        return AnimatedScreenTransition(
+          newScreen: CertificateDetailView(
+            title: extra['title'] as String,
+            certificates: extra['certificates'] as List<MinorCertificateModel>,
+          ),
+          key: state.pageKey,
+        );
+      },
     ),
     GoRoute(
       path: '/experiments',

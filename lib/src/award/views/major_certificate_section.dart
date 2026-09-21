@@ -67,7 +67,7 @@ class MajorCertificateSection extends StatelessWidget {
 
           // Instruction
           SubTitleWidget(
-            subtitle: 'CLICK TO VIEW ANIMATED',
+            subtitle: 'CLICK OR SLIDE TO ANIMATE',
             color: AppColor.shadow,
           ),
 

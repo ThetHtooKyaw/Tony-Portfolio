@@ -6,7 +6,13 @@ import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 class TitleWidget extends StatelessWidget {
   final String title;
   final Color color;
-  const TitleWidget({super.key, required this.title, required this.color});
+  final bool isLongTitle;
+  const TitleWidget({
+    super.key,
+    required this.title,
+    required this.color,
+    this.isLongTitle = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class TitleWidget extends StatelessWidget {
       ),
       child: AutoSizeText(
         title,
-        maxFontSize: 100,
+        maxFontSize: isLongTitle ? 80 : 100,
         minFontSize: 30,
         maxLines: 1,
         textAlign: TextAlign.center,
