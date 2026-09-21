@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
 import 'package:tony_portfolio/src/home/views/experience_section.dart';
 import 'package:tony_portfolio/src/home/views/intro_section.dart';
 import 'package:tony_portfolio/src/home/views/landing_section.dart';
 import 'package:tony_portfolio/src/home/views/project_section.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:tony_portfolio/src/home/widgets/sticky_section_header.dart';
 import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
 import 'package:tony_portfolio/src/widgets/floating_btn.dart';
@@ -36,30 +34,8 @@ class _HomeViewState extends State<HomeView>
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
-    final isMobile = ResponsiveWidget.isMobile(context);
-
-    if (isMobile || isSmallMobile) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    }
-  }
-
-  @override
   void dispose() {
     super.dispose();
-
     _scrollController.dispose();
   }
 

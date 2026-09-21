@@ -82,10 +82,12 @@ class _LandingSectionState extends State<LandingSection> {
               child: VisibilityDetector(
                 key: const Key('marqueer-visibility'),
                 onVisibilityChanged: (visibilityInfo) {
-                  if (visibilityInfo.visibleFraction == 0) {
-                    _marqueeController.stop();
-                  } else if (visibilityInfo.visibleFraction > 0) {
-                    _marqueeController.start();
+                  if (_marqueeController.hasClients) {
+                    if (visibilityInfo.visibleFraction == 0) {
+                      _marqueeController.stop();
+                    } else if (visibilityInfo.visibleFraction > 0) {
+                      _marqueeController.start();
+                    }
                   }
                 },
                 child:

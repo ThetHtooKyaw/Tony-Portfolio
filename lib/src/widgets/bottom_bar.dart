@@ -4,15 +4,15 @@ import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
 import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 
-class BottomBar extends StatefulWidget {
+class BottomBar extends StatelessWidget {
   final ScrollController scrollController;
-  const BottomBar({super.key, required this.scrollController});
+  final bool? isDetailView;
+  const BottomBar({
+    super.key,
+    required this.scrollController,
+    this.isDetailView = false,
+  });
 
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
@@ -38,37 +38,41 @@ class _BottomBarState extends State<BottomBar> {
           ),
 
           // Project Label
-          if (isLargeScreen)
+          if (isLargeScreen || isDetailView!)
             AnimatedHoverMenuBtn(
               title: 'Tony\'s Portfolio',
-              fontSize: (screenSize.width * 0.025).clamp(22, 34),
+              fontSize: (screenSize.width * 0.025).clamp(
+                isDetailView! ? 16 : 22,
+                isDetailView! ? 20 : 34,
+              ),
             ),
 
           // Back to Top Button
-          GestureDetector(
-            onTap: () {
-              widget.scrollController.animateTo(
-                0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
-            },
-            child: Row(
-              children: [
-                AnimatedHoverMenuBtn(
-                  title: 'Back to Top',
-                  fontSize: (screenSize.width * 0.025).clamp(16, 20),
-                ),
-                const SizedBox(width: 10),
+          if (!isDetailView!)
+            GestureDetector(
+              onTap: () {
+                scrollController.animateTo(
+                  0,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: Row(
+                children: [
+                  AnimatedHoverMenuBtn(
+                    title: 'Back to Top',
+                    fontSize: (screenSize.width * 0.025).clamp(16, 20),
+                  ),
+                  const SizedBox(width: 10),
 
-                Icon(
-                  Icons.arrow_upward,
-                  color: AppColor.white,
-                  size: (screenSize.width * 0.025).clamp(16, 20),
-                ),
-              ],
+                  Icon(
+                    Icons.arrow_upward,
+                    color: AppColor.white,
+                    size: (screenSize.width * 0.025).clamp(16, 20),
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

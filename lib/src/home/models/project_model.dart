@@ -115,10 +115,7 @@ const List<ProjectModel> projects = [
     downloadCount: 0,
     type: 'Restaurant Booking Website',
     labels: ['Flutter, Dart', 'Firebase', 'Web'],
-    images: [
-      // 'assets/images/ruyi_1.webp',
-      // 'assets/images/ruyi_2.webp',
-    ],
+    images: ['assets/images/ruyi_1.webp', 'assets/images/ruyi_2.webp'],
     description:
         'I independently built a restaurant reservation and pre-order platform from scratch as a Full-Stack Flutter Developer. The platform unifies real-time table selection with a dynamic e-commerce menu interface. This gives diners a smoother booking experience while giving the kitchen staff a clear, upfront look at exactly what they need to prep.',
     features: [

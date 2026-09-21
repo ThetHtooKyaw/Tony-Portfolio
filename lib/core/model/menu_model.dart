@@ -24,7 +24,11 @@ const List<MobileMenuItem> mobileMenuItems = [
     route: '/awards',
     delay: Duration(milliseconds: 250),
   ),
-  // MobileMenuItem(title: 'About', route: '/about', delay: Duration(milliseconds: 350)),
+  MobileMenuItem(
+    title: 'Experiments',
+    route: '/experiments',
+    delay: Duration(milliseconds: 350),
+  ),
   MobileMenuItem(
     title: 'Get in touch',
     route: '/contact',
@@ -35,5 +39,6 @@ const List<MobileMenuItem> mobileMenuItems = [
 const List<DesktopMenuItem> desktopMenuItems = [
   DesktopMenuItem(title: 'Home', route: '/'),
   DesktopMenuItem(title: 'Awards', route: '/awards'),
+  DesktopMenuItem(title: 'Experiments', route: '/experiments'),
   // DesktopMenuItem(title: 'About', route: '/about'),
 ];

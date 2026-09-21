@@ -4,6 +4,8 @@ import 'package:tony_portfolio/src/home/models/project_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/pill_container.dart';
+import 'package:tony_portfolio/src/widgets/title_widget.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class ProjectSection extends StatelessWidget {
@@ -12,11 +14,19 @@ class ProjectSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(AppFormat.primaryPadding),
+      padding: const EdgeInsets.symmetric(horizontal: AppFormat.primaryPadding),
       child: Column(
         children: [
           const SizedBox(height: 20),
 
+          // Instruction
+          SubTitleWidget(
+            subtitle: 'SELECT TO VIEW PROJECT DETAILS',
+            color: AppColor.light,
+          ),
+          const SizedBox(height: 20),
+
+          // Projects
           ...projects.asMap().entries.map((entry) {
             final index = entry.key;
             final project = entry.value;
@@ -118,17 +128,17 @@ class _ProjectCardState extends State<ProjectCard>
     ProjectModel project,
   ) {
     return GestureDetector(
-      onTap: () => context.go('/project_detail', extra: widget.project),
+      onTap: () => context.push('/project_detail', extra: widget.project),
       child: Center(
         child: AnimatedContainer(
           transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
-          width: isDesktop ? 900 : double.infinity,
           margin: const EdgeInsets.symmetric(
             vertical: AppFormat.secondaryPadding,
           ),
           padding: const EdgeInsets.all(AppFormat.primaryPadding),
+          width: isDesktop ? 900 : double.infinity,
           decoration: BoxDecoration(
             color: AppColor.card,
             border: Border.all(color: AppColor.disable, width: 0.5),
@@ -154,7 +164,7 @@ class _ProjectCardState extends State<ProjectCard>
                             color: _isHovering
                                 ? AppColor.accent
                                 : AppColor.white,
-                            fontSize: 24,
+                            fontSize: 28,
                             fontWeight: FontWeight.bold,
                             height: 1,
                           ),
@@ -167,7 +177,7 @@ class _ProjectCardState extends State<ProjectCard>
                           style: TextStyle(
                             fontFamily: 'Oswald',
                             color: AppColor.light,
-                            fontSize: 18,
+                            fontSize: 20,
                           ),
                         ),
                       ],
@@ -175,30 +185,9 @@ class _ProjectCardState extends State<ProjectCard>
 
                     // Project Download Count
                     if (project.downloadCount > 0)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColor.shadow.withValues(alpha: 0.2),
-                          border: Border.all(
-                            color: AppColor.accent.withValues(alpha: 0.3),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(
-                            AppFormat.circleBorderRadius,
-                          ),
-                        ),
-                        child: Text(
-                          "${project.downloadCount}K+",
-                          style: const TextStyle(
-                            fontFamily: 'Oswald',
-                            color: AppColor.accent,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      PillContainerDownloadCount(
+                        downloadCount: project.downloadCount,
+                        fontSize: 16.0,
                       ),
                   ],
                 ),
@@ -206,33 +195,7 @@ class _ProjectCardState extends State<ProjectCard>
               const SizedBox(height: 20),
 
               // Project Labels
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: project.labels.map((label) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColor.background,
-                      borderRadius: BorderRadius.circular(
-                        AppFormat.circleBorderRadius,
-                      ),
-                      border: Border.all(color: AppColor.disable, width: 0.5),
-                    ),
-                    child: Text(
-                      label,
-                      style: const TextStyle(
-                        fontFamily: 'Open Sans',
-                        color: AppColor.light,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
+              PillContainerLabel(labels: project.labels),
               const SizedBox(height: 20),
 
               // Project Description
@@ -245,32 +208,9 @@ class _ProjectCardState extends State<ProjectCard>
               const SizedBox(height: 20),
 
               // Project Buttons
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: project.storeButtons.map((button) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColor.background,
-                      borderRadius: BorderRadius.circular(
-                        AppFormat.circleBorderRadius,
-                      ),
-                      border: Border.all(color: AppColor.disable, width: 0.5),
-                    ),
-                    child: Text(
-                      button['name'] as String,
-                      style: const TextStyle(
-                        fontFamily: 'Open Sans',
-                        color: AppColor.white,
-                        fontSize: 14,
-                      ),
-                    ),
-                  );
-                }).toList(),
+              PillContainerButton(
+                buttons: project.storeButtons,
+                buttonColor: AppColor.background,
               ),
             ],
           ),

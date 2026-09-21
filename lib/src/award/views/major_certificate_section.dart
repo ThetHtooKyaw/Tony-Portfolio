@@ -5,6 +5,7 @@ import 'package:tony_portfolio/src/award/model/certificate_model.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 import 'package:tony_portfolio/core/theme/app_format.dart';
 import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/title_widget.dart';
 
 class MajorCertificateSection extends StatelessWidget {
   final ScrollController scrollController;
@@ -16,7 +17,7 @@ class MajorCertificateSection extends StatelessWidget {
     final isLargeScreen = ResponsiveWidget.isLargeScreen(context);
 
     return Container(
-      height: screenSize.height,
+      padding: EdgeInsets.only(top: AppFormat.primaryPadding, bottom: 40),
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -33,8 +34,6 @@ class MajorCertificateSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 20),
-
           // Label
           Container(
             padding: const EdgeInsets.symmetric(
@@ -66,48 +65,24 @@ class MajorCertificateSection extends StatelessWidget {
           ),
           const SizedBox(height: 20),
 
+          // Instruction
+          SubTitleWidget(
+            subtitle: 'CLICK TO VIEW ANIMATED',
+            color: AppColor.shadow,
+          ),
+
           // Title
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isLargeScreen
-                  ? (screenSize.width * 0.03).clamp(40.0, 80.0)
-                  : AppFormat.primaryPadding,
-            ),
-            child: AutoSizeText(
-              'Credentials & Credits',
-              maxFontSize: 100,
-              minFontSize: 30,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Racing Sans One',
-                color: AppColor.background,
-                height: 1,
-                fontSize: screenSize.width * 0.1,
-              ),
-            ),
+          TitleWidget(
+            title: 'Credentials & Credits',
+            color: AppColor.background,
           ),
           const SizedBox(height: 20),
 
           // Subtitle
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isLargeScreen
-                  ? (screenSize.width * 0.03).clamp(40.0, 80.0)
-                  : AppFormat.primaryPadding,
-            ),
-            child: AutoSizeText(
-              'Where academic rigor meets professional practice and specialized innovation',
-              maxFontSize: 20,
-              minFontSize: 8,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Questrial',
-                color: AppColor.shadow,
-                fontSize: screenSize.width * 0.03,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          SubTitleWidget(
+            subtitle:
+                'Where academic rigor meets professional practice and specialized innovation',
+            color: AppColor.shadow,
           ),
           SizedBox(height: isLargeScreen ? 0 : 40),
 

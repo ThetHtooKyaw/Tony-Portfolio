@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tony_portfolio/core/theme/app_color.dart';
 
-class AnimatedScreenTransition extends CustomTransitionPage {
+class AnimatedScreenTransition extends CustomTransitionPage<void> {
   AnimatedScreenTransition({required Widget newScreen, required LocalKey key})
     : super(
         key: key,
         child: newScreen,
         transitionDuration: const Duration(milliseconds: 1000),
+        reverseTransitionDuration: const Duration(milliseconds: 1000),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           final curvedAnimation = CurvedAnimation(
             parent: animation,
@@ -16,6 +17,7 @@ class AnimatedScreenTransition extends CustomTransitionPage {
 
           return Stack(
             children: [
+              // Screen Fade-in/Out Control
               AnimatedBuilder(
                 animation: animation,
                 builder: (context, _) {
@@ -26,6 +28,7 @@ class AnimatedScreenTransition extends CustomTransitionPage {
                 },
               ),
 
+              // Background Color Transition
               AnimatedBuilder(
                 animation: animation,
                 builder: (context, _) {

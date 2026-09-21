@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tony_portfolio/src/award/views/major_certificate_section.dart';
 import 'package:tony_portfolio/src/award/views/hackathon_section.dart';
 import 'package:tony_portfolio/src/award/views/minor_certificate_section.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
 import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
 import 'package:tony_portfolio/src/widgets/floating_btn.dart';
@@ -29,27 +27,6 @@ class AwardViewState extends State<AwardView> {
         _canScroll = true;
       });
     });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final isSmallMobile = ResponsiveWidget.isSmallMobile(context);
-    final isMobile = ResponsiveWidget.isMobile(context);
-
-    if (isMobile || isSmallMobile) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-    }
   }
 
   @override

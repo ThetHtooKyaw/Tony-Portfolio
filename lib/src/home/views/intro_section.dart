@@ -320,11 +320,11 @@ class _IntroSectionState extends State<IntroSection>
           }
 
           const String firstPart =
-              "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0I’m a versatile mobile developer with";
+              "\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0I’m a versatile mobile & web developer with";
           const String accentPart =
-              " solid foundation in software architecture and hands-on experience in full-cycle app development. I turn ";
+              " solid foundation in software architecture and hands-on experience in full-cycle app development.";
           const String lastPart =
-              " concepts into reality with a focus on clean interfaces, and fast delivery.";
+              " I turn concepts into reality with a focus on clean interfaces, and fast delivery.";
 
           const String fullString = firstPart + accentPart + lastPart;
           final int litLetters = (fullString.length * scrollPercent).toInt();

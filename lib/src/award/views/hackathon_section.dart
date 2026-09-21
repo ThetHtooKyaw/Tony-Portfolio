@@ -154,10 +154,9 @@ class _HackathonSectionState extends State<HackathonSection>
                         foreground: Paint()
                           ..color = AppColor.accent
                           ..blendMode = BlendMode.difference,
-                        // color: AppColor.accent,
                         fontFamily: 'Racing Sans One',
                         height: 1,
-                        fontSize: screenSize.width * 0.10,
+                        fontSize: screenSize.width * 0.06,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

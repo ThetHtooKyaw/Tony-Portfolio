@@ -39,7 +39,13 @@ PreferredSizeWidget buildAppBar({
               icon: 'assets/images/tony_logo.webp',
               title: 'Tony\'s Portfolio',
               fontSize: (screenSize.width * 0.025).clamp(18, 22),
-              onPressed: () => context.go('/'),
+              onPressed: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go('/');
+                }
+              },
             ).animate().slide(
               begin: const Offset(0.0, -1.0),
               end: Offset.zero,
@@ -64,8 +70,10 @@ PreferredSizeWidget buildAppBar({
                       onPressed: () {
                         if (menu.route == '/awards') {
                           context.go('/awards');
-                        } else if (menu.route == '/about') {
-                          context.go('/about');
+                        } else if (menu.route == '/experiments') {
+                          context.go('/experiments');
+                        } else if (menu.route == '/contact') {
+                          context.go('/contact');
                         } else {
                           context.go('/');
                         }
@@ -217,7 +225,7 @@ void _showMainMenu({required BuildContext context}) {
                           Text(
                             'Tony\'s Portfolio',
                             style: TextStyle(
-                              fontFamily: 'Oswald',
+                              fontFamily: 'Questrial',
                               color: AppColor.white,
                               fontSize: 18,
                             ),
@@ -245,8 +253,8 @@ void _showMainMenu({required BuildContext context}) {
                         onPressed: () {
                           if (menu.route == '/awards') {
                             context.go('/awards');
-                          } else if (menu.route == '/about') {
-                            context.go('/about');
+                          } else if (menu.route == '/experiments') {
+                            context.go('/experiments');
                           } else if (menu.route == '/contact') {
                             context.go('/contact');
                           } else {

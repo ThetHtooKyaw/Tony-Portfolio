@@ -3,6 +3,7 @@ import 'package:tony_portfolio/src/award/model/certificate_model.dart';
 import 'package:tony_portfolio/src/award/views/award_view.dart';
 import 'package:tony_portfolio/src/award/views/certificate_detail_view.dart';
 import 'package:tony_portfolio/src/contact/views/contact_view.dart';
+import 'package:tony_portfolio/src/experiments/views/experiments_view.dart';
 import 'package:tony_portfolio/src/home/models/project_model.dart';
 import 'package:tony_portfolio/src/home/views/home_view.dart';
 import 'package:tony_portfolio/src/home/views/project_detail_view.dart';
@@ -42,6 +43,13 @@ final GoRouter router = GoRouter(
         newScreen: CertificateDetailView(
           certificates: state.extra as List<MinorCertificateModel>,
         ),
+        key: state.pageKey,
+      ),
+    ),
+    GoRoute(
+      path: '/experiments',
+      pageBuilder: (context, state) => AnimatedScreenTransition(
+        newScreen: const ExperimentsView(),
         key: state.pageKey,
       ),
     ),

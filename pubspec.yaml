@@ -50,7 +50,6 @@ dependencies:
   marqueer: ^2.5.0
   marquee: ^2.3.0
 
-
   lottie: ^3.3.2
   cupertino_icons: ^1.0.8
   auto_size_text: ^3.0.0

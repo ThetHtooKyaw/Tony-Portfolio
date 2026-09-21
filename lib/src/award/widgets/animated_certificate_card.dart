@@ -29,7 +29,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
   void _handleSeeMore() {
     if (widget.certificate.detail == false) return;
 
-    context.go('/certificates', extra: widget.certificate.certificates);
+    context.push('/certificates', extra: widget.certificate.certificates);
   }
 
   @override
@@ -52,7 +52,7 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
         child: Stack(
           children: [
             // Certificate Image
-            _buildImageContainer(height: 500, width: 650),
+            _buildImageContainer(),
 
             // "See More" Button
             if (certificate.detail == true)
@@ -99,13 +99,13 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
-        height: isExpanded ? 300 : 150,
+        height: isExpanded ? 400 : 150,
         width: screenSize.width,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
         child: Stack(
           children: [
             // Certificate Image
-            _buildImageContainer(height: 300, width: double.infinity),
+            _buildImageContainer(),
 
             // "See More" Button
             if (certificate.detail == true)
@@ -232,13 +232,13 @@ class _AnimatedCertificateCardState extends State<AnimatedCertificateCard> {
     );
   }
 
-  Widget _buildImageContainer({required double height, required double width}) {
+  Widget _buildImageContainer() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Image.asset(
         widget.certificate.image,
-        height: height,
-        width: width,
+        height: double.infinity,
+        width: double.infinity,
         fit: BoxFit.fill,
       ),
     );

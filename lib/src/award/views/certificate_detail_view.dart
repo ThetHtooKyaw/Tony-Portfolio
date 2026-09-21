@@ -5,6 +5,9 @@ import 'package:tony_portfolio/src/award/model/certificate_model.dart';
 import 'package:tony_portfolio/src/award/widgets/animated_certificate_card.dart';
 import 'package:tony_portfolio/src/widgets/app_bar.dart';
 import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
+import 'package:tony_portfolio/src/widgets/floating_btn.dart';
+import 'package:tony_portfolio/src/widgets/title_widget.dart';
 
 class CertificateDetailView extends StatefulWidget {
   final List<MinorCertificateModel> certificates;
@@ -14,8 +17,22 @@ class CertificateDetailView extends StatefulWidget {
   State<CertificateDetailView> createState() => _CertificateDetailViewState();
 }
 
-class _CertificateDetailViewState extends State<CertificateDetailView> {
+class _CertificateDetailViewState extends State<CertificateDetailView>
+    with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
   int? _expandedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,45 +40,78 @@ class _CertificateDetailViewState extends State<CertificateDetailView> {
     final isDesktop = ResponsiveWidget.isDesktop(context);
 
     return Scaffold(
-      backgroundColor: AppColor.background,
       appBar: buildAppBar(context: context, screenSize: screenSize),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: isDesktop
-                ? AppFormat.primaryPadding
-                : (screenSize.width * 0.1).clamp(
-                    AppFormat.primaryPadding,
-                    100.0,
-                  ),
-          ),
-          height: isDesktop ? 500 : null,
-          width: double.infinity,
-          alignment: Alignment.center,
-          child: ListView.separated(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
-            shrinkWrap: true,
-            separatorBuilder: (context, index) =>
-                const SizedBox(width: 20, height: 20),
-            scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
-            // physics: const NeverScrollableScrollPhysics(),
-            itemCount: widget.certificates.length,
-            itemBuilder: (context, index) {
-              final certificate = widget.certificates[index];
+      floatingActionButton: FloatingBtn(
+        scrollController: _scrollController,
+        delay: Duration(milliseconds: 0),
+      ),
+      body: isDesktop
+          ? _buildDetailCertificateCard(isDesktop)
+          : SingleChildScrollView(
+              controller: _scrollController,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppFormat.primaryPadding,
+                ),
+                child: _buildDetailCertificateCard(isDesktop),
+              ),
+            ),
+    );
+  }
 
-              return AnimatedCertificateCard(
-                certificate: certificate,
-                isExpandedMobile: _expandedIndex == index,
-                onTapMobile: () {
-                  setState(() {
-                    _expandedIndex = _expandedIndex == index ? null : index;
-                  });
+  Widget _buildDetailCertificateCard(bool isDesktop) {
+    final isTablet = ResponsiveWidget.isTablet(context);
+
+    return Column(
+      children: [
+        const SizedBox(height: 60),
+
+        // Instruction
+        SubTitleWidget(
+          subtitle: 'CLICK OR HOVER TO EXPAND DETAILS',
+          color: AppColor.light,
+        ),
+        const SizedBox(height: 20),
+
+        // Certificates
+        Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isTablet ? 600 : double.infinity,
+            ),
+            child: SizedBox(
+              height: isDesktop ? 500 : null,
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(
+                  vertical: AppFormat.primaryPadding,
+                ),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(width: 20, height: 20),
+                scrollDirection: isDesktop ? Axis.horizontal : Axis.vertical,
+                itemCount: widget.certificates.length,
+                itemBuilder: (context, index) {
+                  final certificate = widget.certificates[index];
+
+                  return AnimatedCertificateCard(
+                    certificate: certificate,
+                    isExpandedMobile: _expandedIndex == index,
+                    onTapMobile: () {
+                      setState(() {
+                        _expandedIndex = _expandedIndex == index ? null : index;
+                      });
+                    },
+                  );
                 },
-              );
-            },
+              ),
+            ),
           ),
         ),
-      ),
+        if (isDesktop) const Spacer(),
+
+        // Bottom Bar
+        BottomBar(scrollController: _scrollController, isDetailView: true),
+      ],
     );
   }
 }
