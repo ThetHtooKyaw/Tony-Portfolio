@@ -43,7 +43,7 @@ class _MinorCertificateSectionState extends State<MinorCertificateSection> {
                 'Verified proficiency in programming syntax and professional communication',
             color: AppColor.white,
           ),
-          SizedBox(height: 60),
+          SizedBox(height: 40),
 
           // Minor Certificates List
           Center(
