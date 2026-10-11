@@ -24,7 +24,7 @@ List<ExperimentProjectModel> experimentProjects = [
     description:
         'A fun horoscope website that lets users uncover their zodiac related true self, strengths, weaknesses, and compatibility through a dynamic date-driven experience.',
     highlight: [
-      'Clean layout tailored for desktop, tablet, and mobile devices.'
+      'Clean layout tailored for desktop, tablet, and mobile devices.',
       'Interactive spinning wheel that responds dynamically to user input',
       'Custom-built scrollable date pickers with smooth step-by-step transitions'
     ],
