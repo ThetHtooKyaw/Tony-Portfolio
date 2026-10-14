@@ -36,64 +36,57 @@ class _ExperimentsViewState extends State<ExperimentsView>
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
-    final isDesktop = ResponsiveWidget.isDesktop(context);
 
     return Scaffold(
       appBar: buildAppBar(context: context, screenSize: screenSize),
       floatingActionButton: FloatingBtn(
         scrollController: _scrollController,
         delay: Duration(milliseconds: 0),
-        notScrollable: true,
       ),
-      body: isDesktop
-          ? _buildTemporaryLayout(isDesktop)
-          : SingleChildScrollView(
-              controller: _scrollController,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppFormat.primaryPadding,
-                ),
-                child: _buildTemporaryLayout(isDesktop),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppFormat.primaryPadding,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+
+              // Instruction
+              SubTitleWidget(
+                subtitle: 'SLIDE OR SCROLL TO BROWSE PROJECTS',
+                color: AppColor.light,
               ),
-            ),
-    );
-  }
 
-  Widget _buildTemporaryLayout(bool isDesktop) {
-    return Column(
-      children: [
-        const SizedBox(height: 20),
+              // Title
+              TitleWidget(title: 'Experiments', color: AppColor.accent),
+              const SizedBox(height: 20),
 
-        // Instruction
-        SubTitleWidget(
-          subtitle: 'SLIDE OR SCROLL TO BROWSE PROJECTS',
-          color: AppColor.light,
+              // Subtitle
+              SubTitleWidget(
+                subtitle:
+                    'A playground for experimental apps, interactive UI, and live feature prototypes',
+                color: AppColor.white,
+              ),
+              SizedBox(height: 40),
+
+              // Experiment Projects
+              ...experimentProjects.asMap().entries.map((entry) {
+                final index = entry.key;
+                final project = entry.value;
+
+                return ExperimentProjectCard(index: index, project: project);
+              }),
+              // Bottom Bar
+              BottomBar(
+                scrollController: _scrollController,
+                isDetailView: true,
+              ),
+            ],
+          ),
         ),
-
-        // Title
-        TitleWidget(title: 'Experiments', color: AppColor.accent),
-        const SizedBox(height: 20),
-
-        // Subtitle
-        SubTitleWidget(
-          subtitle:
-              'A playground for experimental apps, interactive UI, and live feature prototypes',
-          color: AppColor.white,
-        ),
-        SizedBox(height: 40),
-
-        // Experiment Projects
-        ...experimentProjects.asMap().entries.map((entry) {
-          final index = entry.key;
-          final project = entry.value;
-
-          return ExperimentProjectCard(index: index, project: project);
-        }),
-        if (isDesktop) const Spacer(),
-
-        // Bottom Bar
-        BottomBar(scrollController: _scrollController, isDetailView: true),
-      ],
+      ),
     );
   }
 }

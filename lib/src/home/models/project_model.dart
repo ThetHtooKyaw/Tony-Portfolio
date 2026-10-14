@@ -30,7 +30,8 @@ const List<ProjectModel> projects = [
     downloadCount: 1,
     type: 'Esports & Gaming Community App',
     labels: [
-      'Flutter, Dart, Koltin, Swift',
+      'Flutter',
+      'Dart, Koltin, Swift',
       'Clean Architecture, BloC/Cubic',
       'Android / iOS',
     ],
@@ -72,7 +73,8 @@ const List<ProjectModel> projects = [
     downloadCount: 0,
     type: 'Event Marketplace App',
     labels: [
-      'Flutter, Dart, Koltin',
+      'Flutter',
+      'Dart, Koltin',
       'Node.js, Firebase',
       'MVVM, Provider',
       'Android',
@@ -114,7 +116,7 @@ const List<ProjectModel> projects = [
     name: 'RUYI',
     downloadCount: 0,
     type: 'Restaurant Booking Website',
-    labels: ['Flutter, Dart', 'Firebase', 'Web'],
+    labels: ['Flutter', 'Dart', 'Firebase', 'Web'],
     images: ['assets/images/ruyi_1.webp', 'assets/images/ruyi_2.webp'],
     description:
         'I independently built a restaurant reservation and pre-order platform from scratch as a Full-Stack Flutter Developer. The platform unifies real-time table selection with a dynamic e-commerce menu interface. This gives diners a smoother booking experience while giving the kitchen staff a clear, upfront look at exactly what they need to prep.',

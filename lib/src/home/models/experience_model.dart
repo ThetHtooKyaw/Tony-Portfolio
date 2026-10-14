@@ -48,10 +48,18 @@ List<ExperienceModel> experiences = [
         'Co-developed a full-stack CRM platform from scratch, transitioning seamlessly from initial wireframing and high-fidelity Figma designs to a complete technical implementation. Working across the entire stack, I architected a scalable UI and robust database infrastructure using JavaScript, React, Tailwind CSS, and MongoDB to optimize workflow management and ensure a highly responsive user experience.',
   ),
   ExperienceModel(
+    position: 'Freelance Developer',
+    company: 'Freelance',
+    logo: 'assets/images/freelance.webp',
+    year: 'Jan 2024 - Dec 2025',
+    desc:
+        'Engineered responsive, high-performing websites and web applications from scratch, translating design wireframes into clean, production-ready code while debugging existing codebases to enhance performance, ensure cross-browser compatibility, and deliver a seamless user experience across all devices.',
+  ),
+  ExperienceModel(
     position: 'Flutter Developer (Mobile & Desktop)',
     company: 'Hash For Gamers',
     logo: 'assets/images/hash_for_gamer.webp',
-    year: 'Jan 2025 - Dec 2025',
+    year: 'Jan 2025 - Aug 2026',
     desc:
         'Engineered high-performance cross-platform solutions, developing and maintaining the UI for over 10 production mobile and desktop applications serving thousands of users. This included architecting the mobile UI for the Hash: Book Gaming Cafes application and delivering 5+ core features and critical bug fixes for the Hash Dash PC system—including secure User Authentication, real-time Session Control, and comprehensive data Analytics to optimize system performance and user engagement.',
   ),
