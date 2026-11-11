@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_3d_carousel/flutter_3d_carousel.dart';
-import 'package:tony_portfolio/src/award/model/certificate_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
-import 'package:tony_portfolio/src/widgets/title_widget.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../../../core/widgets/title_widget.dart';
+import '../model/certificate_model.dart';
 
 class MajorCertificateSection extends StatelessWidget {
   final ScrollController scrollController;

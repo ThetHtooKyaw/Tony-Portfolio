@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:tony_portfolio/core/status/failure.dart';
-import 'package:tony_portfolio/core/status/success.dart';
+
+import '../../../core/status/failure.dart';
+import '../../../core/status/success.dart';
 
 class ContactService {
   final http.Client httpClient;

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:marqueer/marqueer.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
 
 class LandingSection extends StatefulWidget {
   final ScrollController scrollController;

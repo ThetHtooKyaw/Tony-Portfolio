@@ -1,14 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/core/utils/app_snackbars.dart';
-import 'package:tony_portfolio/src/contact/view_model/contact_view_model.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
-import 'package:tony_portfolio/src/contact/widgets/contact_icon_button.dart';
-import 'package:tony_portfolio/src/contact/widgets/custom_textfiled.dart';
-import 'package:tony_portfolio/src/widgets/app_bar.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/app_snackbars.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../../../core/widgets/app_bar.dart';
+import '../view_model/contact_view_model.dart';
+import '../widgets/contact_icon_button.dart';
+import '../widgets/custom_textfiled.dart';
 
 class ContactView extends StatefulWidget {
   final bool isTestMode;

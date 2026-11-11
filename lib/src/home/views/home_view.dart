@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/widgets/app_bar.dart';
-import 'package:tony_portfolio/src/home/views/experience_section.dart';
-import 'package:tony_portfolio/src/home/views/intro_section.dart';
-import 'package:tony_portfolio/src/home/views/landing_section.dart';
-import 'package:tony_portfolio/src/home/views/project_section.dart';
-import 'package:tony_portfolio/src/home/widgets/sticky_section_header.dart';
-import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
-import 'package:tony_portfolio/src/widgets/floating_btn.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/widgets/app_bar.dart';
+import '../../../core/widgets/bottom_bar.dart';
+import '../../../core/widgets/floating_btn.dart';
+import '../widgets/sticky_section_header.dart';
+import 'experience_section.dart';
+import 'intro_section.dart';
+import 'landing_section.dart';
+import 'project_section.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

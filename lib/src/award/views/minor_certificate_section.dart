@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/src/award/model/certificate_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/award/widgets/animated_certificate_card.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
-import 'package:tony_portfolio/src/widgets/title_widget.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../../../core/widgets/title_widget.dart';
+import '../model/certificate_model.dart';
+import '../widgets/animated_certificate_card.dart';
 
 class MinorCertificateSection extends StatefulWidget {
   const MinorCertificateSection({super.key});

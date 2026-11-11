@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/src/award/views/major_certificate_section.dart';
-import 'package:tony_portfolio/src/award/views/hackathon_section.dart';
-import 'package:tony_portfolio/src/award/views/minor_certificate_section.dart';
-import 'package:tony_portfolio/src/widgets/app_bar.dart';
-import 'package:tony_portfolio/src/widgets/bottom_bar.dart';
-import 'package:tony_portfolio/src/widgets/floating_btn.dart';
+
+import '../../../core/widgets/app_bar.dart';
+import '../../../core/widgets/bottom_bar.dart';
+import '../../../core/widgets/floating_btn.dart';
+import 'hackathon_section.dart';
+import 'major_certificate_section.dart';
+import 'minor_certificate_section.dart';
 
 class AwardView extends StatefulWidget {
   const AwardView({super.key});

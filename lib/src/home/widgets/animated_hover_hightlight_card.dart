@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
 
 class AnimatedHoverHightlightCard extends StatefulWidget {
   final bool isExpLabel;

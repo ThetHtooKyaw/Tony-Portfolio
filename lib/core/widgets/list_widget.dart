@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
+
+import '../theme/app_color.dart';
 
 class ListWidget extends StatelessWidget {
   final String title;

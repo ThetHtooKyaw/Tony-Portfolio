@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
-import 'package:tony_portfolio/src/home/models/skill_model.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../models/skill_model.dart';
 
 class AnimatedHoverSkillCard extends StatefulWidget {
   final SkillModel skill;

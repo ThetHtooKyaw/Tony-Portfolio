@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/src/home/models/skill_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_hover_hightlight_card.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_hover_skill_card.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../models/skill_model.dart';
+import '../widgets/animated_hover_hightlight_card.dart';
+import '../widgets/animated_hover_skill_card.dart';
 
 class IntroSection extends StatefulWidget {
   final ScrollController scrollController;

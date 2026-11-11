@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+import '../theme/app_color.dart';
+import '../theme/app_format.dart';
+import '../utils/responsive_widget.dart';
+import 'animated_hover_menu_btn.dart';
 
 class BottomBar extends StatelessWidget {
   final ScrollController scrollController;

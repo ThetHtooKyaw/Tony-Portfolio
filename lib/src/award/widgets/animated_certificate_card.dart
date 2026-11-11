@@ -2,9 +2,10 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
-import 'package:tony_portfolio/src/award/model/certificate_model.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../model/certificate_model.dart';
 
 class AnimatedCertificateCard extends StatefulWidget {
   final MinorCertificateModel certificate;

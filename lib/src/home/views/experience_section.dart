@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/src/home/models/experience_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/animated_experience_card.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+import '../../../core/theme/app_color.dart';
+import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
+import '../models/experience_model.dart';
+import '../widgets/animated_experience_card.dart';
 
 class ExperienceSection extends StatefulWidget {
   final ScrollController scrollController;

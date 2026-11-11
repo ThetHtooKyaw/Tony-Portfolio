@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+import '../theme/app_format.dart';
+import '../utils/responsive_widget.dart';
 
 class TitleWidget extends StatelessWidget {
   final String title;

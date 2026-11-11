@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
+
+import '../../src/home/widgets/blend_mask.dart';
+import '../theme/app_color.dart';
 
 class AnimatedHoverMenuBtn extends StatefulWidget {
   final String? icon;

@@ -20,7 +20,7 @@ List<ExperimentProjectModel> experimentProjects = [
   ExperimentProjectModel(
     name: 'Souls Compass',
     type: 'Horoscope Website',
-    labels: ['HTML5, CSS3, JavaScript'],
+    labels: ['HTML5, CSS3, JavaScript', 'Web'],
     description:
         'A fun horoscope website that lets users uncover their zodiac related true self, strengths, weaknesses, and compatibility through a dynamic date-driven experience.',
     highlight: [
@@ -39,7 +39,7 @@ List<ExperimentProjectModel> experimentProjects = [
   ExperimentProjectModel(
     name: 'Flappy Bird Clone',
     type: 'Browser-Based Arcade Game',
-    labels: ['Phaser.js', 'HTML5, CSS3, JavaScript'],
+    labels: ['Phaser.js', 'HTML5, CSS3, JavaScript', 'Web'],
     description:
         'An addictive arcade-style Flappy Bird replica that challenges players to master precise flight mechanics, dodge dynamic obstacles, and push for the ultimate high score through a smooth web-based experience.',
     highlight: [

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
+
+import '../theme/app_color.dart';
 
 class AnimatedScreenTransition extends CustomTransitionPage<void> {
   AnimatedScreenTransition({required Widget newScreen, required LocalKey key})

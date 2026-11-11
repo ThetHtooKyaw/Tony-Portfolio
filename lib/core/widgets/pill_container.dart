@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../theme/app_color.dart';
+import '../theme/app_format.dart';
+import '../utils/responsive_widget.dart';
 
 class PillContainerDownloadCount extends StatelessWidget {
   final int? downloadCount;

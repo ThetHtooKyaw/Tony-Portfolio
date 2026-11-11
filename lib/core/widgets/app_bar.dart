@@ -2,13 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tony_portfolio/core/model/menu_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/widgets/animated_hover_menu_btn.dart';
-import 'package:tony_portfolio/src/widgets/animated_text_menu_btn.dart';
-import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
+
+import '../../src/home/widgets/blend_mask.dart';
+import '../model/menu_model.dart';
+import '../theme/app_color.dart';
+import '../theme/app_format.dart';
+import '../utils/responsive_widget.dart';
+import 'animated_hover_menu_btn.dart';
+import 'animated_text_menu_btn.dart';
 
 PreferredSizeWidget buildAppBar({
   required BuildContext context,
@@ -70,6 +71,8 @@ PreferredSizeWidget buildAppBar({
                       onPressed: () {
                         if (menu.route == '/awards') {
                           context.go('/awards');
+                        } else if (menu.route == '/projects') {
+                          context.go('/projects');
                         } else if (menu.route == '/experiments') {
                           context.go('/experiments');
                         } else if (menu.route == '/contact') {
@@ -253,6 +256,8 @@ void _showMainMenu({required BuildContext context}) {
                         onPressed: () {
                           if (menu.route == '/awards') {
                             context.go('/awards');
+                          } else if (menu.route == '/projects') {
+                            context.go('/projects');
                           } else if (menu.route == '/experiments') {
                             context.go('/experiments');
                           } else if (menu.route == '/contact') {

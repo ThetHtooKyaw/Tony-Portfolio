@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/status/failure.dart';
-import 'package:tony_portfolio/core/status/success.dart';
-import 'package:tony_portfolio/core/utils/base_view_model.dart';
-import 'package:tony_portfolio/src/contact/repo/contact_service.dart';
+
+import '../../../core/status/failure.dart';
+import '../../../core/status/success.dart';
+import '../../../core/utils/base_view_model.dart';
+import '../repo/contact_service.dart';
 
 class ContactViewModel extends BaseViewModel {
   // Dependencies

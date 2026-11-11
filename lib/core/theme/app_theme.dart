@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
+
+import 'app_color.dart';
+import 'app_format.dart';
 
 class AppTheme {
   AppTheme._();

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:tony_portfolio/core/model/contact_model.dart';
-import 'package:tony_portfolio/core/theme/app_color.dart';
-import 'package:tony_portfolio/core/theme/app_format.dart';
-import 'package:tony_portfolio/src/home/widgets/blend_mask.dart';
-import 'package:tony_portfolio/core/utils/responsive_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../src/home/widgets/blend_mask.dart';
+import '../model/contact_model.dart';
+import '../theme/app_color.dart';
+import '../theme/app_format.dart';
+import '../utils/responsive_widget.dart';
 
 class FloatingBtn extends StatefulWidget {
   final ScrollController scrollController;

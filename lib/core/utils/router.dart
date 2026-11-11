@@ -1,14 +1,16 @@
 import 'package:go_router/go_router.dart';
-import 'package:tony_portfolio/src/award/model/certificate_model.dart';
-import 'package:tony_portfolio/src/award/views/award_view.dart';
-import 'package:tony_portfolio/src/award/views/certificate_detail_view.dart';
-import 'package:tony_portfolio/src/contact/views/contact_view.dart';
-import 'package:tony_portfolio/src/experiments/views/experiments_view.dart';
-import 'package:tony_portfolio/src/home/models/project_model.dart';
-import 'package:tony_portfolio/src/home/views/home_view.dart';
-import 'package:tony_portfolio/src/home/views/project_detail_view.dart';
-import 'package:tony_portfolio/src/not_found_view.dart';
-import 'package:tony_portfolio/src/widgets/animated_screen_transition.dart';
+
+import '../../src/award/model/certificate_model.dart';
+import '../../src/award/views/award_view.dart';
+import '../../src/award/views/certificate_detail_view.dart';
+import '../../src/contact/views/contact_view.dart';
+import '../../src/experiments/views/experiments_view.dart';
+import '../../src/home/views/home_view.dart';
+import '../../src/not_found_view.dart';
+import '../../src/projects/models/project_model.dart';
+import '../../src/projects/views/project_detail_view.dart';
+import '../../src/projects/views/project_view.dart';
+import '../widgets/animated_screen_transition.dart';
 
 final GoRouter router = GoRouter(
   errorPageBuilder: (context, state) => AnimatedScreenTransition(
@@ -50,6 +52,13 @@ final GoRouter router = GoRouter(
           key: state.pageKey,
         );
       },
+    ),
+    GoRoute(
+      path: '/projects',
+      pageBuilder: (context, state) => AnimatedScreenTransition(
+        newScreen: const ProjectView(),
+        key: state.pageKey,
+      ),
     ),
     GoRoute(
       path: '/experiments',
