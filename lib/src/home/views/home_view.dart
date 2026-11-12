@@ -149,7 +149,6 @@ class _HomeViewState extends State<HomeView>
               SliverToBoxAdapter(child: ProjectSection()),
             ],
           ),
-
           // Bottom Bar
           SliverToBoxAdapter(
             child: BottomBar(scrollController: _scrollController),

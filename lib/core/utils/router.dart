@@ -4,12 +4,12 @@ import '../../src/award/model/certificate_model.dart';
 import '../../src/award/views/award_view.dart';
 import '../../src/award/views/certificate_detail_view.dart';
 import '../../src/contact/views/contact_view.dart';
-import '../../src/experiments/views/experiments_view.dart';
+import '../../src/experiments/views/experiment_view.dart';
 import '../../src/home/views/home_view.dart';
 import '../../src/not_found_view.dart';
-import '../../src/projects/models/project_model.dart';
 import '../../src/projects/views/project_detail_view.dart';
 import '../../src/projects/views/project_view.dart';
+import '../model/project_model.dart';
 import '../widgets/animated_screen_transition.dart';
 
 final GoRouter router = GoRouter(
@@ -63,7 +63,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/experiments',
       pageBuilder: (context, state) => AnimatedScreenTransition(
-        newScreen: const ExperimentsView(),
+        newScreen: const ExperimentView(),
         key: state.pageKey,
       ),
     ),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../core/model/project_model.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_format.dart';
 import '../../../core/utils/responsive_widget.dart';
 import '../../../core/widgets/pill_container.dart';
-import '../models/project_model.dart';
 
 class ProjectCard extends StatefulWidget {
   final int index;
@@ -30,7 +30,7 @@ class _ProjectCardState extends State<ProjectCard>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 400),
     );
 
     _fadeInAnimation = CurvedAnimation(
@@ -97,7 +97,7 @@ class _ProjectCardState extends State<ProjectCard>
     ProjectModel project,
   ) {
     return GestureDetector(
-      onTap: () => context.push('/project_detail', extra: widget.project),
+      onTap: () => context.push('/project_detail', extra: project),
       child: AnimatedContainer(
         transform: Matrix4.translationValues(0, _isHovering ? -5.0 : 0, 0),
         duration: const Duration(milliseconds: 200),
@@ -139,7 +139,7 @@ class _ProjectCardState extends State<ProjectCard>
 
                       // Project Type
                       Text(
-                        project.type,
+                        project.type!,
                         style: TextStyle(
                           fontFamily: 'Oswald',
                           color: AppColor.light,
@@ -150,7 +150,7 @@ class _ProjectCardState extends State<ProjectCard>
                   ),
 
                   // Project Download Count
-                  if (project.downloadCount > 0)
+                  if (project.downloadCount! > 0)
                     PillContainerDownloadCount(
                       downloadCount: project.downloadCount,
                       fontSize: 16.0,
@@ -166,7 +166,7 @@ class _ProjectCardState extends State<ProjectCard>
 
             // Project Description
             Text(
-              project.description,
+              project.description!,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: AppColor.light, fontSize: 16),
@@ -175,7 +175,7 @@ class _ProjectCardState extends State<ProjectCard>
 
             // Project Buttons
             PillContainerButton(
-              buttons: project.storeButtons,
+              buttons: project.storeButtons!,
               buttonColor: AppColor.background,
             ),
           ],

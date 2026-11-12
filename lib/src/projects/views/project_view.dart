@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/model/project_model.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_format.dart';
 import '../../../core/widgets/app_bar.dart';
 import '../../../core/widgets/bottom_bar.dart';
 import '../../../core/widgets/floating_btn.dart';
 import '../../../core/widgets/title_widget.dart';
-import '../models/project_model.dart';
 import '../widgets/project_card.dart';
 
 class ProjectView extends StatefulWidget {
@@ -16,8 +16,7 @@ class ProjectView extends StatefulWidget {
   State<ProjectView> createState() => _ProjectViewState();
 }
 
-class _ProjectViewState extends State<ProjectView>
-    with SingleTickerProviderStateMixin {
+class _ProjectViewState extends State<ProjectView> {
   late ScrollController _scrollController;
 
   @override
@@ -28,13 +27,16 @@ class _ProjectViewState extends State<ProjectView>
 
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final products = allProjects
+        .where((p) => p.categories.contains('Production'))
+        .toList();
 
     return Scaffold(
       appBar: buildAppBar(context: context, screenSize: screenSize),
@@ -71,12 +73,13 @@ class _ProjectViewState extends State<ProjectView>
               SizedBox(height: 40),
 
               // Experiment Projects
-              ...projects.asMap().entries.map((entry) {
+              ...products.asMap().entries.map((entry) {
                 final index = entry.key;
                 final project = entry.value;
 
                 return ProjectCard(index: index, project: project);
               }),
+
               // Bottom Bar
               BottomBar(
                 scrollController: _scrollController,

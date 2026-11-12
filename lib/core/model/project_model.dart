@@ -1,34 +1,46 @@
 class ProjectModel {
   final String name;
-  final String type;
-  final int downloadCount;
+  final String? type;
+  final int? downloadCount;
   final List<String> labels;
   final List<String> images;
-  final String description;
+  final String? description;
   final List<String> features;
   final List<String> learned;
-  final String detail;
-  final List<Map<String, dynamic>> storeButtons;
+  final String? detail;
+  final List<Map<String, dynamic>>? storeButtons;
+
+  // Categories support multiple tags (e.g., ['Live', 'Hackathon'])
+  final List<String> categories;
+
+  // Hackathon-specific optional fields
+  final String? award;
+  final String? eventName;
 
   const ProjectModel({
     required this.name,
-    required this.type,
-    required this.downloadCount,
-    required this.labels,
-    required this.images,
-    required this.description,
-    required this.features,
-    required this.learned,
-    required this.detail,
-    required this.storeButtons,
+    this.type,
+    this.downloadCount,
+    this.labels = const [],
+    this.images = const [],
+    this.description,
+    this.features = const [],
+    this.learned = const [],
+    this.detail,
+    this.storeButtons,
+    this.categories = const [],
+    this.award,
+    this.eventName,
   });
 }
 
-const List<ProjectModel> projects = [
+final List<ProjectModel> allProjects = [
+  // 1. Hash Gaming: Esports Network
   ProjectModel(
     name: 'Hash Gaming: Esports Network',
-    downloadCount: 1,
     type: 'Esports & Gaming Community App',
+    downloadCount: 1,
+    categories: ['Production'],
     labels: [
       'Flutter',
       'Dart, Koltin, Swift',
@@ -68,10 +80,13 @@ const List<ProjectModel> projects = [
       },
     ],
   ),
+
+  // 2. Eventee
   ProjectModel(
     name: 'Eventee',
-    downloadCount: 0,
     type: 'Event Marketplace App',
+    downloadCount: 0,
+    categories: ['Production'],
     labels: [
       'Flutter',
       'Dart, Koltin',
@@ -95,7 +110,7 @@ const List<ProjectModel> projects = [
     learned: [
       'MVVM architecture & Provider state management',
       'Response-based push notifications for feature success/failure',
-      'Native feature triggering integrations with Koltin',
+      'Native feature triggering integrations with Kotlin',
       'End-to-end authentication & user onboarding implementation',
       'Booking & tracking logic implementation',
       'Node.js backend API integration',
@@ -112,10 +127,13 @@ const List<ProjectModel> projects = [
       },
     ],
   ),
+
+  // 3. RUYI
   ProjectModel(
     name: 'RUYI',
-    downloadCount: 0,
     type: 'Restaurant Booking Website',
+    downloadCount: 0,
+    categories: ['Production'],
     labels: ['Flutter', 'Dart', 'Firebase', 'Provider', 'Web'],
     images: ['assets/images/ruyi_1.webp', 'assets/images/ruyi_2.webp'],
     description:
@@ -141,6 +159,126 @@ const List<ProjectModel> projects = [
         'Developing this full-stack restaurant software from the ground up gave me a comprehensive understanding of how to plan, build, and deliver a production-ready web application independently. On the frontend, I gained significant expertise in implementing multi-language localization frameworks that dynamically translate content, while utilizing mobile-first design patterns to ensure intricate layouts remain completely responsive across all device screen sizes. Moving deeper into the backend architecture, I focused on constructing heavy operational logic—specifically engineering a thread-safe table reservation and scheduling engine capable of managing real-time inventory and preventing booking conflicts. Additionally, I learned how to orchestrate complex data flows by building a secure menu management system driven by robust CRUD pipelines, connecting automated booking confirmation email triggers using transactional mail servers, and unifying these separate components into a centralized administrative control dashboard for seamless restaurant management.',
     storeButtons: [
       {'name': 'Website', 'url': 'https://ruyibooking.netlify.app/'},
+    ],
+  ),
+
+  // 4. Souls Compass
+  ProjectModel(
+    name: 'Souls Compass',
+    type: 'Horoscope Website',
+    downloadCount: 0,
+    categories: ['Experiment'],
+    labels: ['HTML5, CSS3, JavaScript', 'Web'],
+    images: [
+      'assets/images/souls_compass_1.webp',
+      'assets/images/souls_compass_2.webp',
+    ],
+    description:
+        'A fun horoscope website that lets users uncover their zodiac related true self, strengths, weaknesses, and compatibility through a dynamic date-driven experience.',
+    features: [
+      'Clean layout tailored for desktop, tablet, and mobile devices.',
+      'Interactive spinning wheel that responds dynamically to user input',
+      'Custom-built scrollable date pickers with smooth step-by-step transitions',
+    ],
+    storeButtons: [
+      {'name': 'Website', 'url': 'https://soulscompass.vercel.app/'},
+      {
+        'name': 'GitHub',
+        'url': 'https://github.com/ThetHtooKyaw/Soul-Compass.git',
+      },
+    ],
+  ),
+
+  // 5. Flappy Bird Clone
+  ProjectModel(
+    name: 'Flappy Bird Clone',
+    type: 'Browser-Based Arcade Game',
+    downloadCount: 0,
+    categories: ['Experiment'],
+    labels: ['Phaser.js', 'HTML5, CSS3, JavaScript', 'Web'],
+    images: [
+      'assets/images/flappy_bird_1.webp',
+      'assets/images/flappy_bird_2.webp',
+    ],
+    description:
+        'An addictive arcade-style Flappy Bird replica that challenges players to master precise flight mechanics, dodge dynamic obstacles, and push for the ultimate high score through a smooth web-based experience.',
+    features: [
+      'Fully responsive canvas scaling smoothly across desktop, tablet, and mobile devices.',
+      'Multi-modal input system supporting keyboard, mouse clicks, and mobile touch interactions.',
+      'Procedural obstacle generation with efficient object recycling for smooth, infinite gameplay.',
+      'Immersive collision feedback featuring camera shake, visual flashes, and custom audio cues.',
+      'Custom-rendered dynamic score displays with real-time digit tracking and best score management.',
+    ],
+    storeButtons: [
+      {'name': 'Website', 'url': 'https://flappy-bird-by-tony.vercel.app/'},
+      {
+        'name': 'GitHub',
+        'url': 'https://github.com/ThetHtooKyaw/Flappy-Bird-Clone.git',
+      },
+    ],
+  ),
+
+  // 6. Onyx (Hackathon)
+  ProjectModel(
+    name: 'Onyx',
+    type: 'AI-Powered Support Platform',
+    downloadCount: 0,
+    categories: ['Hackathon'],
+    eventName: 'Hack The Zodiac (2024)',
+    award: 'Winner',
+    labels: ['Flutter', 'Dart', 'Gemini AI'],
+    images: ['assets/images/onyx.webp'],
+    description:
+        'Designed for eco-conscious businesses and consumers, this AI-powered platform transforms traditional customer support into a proactive green initiative. By integrating Gemini AI for automated assistance and smart recommendations, the app seamlessly guides users through verified trade-in services to minimize electronic waste. Through its unique green tax system, the platform empowers users to contribute to environmental conservation with every digital interaction.',
+    features: [
+      'Automated assistance and smart recommendations using Gemini AI.',
+      'Verified trade-in services to minimize electronic waste.',
+    ],
+    storeButtons: [
+      {
+        'name': 'GitHub',
+        'url': 'https://github.com/ThetHtooKyaw/Stepout-Customer-Support.git',
+      },
+    ],
+  ),
+
+  // 7. Card Htet Kya Soh! (Game Jam)
+  ProjectModel(
+    name: 'Card Htet Kya Soh!',
+    type: '2D Card Battler WebGL Game',
+    downloadCount: 0,
+    categories: ['Production', 'Hackathon'],
+    eventName: 'Digit7s Jam (2026)',
+    award: 'Finalist',
+    labels: ['Unity 6', 'C#', 'WebGL'],
+    images: [
+      'assets/images/CHKS1.webp',
+      'assets/images/CHKS2.webp',
+      'assets/images/CHKS3.webp',
+      'assets/images/CHKS4.webp',
+      'assets/images/CHKS5.webp',
+      'assets/images/CHKS6.webp',
+      'assets/images/CHKS7.webp',
+    ],
+    description:
+        'Developed alongside two friends as part of our three-person team, APEX, for the Digit7s Jam, this Myanmar-themed 2D card battler lets players collect cultural cards, build custom decks, and battle a rising campaign ladder of opponents on a shared board. Featuring interactive minigames, dynamic opponent dialogue choices, and seamless progress saving, the game blends tactical card strategy with rich cultural storytelling.',
+    features: [
+      'Smooth Unity WebGL experience built with responsive scaling across mobile, tablet, and PC screen sizes.',
+      'Campaign ladder allowing players to unlock and progress through 4 distinct difficulty levels on an interactive map.',
+      'Myanmar-themed card packs featuring unique cultural cards (1★–3★) obtained through weighted rarity pack drops.',
+      'Tactical board battles where players swipe to play cards, trigger category matching, use strategic artifacts, and win or lose cards based on the battle outcome.',
+      'Interactive Memory Match and Rock-Paper-Scissors minigames to earn extra coins.',
+      'Collection book that automatically tracks every card unlocked from packs or discovered during gameplay.',
+      'Opponent dialogue system offering interactive choices during fights that dynamically alter match conditions.',
+      'Dynamic audio and SFX featuring scene-specific music, custom boss battle themes, and responsive card and UI sound effects.',
+      'Seamless data persistence saving unlocked cards, owned cards, coins, artifacts, and settings via PlayerPrefs.',
+    ],
+    storeButtons: [
+      {'name': 'Website', 'url': 'https://cardhtetkyasoh.vercel.app/'},
+      {
+        'name': 'GitHub',
+        'url': 'https://github.com/Akito101/SchoolCardFight.git',
+      },
     ],
   ),
 ];

@@ -5,8 +5,8 @@ import '../../../core/theme/app_color.dart';
 import '../../../core/utils/responsive_widget.dart';
 
 class ViewAllButton extends StatefulWidget {
-  final VoidCallback onTap;
-  const ViewAllButton({super.key, required this.onTap});
+  final VoidCallback onPressed;
+  const ViewAllButton({super.key, required this.onPressed});
 
   @override
   State<ViewAllButton> createState() => _ViewAllButtonState();
@@ -20,8 +20,8 @@ class _ViewAllButtonState extends State<ViewAllButton> {
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
 
-    final card = GestureDetector(
-      onTap: widget.onTap,
+    final card = TextButton(
+      onPressed: widget.onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -33,7 +33,7 @@ class _ViewAllButtonState extends State<ViewAllButton> {
             style: TextStyle(
               color: _isHovering ? AppColor.accent : AppColor.white,
               fontSize: screenSize.width * 0.03,
-              fontWeight: FontWeight.bold,
+              fontWeight: _isHovering ? FontWeight.bold : FontWeight.normal,
             ),
           ),
           const SizedBox(width: 10),

@@ -88,10 +88,10 @@ class _IntroSectionState extends State<IntroSection>
 
   @override
   void dispose() {
-    super.dispose();
     _firstComboController.dispose();
     _secondCombonController.dispose();
     _counterController.dispose();
+    super.dispose();
   }
 
   @override
@@ -137,6 +137,8 @@ class _IntroSectionState extends State<IntroSection>
         VisibilityDetector(
           key: const Key('desktop-intro-section'),
           onVisibilityChanged: (visibilityInfo) {
+            if (!mounted) return;
+
             if (visibilityInfo.visibleFraction > 0.25) {
               _secondCombonController.forward();
               _counterController.forward();
@@ -242,6 +244,8 @@ class _IntroSectionState extends State<IntroSection>
         VisibilityDetector(
           key: const Key('mobile-skills-list'),
           onVisibilityChanged: (visibilityInfo) {
+            if (!mounted) return;
+
             if (visibilityInfo.visibleFraction > 0.1) {
               _firstComboController.forward();
             } else if (visibilityInfo.visibleFraction == 0) {
@@ -267,6 +271,8 @@ class _IntroSectionState extends State<IntroSection>
         VisibilityDetector(
           key: const Key('mobile-highlights-section'),
           onVisibilityChanged: (visibilityInfo) {
+            if (!mounted) return;
+
             if (visibilityInfo.visibleFraction > 0.1) {
               _secondCombonController.forward();
               _counterController.forward();

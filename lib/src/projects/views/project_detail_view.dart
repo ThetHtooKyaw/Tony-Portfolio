@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/model/project_model.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_format.dart';
 import '../../../core/utils/responsive_widget.dart';
@@ -8,7 +9,6 @@ import '../../../core/widgets/bottom_bar.dart';
 import '../../../core/widgets/floating_btn.dart';
 import '../../../core/widgets/list_widget.dart';
 import '../../../core/widgets/pill_container.dart';
-import '../models/project_model.dart';
 
 class ProjectDetailView extends StatefulWidget {
   final ProjectModel project;
@@ -18,8 +18,7 @@ class ProjectDetailView extends StatefulWidget {
   State<ProjectDetailView> createState() => _ProjectDetailViewState();
 }
 
-class _ProjectDetailViewState extends State<ProjectDetailView>
-    with SingleTickerProviderStateMixin {
+class _ProjectDetailViewState extends State<ProjectDetailView> {
   late ScrollController _scrollController;
 
   @override
@@ -39,6 +38,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
     final screenSize = MediaQuery.sizeOf(context);
     final isDesktop = ResponsiveWidget.isDesktop(context);
     final isMobile = ResponsiveWidget.isMobile(context);
+    final project = widget.project;
 
     return Scaffold(
       appBar: buildAppBar(context: context, screenSize: screenSize),
@@ -84,7 +84,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
 
                               // Project Type
                               Text(
-                                widget.project.type,
+                                project.type!,
                                 style: TextStyle(
                                   fontFamily: 'Oswald',
                                   color: AppColor.light,
@@ -95,7 +95,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
                           ),
 
                           // Project Download Count
-                          if (widget.project.downloadCount > 0)
+                          if (project.downloadCount! > 0)
                             PillContainerDownloadCount(
                               downloadCount: widget.project.downloadCount,
                               fontSize: 20.0,
@@ -110,36 +110,56 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
                     const SizedBox(height: 40),
 
                     // Project Image
-                    Wrap(
-                      spacing: AppFormat.primaryPadding,
-                      runSpacing: AppFormat.primaryPadding,
-                      children: widget.project.images.map((image) {
-                        return SizedBox(
-                          width: 400,
-                          height: 400,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                AppFormat.primaryBorderRadius,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final isMobileView = constraints.maxWidth < 500;
+                        final itemWidth = isMobileView
+                            ? constraints.maxWidth
+                            : (constraints.maxWidth -
+                                      AppFormat.primaryPadding) /
+                                  2;
+
+                        return Wrap(
+                          spacing: AppFormat.primaryPadding,
+                          runSpacing: AppFormat.primaryPadding,
+                          children: widget.project.images.map((image) {
+                            return SizedBox(
+                              width: itemWidth.clamp(0.0, constraints.maxWidth),
+                              child: ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  maxHeight: 600,
+                                  minHeight: 200,
+                                ),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      AppFormat.primaryBorderRadius,
+                                    ),
+                                    border: Border.all(
+                                      color: AppColor.disable,
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      AppFormat.primaryBorderRadius,
+                                    ),
+                                    child: Image.asset(
+                                      image,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              border: Border.all(
-                                color: AppColor.disable,
-                                width: 0.5,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                AppFormat.primaryBorderRadius,
-                              ),
-                              child: Image.asset(image, fit: BoxFit.contain),
-                            ),
-                          ),
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
+                      },
                     ),
                     const SizedBox(height: 40),
 
-                    // Project Description
+                    // Project Overview
                     Text(
                       'OVERVIEW',
                       style: TextStyle(
@@ -152,7 +172,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
                     const SizedBox(height: 10),
 
                     Text(
-                      widget.project.description,
+                      project.description!,
                       style: TextStyle(
                         fontFamily: 'Open Sans',
                         color: AppColor.light,
@@ -169,40 +189,46 @@ class _ProjectDetailViewState extends State<ProjectDetailView>
                     const SizedBox(height: 40),
 
                     // What I Learned
-                    ListWidget(
-                      title: 'WHAT I LEARNED',
-                      items: widget.project.learned,
-                    ),
-                    const SizedBox(height: 40),
+                    if (project.detail != null) ...[
+                      ListWidget(
+                        title: 'WHAT I LEARNED',
+                        items: widget.project.learned,
+                      ),
+                      const SizedBox(height: 20),
+                    ],
 
                     // Project Detail
-                    Text(
-                      'DETAIL',
-                      style: TextStyle(
-                        fontFamily: 'Oswald',
-                        color: AppColor.accent,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                    if (project.detail != null) ...[
+                      const SizedBox(height: 20),
 
-                    Text(
-                      widget.project.detail,
-                      style: TextStyle(
-                        fontFamily: 'Open Sans',
-                        color: AppColor.light,
-                        fontSize: 16,
+                      Text(
+                        'DETAIL',
+                        style: TextStyle(
+                          fontFamily: 'Oswald',
+                          color: AppColor.accent,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
+                      const SizedBox(height: 10),
+
+                      Text(
+                        project.detail!,
+                        style: TextStyle(
+                          fontFamily: 'Open Sans',
+                          color: AppColor.light,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
 
                     Divider(color: AppColor.disable, thickness: 0.5),
                     const SizedBox(height: 20),
 
                     // Project Buttons
                     PillContainerButton(
-                      buttons: widget.project.storeButtons,
+                      buttons: project.storeButtons!,
                       buttonColor: AppColor.accent,
                       isDetailButton: true,
                     ),

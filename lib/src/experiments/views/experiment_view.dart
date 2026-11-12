@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/model/project_model.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_format.dart';
+import '../../../core/utils/responsive_widget.dart';
 import '../../../core/widgets/app_bar.dart';
 import '../../../core/widgets/bottom_bar.dart';
 import '../../../core/widgets/floating_btn.dart';
 import '../../../core/widgets/title_widget.dart';
-import '../models/experiment_project_model.dart';
 import '../widgets/experiment_project_card.dart';
 
-class ExperimentsView extends StatefulWidget {
-  const ExperimentsView({super.key});
+class ExperimentView extends StatefulWidget {
+  const ExperimentView({super.key});
 
   @override
-  State<ExperimentsView> createState() => _ExperimentsViewState();
+  State<ExperimentView> createState() => _ExperimentViewState();
 }
 
-class _ExperimentsViewState extends State<ExperimentsView>
-    with SingleTickerProviderStateMixin {
+class _ExperimentViewState extends State<ExperimentView> {
   late ScrollController _scrollController;
 
   @override
@@ -28,13 +28,17 @@ class _ExperimentsViewState extends State<ExperimentsView>
 
   @override
   void dispose() {
-    super.dispose();
     _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final isDesktop = ResponsiveWidget.isDesktop(context);
+    final products = allProjects
+        .where((p) => p.categories.contains('Experiment'))
+        .toList();
 
     return Scaffold(
       appBar: buildAppBar(context: context, screenSize: screenSize),
@@ -54,7 +58,7 @@ class _ExperimentsViewState extends State<ExperimentsView>
 
               // Instruction
               SubTitleWidget(
-                subtitle: 'SLIDE OR SCROLL TO BROWSE PROJECTS',
+                subtitle: 'SELECT TO VIEW PROJECT DETAILS',
                 color: AppColor.light,
               ),
 
@@ -71,12 +75,38 @@ class _ExperimentsViewState extends State<ExperimentsView>
               SizedBox(height: 40),
 
               // Experiment Projects
-              ...experimentProjects.asMap().entries.map((entry) {
-                final index = entry.key;
-                final project = entry.value;
+              Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: isDesktop ? 900 : double.infinity,
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      final itemWidth = isDesktop
+                          ? (constraints.maxWidth - 20) / 2
+                          : constraints.maxWidth;
 
-                return ExperimentProjectCard(index: index, project: project);
-              }),
+                      return Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
+                        children: products.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final project = entry.value;
+
+                          return SizedBox(
+                            width: itemWidth.clamp(0.0, constraints.maxWidth),
+                            child: ExperimentProjectCard(
+                              index: index,
+                              project: project,
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
+                ),
+              ),
+
               // Bottom Bar
               BottomBar(
                 scrollController: _scrollController,

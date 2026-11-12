@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/model/project_model.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_format.dart';
-import '../../projects/models/project_model.dart';
 import '../../projects/widgets/project_card.dart';
 import '../../../core/widgets/title_widget.dart';
 import '../widgets/view_all_button.dart';
@@ -13,7 +13,10 @@ class ProjectSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final previewProjects = projects.take(2).toList();
+    final previewProjects = allProjects
+        .where((p) => p.categories.contains('Production'))
+        .take(2)
+        .toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppFormat.primaryPadding),
@@ -38,7 +41,7 @@ class ProjectSection extends StatelessWidget {
           const SizedBox(height: 40),
 
           // View All Button
-          ViewAllButton(onTap: () => context.go('/projects')),
+          ViewAllButton(onPressed: () => context.go('/projects')),
           const SizedBox(height: 40),
         ],
       ),
