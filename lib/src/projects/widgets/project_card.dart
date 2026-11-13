@@ -61,13 +61,8 @@ class _ProjectCardState extends State<ProjectCard>
         if (!mounted) return;
 
         if (expCard.visibleFraction > 0.03) {
-          if (_controller.status == AnimationStatus.dismissed ||
-              _controller.status == AnimationStatus.reverse) {
+          if (_controller.status == AnimationStatus.dismissed) {
             _controller.forward();
-          }
-        } else if (expCard.visibleFraction == 0) {
-          if (isDesktop) {
-            _controller.reset();
           }
         }
       },
