@@ -16,8 +16,14 @@ PreferredSizeWidget buildAppBar({
   required Size screenSize,
   bool isBlackBackground = true,
 }) {
+  final double screenWidth = screenSize.width;
   final isDesktop = ResponsiveWidget.isDesktop(context);
-  final isTablet = ResponsiveWidget.isTablet(context);
+  final bool isCompact = screenWidth < 1200;
+
+  final double menuFontSize = (screenWidth * 0.0185).clamp(18.0, 22.0);
+  final double itemSpacing = isCompact
+      ? (screenWidth * 0.02).clamp(12.0, 22.0)
+      : (screenWidth * 0.04).clamp(24.0, 50.0);
 
   return AppBar(
     backgroundColor: Colors.transparent,
@@ -27,7 +33,6 @@ PreferredSizeWidget buildAppBar({
     iconTheme: const IconThemeData(color: AppColor.background),
     leadingWidth: 220,
     actionsPadding: const EdgeInsets.only(right: AppFormat.primaryPadding),
-    // Project Label
     leading: Padding(
       padding: const EdgeInsets.only(
         left: AppFormat.primaryPadding,
@@ -39,7 +44,7 @@ PreferredSizeWidget buildAppBar({
             AnimatedHoverMenuBtn(
               icon: 'assets/images/tony_logo.webp',
               title: 'Tony\'s Portfolio',
-              fontSize: (screenSize.width * 0.025).clamp(18, 22),
+              fontSize: menuFontSize,
               onPressed: () {
                 if (context.canPop()) {
                   context.pop();
@@ -55,7 +60,7 @@ PreferredSizeWidget buildAppBar({
             ),
       ),
     ),
-    actions: isDesktop || isTablet
+    actions: isDesktop
         ? [
             // Desktop Menu
             ...desktopMenuItems.map((menu) {
@@ -67,7 +72,7 @@ PreferredSizeWidget buildAppBar({
                   children: [
                     AnimatedHoverMenuBtn(
                       title: menu.title,
-                      fontSize: (screenSize.width * 0.025).clamp(18, 22),
+                      fontSize: menuFontSize,
                       onPressed: () {
                         if (menu.route == '/awards') {
                           context.go('/awards');
@@ -82,64 +87,67 @@ PreferredSizeWidget buildAppBar({
                         }
                       },
                     ),
-                    SizedBox(width: (screenSize.width * 0.04).clamp(16, 50)),
+                    SizedBox(width: itemSpacing),
                   ],
                 ),
               );
             }),
 
             // Contact Button
-            ElevatedButton(
-              onPressed: () => context.go('/contact'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isBlackBackground
-                    ? AppColor.white
-                    : AppColor.background,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    AppFormat.circleBorderRadius,
+            Padding(
+              padding: const EdgeInsets.only(top: AppFormat.secondaryPadding),
+              child: ElevatedButton(
+                onPressed: () => context.go('/contact'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isBlackBackground
+                      ? AppColor.white
+                      : AppColor.background,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      AppFormat.circleBorderRadius,
+                    ),
+                  ),
+                  padding: EdgeInsets.only(
+                    left: isCompact ? 14 : 20,
+                    right: 6,
+                    top: isCompact ? 10 : 14,
+                    bottom: isCompact ? 10 : 14,
                   ),
                 ),
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 6,
-                  top: 14,
-                  bottom: 14,
-                ),
-              ),
-              child: Row(
-                children: [
-                  AutoSizeText(
-                    'Get in touch',
-                    maxFontSize: 22,
-                    minFontSize: 16,
-                    style: TextStyle(
-                      fontFamily: 'Oswald',
-                      color: isBlackBackground
+                child: Row(
+                  children: [
+                    AutoSizeText(
+                      'Get in touch',
+                      maxFontSize: 22,
+                      minFontSize: 16,
+                      style: TextStyle(
+                        fontFamily: 'Oswald',
+                        color: isBlackBackground
+                            ? AppColor.background
+                            : AppColor.white,
+                        fontSize: menuFontSize,
+                      ),
+                    ),
+                    SizedBox(width: isCompact ? 8 : 10),
+
+                    CircleAvatar(
+                      radius: isCompact ? 13 : 16,
+                      backgroundColor: isBlackBackground
                           ? AppColor.background
                           : AppColor.white,
-                      fontSize: screenSize.width * 0.025,
+                      foregroundColor: isBlackBackground
+                          ? AppColor.white
+                          : AppColor.background,
+                      child: Icon(
+                        Icons.arrow_forward,
+                        // color: isBlackBackground
+                        //     ? AppColor.white
+                        //     : AppColor.background,
+                        size: isCompact ? 16 : 20,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-
-                  CircleAvatar(
-                    radius: 16,
-                    backgroundColor: isBlackBackground
-                        ? AppColor.background
-                        : AppColor.white,
-                    foregroundColor: isBlackBackground
-                        ? AppColor.white
-                        : AppColor.background,
-                    child: Icon(
-                      Icons.arrow_forward,
-                      // color: isBlackBackground
-                      //     ? AppColor.white
-                      //     : AppColor.background,
-                      size: 20,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ].animate().slide(
