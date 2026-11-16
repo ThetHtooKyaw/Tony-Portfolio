@@ -143,7 +143,7 @@ class _ExperimentProjectCardState extends State<ExperimentProjectCard>
 
                       // Project Type
                       Text(
-                        project.type!,
+                        project.type,
                         style: TextStyle(
                           fontFamily: 'Oswald',
                           color: AppColor.light,
@@ -158,12 +158,12 @@ class _ExperimentProjectCardState extends State<ExperimentProjectCard>
             const SizedBox(height: 20),
 
             // Project Labels
-            PillContainerLabel(labels: project.labels),
+            PillContainerLabel(labels: project.techStack),
             const SizedBox(height: 20),
 
             // Project Description
             Text(
-              project.description!,
+              project.description,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: AppColor.light, fontSize: 16),
@@ -172,7 +172,7 @@ class _ExperimentProjectCardState extends State<ExperimentProjectCard>
 
             // Project Buttons
             PillContainerButton(
-              buttons: project.storeButtons!,
+              buttons: project.storeButtons,
               buttonColor: AppColor.background,
             ),
           ],

@@ -11,7 +11,6 @@ class AppTheme {
       brightness: Brightness.light,
       useMaterial3: true,
       scaffoldBackgroundColor: AppColor.background,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
     );
 
     return base.copyWith(

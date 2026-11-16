@@ -5,12 +5,12 @@ import '../theme/app_color.dart';
 import '../theme/app_format.dart';
 import '../utils/responsive_widget.dart';
 
-class PillContainerDownloadCount extends StatelessWidget {
-  final int? downloadCount;
+class PillContainerAppUsedCount extends StatelessWidget {
+  final String text;
   final double fontSize;
-  const PillContainerDownloadCount({
+  const PillContainerAppUsedCount({
     super.key,
-    this.downloadCount = 0,
+    required this.text,
     required this.fontSize,
   });
 
@@ -27,7 +27,7 @@ class PillContainerDownloadCount extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppFormat.secondaryBorderRadius),
       ),
       child: Text(
-        "${downloadCount}K+",
+        text,
         style: TextStyle(
           fontFamily: 'Oswald',
           color: AppColor.accent,

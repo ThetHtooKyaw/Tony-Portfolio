@@ -134,7 +134,7 @@ class _ProjectCardState extends State<ProjectCard>
 
                       // Project Type
                       Text(
-                        project.type!,
+                        project.type,
                         style: TextStyle(
                           fontFamily: 'Oswald',
                           color: AppColor.light,
@@ -145,9 +145,17 @@ class _ProjectCardState extends State<ProjectCard>
                   ),
 
                   // Project Download Count
-                  if (project.downloadCount! > 0)
-                    PillContainerDownloadCount(
-                      downloadCount: project.downloadCount,
+                  if (project.downloadCount != null &&
+                      project.downloadCount! > 0)
+                    PillContainerAppUsedCount(
+                      text: "${project.downloadCount}+",
+                      fontSize: 16.0,
+                    ),
+
+                  // Project Play Count
+                  if (project.playCount != null)
+                    PillContainerAppUsedCount(
+                      text: "${project.playCount}+",
                       fontSize: 16.0,
                     ),
                 ],
@@ -156,12 +164,12 @@ class _ProjectCardState extends State<ProjectCard>
             const SizedBox(height: 20),
 
             // Project Labels
-            PillContainerLabel(labels: project.labels),
+            PillContainerLabel(labels: project.techStack),
             const SizedBox(height: 20),
 
             // Project Description
             Text(
-              project.description!,
+              project.description,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(color: AppColor.light, fontSize: 16),
@@ -170,7 +178,7 @@ class _ProjectCardState extends State<ProjectCard>
 
             // Project Buttons
             PillContainerButton(
-              buttons: project.storeButtons!,
+              buttons: project.storeButtons,
               buttonColor: AppColor.background,
             ),
           ],
