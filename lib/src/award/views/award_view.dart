@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/widgets/app_bar.dart';
 import '../../../core/widgets/bottom_bar.dart';
 import '../../../core/widgets/floating_btn.dart';
-import 'hackathon_section.dart';
+import 'landing_section.dart';
 import 'major_certificate_section.dart';
 import 'minor_certificate_section.dart';
 
@@ -56,7 +56,7 @@ class AwardViewState extends State<AwardView> {
             child: Stack(
               children: [
                 // Award Section
-                HackathonSection(scrollController: _scrollController),
+                LandingSection(scrollController: _scrollController),
 
                 // AppBar
                 Positioned(

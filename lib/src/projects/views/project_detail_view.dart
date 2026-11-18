@@ -262,6 +262,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: project.storeButtons.length,
           itemBuilder: (context, index) {
+            final isSmallScreen = ResponsiveWidget.isSmallScreen(context);
             final button = project.storeButtons[index];
             final buttonName = button['name'];
             final buttonUrl = button['url'];
@@ -281,7 +282,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                     backgroundColor: AppColor.white,
                     foregroundColor: AppColor.background,
                     padding: EdgeInsets.symmetric(
-                      vertical: AppFormat.primaryPadding,
+                      vertical: isSmallScreen ? 16.0 : AppFormat.primaryPadding,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -292,7 +293,7 @@ class _ProjectDetailViewState extends State<ProjectDetailView> {
                   icon: Image.asset(button['icon'], width: 22, height: 22),
                   label: Text(
                     buttonName,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontFamily: 'Open Sans',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

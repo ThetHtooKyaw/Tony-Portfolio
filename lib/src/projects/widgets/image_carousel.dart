@@ -95,7 +95,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
     double spacing,
   ) {
     _snapTimer?.cancel();
-    _snapTimer = Timer(const Duration(milliseconds: 120), () {
+    _snapTimer = Timer(const Duration(milliseconds: 100), () {
       if (!mounted || !_scrollController.hasClients || _isUserDragging) return;
 
       final List<double> offsets = _calculateItemOffsets(

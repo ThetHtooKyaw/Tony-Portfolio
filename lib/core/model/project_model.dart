@@ -3,6 +3,7 @@ class ProjectModel {
   final List<String> categories;
 
   // Core fields
+  final String id;
   final String name;
   final String type;
   final int? downloadCount;
@@ -12,7 +13,6 @@ class ProjectModel {
   final String teamOverview;
   final String description;
   final List<String> features;
-  final List<String> learned;
   final List<String> platformIcons;
   final List<Map<String, dynamic>> storeButtons;
 
@@ -26,6 +26,7 @@ class ProjectModel {
   const ProjectModel({
     required this.categories,
 
+    required this.id,
     required this.name,
     required this.type,
     this.downloadCount,
@@ -35,7 +36,6 @@ class ProjectModel {
     required this.teamOverview,
     required this.description,
     required this.features,
-    this.learned = const [],
     required this.platformIcons,
     required this.storeButtons,
 
@@ -51,7 +51,7 @@ final List<ProjectModel> allProjects = [
   // 1. Onyx (Hackathon)
   ProjectModel(
     categories: ['Hackathon'],
-
+    id: 'h1',
     name: 'Onyx',
     type: 'AI-Powered Support Platform',
     downloadCount: 0,
@@ -87,18 +87,21 @@ final List<ProjectModel> allProjects = [
   // 2. Card Htet Kya Soh! (Game Jam)
   ProjectModel(
     categories: ['Hackathon', 'Production'],
+    id: 'h2',
     name: 'Card Htet Kya Soh!',
     type: '2D Card Battler WebGL Game',
     playCount: 1000,
     techStack: ['Unity 6', 'C#', 'WebGL'],
     eventName: 'Digit7s Jam (2026)',
-    teamName: 'APEX',
+    teamName: 'Apex',
     award: 'Best Creative Concept Award',
     presentation:
         'https://drive.google.com/file/d/16A8crdvGvdHUbB7PjKhBQP00YPubBQOP/view?usp=drive_link',
     overviewImage: [
       'assets/images/projects/CHKS_BCCA.webp',
-      'assets/images/projects/CHKS_BCCA_Art.webp',
+      'assets/images/projects/CHKS_BCCA_Art1.webp',
+      'assets/images/projects/CHKS_BCCAC.webp',
+      'assets/images/projects/CHKS_BCCA_Art2.webp',
       'assets/images/projects/CHKS_Finalist.webp',
     ],
     images: [
@@ -143,9 +146,10 @@ final List<ProjectModel> allProjects = [
   // 3. Hash Gaming: Esports Network
   ProjectModel(
     categories: ['Production'],
+    id: 'p1',
     name: 'Hash Gaming: Esports Network',
     type: 'Esports & Gaming Community App',
-    downloadCount: 1000,
+    downloadCount: 5000,
     techStack: [
       'Flutter',
       'Dart, Koltin, Swift',
@@ -172,13 +176,6 @@ final List<ProjectModel> allProjects = [
       'Time-sensitive information & live promotion tracking',
       'Interactive gaming community UI',
     ],
-    learned: [
-      'Flutter & Bloc state management at production scale',
-      'Advanced animated widget creation',
-      'Code optimization & feature-by-feature debugging',
-      'Clean Architecture implementation & dependency injection with GetIt',
-      'Google Play Store & Apple App Store publication',
-    ],
     platformIcons: ['assets/icons/android.webp', 'assets/icons/ios.webp'],
     storeButtons: [
       {
@@ -199,6 +196,7 @@ final List<ProjectModel> allProjects = [
   // 4. RUYI
   ProjectModel(
     categories: ['Production'],
+    id: 'p2',
     name: 'RUYI',
     type: 'Restaurant Booking Website',
     playCount: 500,
@@ -219,14 +217,6 @@ final List<ProjectModel> allProjects = [
       'Menu management (CRUD operations)',
       'Reservation date & availability scheduler',
     ],
-    learned: [
-      'Multi-language localization',
-      'Table reservation & scheduling implementation',
-      'Responsive UI across all devices',
-      'Menu management & CRUD operations',
-      'Admin dashboard setup & integration',
-      'Automated booking confirmation emails integration',
-    ],
     platformIcons: ['assets/icons/website.webp'],
     storeButtons: [
       {
@@ -245,6 +235,7 @@ final List<ProjectModel> allProjects = [
   // 5. Eventee
   ProjectModel(
     categories: ['Experiment'],
+    id: 'e1',
     name: 'Eventee',
     type: 'Event Marketplace App',
     downloadCount: 0,
@@ -276,17 +267,6 @@ final List<ProjectModel> allProjects = [
       'Automated push notifications',
       'Booking history and ticket tracking UI',
     ],
-    learned: [
-      'MVVM architecture & Provider state management',
-      'Response-based push notifications for feature success/failure',
-      'Native feature triggering integrations with Kotlin',
-      'End-to-end authentication & user onboarding implementation',
-      'Booking & tracking logic implementation',
-      'Node.js backend API integration',
-      'Stripe API integration & full payment flows',
-      'Geo-location services & native permission handling',
-      'Google Play Store publication',
-    ],
     platformIcons: ['assets/icons/android.webp'],
     storeButtons: [
       {
@@ -305,6 +285,7 @@ final List<ProjectModel> allProjects = [
   // 6. Souls Compass
   ProjectModel(
     categories: ['Experiment'],
+    id: 'e2',
     name: 'Souls Compass',
     type: 'Horoscope Website',
     playCount: 100,
@@ -339,6 +320,7 @@ final List<ProjectModel> allProjects = [
   // 7. Flappy Bird Clone
   ProjectModel(
     categories: ['Experiment'],
+    id: 'e3',
     name: 'Flappy Bird Clone',
     type: 'Browser-Based Arcade Game',
     playCount: 150,

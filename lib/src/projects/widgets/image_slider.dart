@@ -13,43 +13,13 @@ class ImageSlider extends StatefulWidget {
 }
 
 class _ImageSliderState extends State<ImageSlider> {
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(viewportFraction: 1.05);
   int _currentIndex = 0;
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _nextPage() {
-    if (_currentIndex < widget.images.length - 1) {
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      _pageController.animateToPage(
-        0,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void _previousPage() {
-    if (_currentIndex > 0) {
-      _pageController.previousPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
-      _pageController.animateToPage(
-        widget.images.length - 1,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-      );
-    }
   }
 
   @override
@@ -78,10 +48,13 @@ class _ImageSliderState extends State<ImageSlider> {
                     });
                   },
                   itemBuilder: (context, index) {
-                    return Image.asset(
-                      widget.images[index],
-                      fit: BoxFit.contain,
-                      width: double.infinity,
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Image.asset(
+                        widget.images[index],
+                        fit: BoxFit.contain,
+                        width: double.infinity,
+                      ),
                     );
                   },
                 ),
@@ -103,34 +76,6 @@ class _ImageSliderState extends State<ImageSlider> {
                   ),
                 ),
 
-                // Left Arrow Button
-                if (widget.images.length > 1)
-                  Positioned(
-                    left: 8,
-                    top: 0,
-                    bottom: 0,
-                    child: Center(
-                      child: _buildArrowButton(
-                        icon: Icons.chevron_left,
-                        onPressed: _previousPage,
-                      ),
-                    ),
-                  ),
-
-                // Right Arrow Button
-                if (widget.images.length > 1)
-                  Positioned(
-                    right: 8,
-                    top: 0,
-                    bottom: 0,
-                    child: Center(
-                      child: _buildArrowButton(
-                        icon: Icons.chevron_right,
-                        onPressed: _nextPage,
-                      ),
-                    ),
-                  ),
-
                 // Progress Bubble Dots Overlay
                 if (widget.images.length > 1)
                   Positioned(
@@ -143,12 +88,12 @@ class _ImageSliderState extends State<ImageSlider> {
                           onTap: () {
                             _pageController.animateToPage(
                               index,
-                              duration: const Duration(milliseconds: 300),
+                              duration: const Duration(milliseconds: 100),
                               curve: Curves.easeInOut,
                             );
                           },
                           child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 250),
+                            duration: const Duration(milliseconds: 200),
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             height: 8,
                             width: isActive ? 22 : 10,
@@ -166,24 +111,6 @@ class _ImageSliderState extends State<ImageSlider> {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildArrowButton({
-    required IconData icon,
-    required VoidCallback onPressed,
-  }) {
-    return Material(
-      color: Colors.black45,
-      shape: const CircleBorder(),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onPressed,
-        child: Padding(
-          padding: const EdgeInsets.all(AppFormat.secondaryPadding),
-          child: Icon(icon, color: AppColor.white, size: 24),
         ),
       ),
     );
